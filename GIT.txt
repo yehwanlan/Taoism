@@ -1,0 +1,42 @@
+6/9 
+git 安裝及指令教學
+CMD git --version
+
+git bash
+crtl+滑鼠滾輪往上往下 --> 字體變化
+ls   , ls -a
+cd , cd ..
+
+git config --list
+如何建立 資料庫 與版本控制
+add 
+
+git remote  查詢現在連到哪個GitHub
+
+.gitignore  如在vs 中要建立repo，要先建立一個 ignore 去ignore .vs檔案
+
+gitignore.io 
+
+git restore .
+
+git reset 切換到之前的版本
+
+git reflog
+
+6/9下午
+
+會員ID用 int(乖乖用自動生成)
+
+git branch (查詢分支)
+
+git branch 分支名稱  (建立分支)
+
+git checkout 分支名稱 (切換分支)
+
+git checkout -b f1 (建立分支 並切換到該分支)
+
+git branch -d 分支名稱 (刪除分支)
+
+金融業 一般會上傳到內部的git server
+
+git remote show origin
