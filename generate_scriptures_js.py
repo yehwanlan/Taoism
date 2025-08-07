@@ -3,8 +3,9 @@ import json
 
 def generate_scriptures_js():
     project_root = os.path.dirname(os.path.abspath(__file__))
-    source_texts_dir = os.path.join(project_root, "source_texts")
-    translations_dir = os.path.join(project_root, "translations")
+    # Update paths to reflect new location inside docs/
+    source_texts_dir = os.path.join(project_root, "docs", "source_texts")
+    translations_dir = os.path.join(project_root, "docs", "translations")
     script_js_path = os.path.join(project_root, "docs", "js", "script.js")
 
     scriptures_data = {}
