@@ -23,17 +23,16 @@ def generate_scriptures_js():
             "translation": f"translations/{display_name}.md" if os.path.exists(translation_file_path) else ""
         }
 
-    # Generate the JavaScript object string
-    scriptures_lines = []
-    for key, value in scriptures_data.items():
-        scriptures_lines.append(f"        \"{key}\": {{ original: \"{value['original']}\", translation: \"{value['translation']}\" }}")
+    # Generate the JavaScript object string explicitly
+    js_content_parts = []
+    items = list(scriptures_data.items())
+    for i, (key, value) in enumerate(items):
+        line = f"        \"{key}\": {{ original: \"{value['original']}\", translation: \"{value['translation']}\" }}"
+        if i < len(items) - 1:
+            line += ","
+        js_content_parts.append(line)
     
-    # Use an f-string for the entire block, escaping curly braces for literal output
-    scriptures_js_content = f"""
-    const scriptures = {{
-{ "\n".join(scriptures_lines) }
-    }};
-"""
+    scriptures_js_content = "    const scriptures = {\n" + "\n".join(js_content_parts) + "\n    };\n"
 
     # Read the existing script.js content
     with open(script_js_path, 'r', encoding='utf-8') as f:
