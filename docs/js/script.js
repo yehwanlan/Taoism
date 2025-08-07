@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const scriptures = {
         "太上太清天童護命妙經": { original: "source_texts/太上太清天童護命妙經.txt", translation: "translations/太上太清天童護命妙經.md" },
         "本經陰符七術": { original: "source_texts/本經陰符七術.text", translation: "translations/本經陰符七術.md" },
-        "雲笈七籤": { original: "source_texts/雲笈七籤.txt", translation: "translations/雲笈七籤.md" },
+        "雲笈七籤119": { original: "source_texts/雲笈七籤119.txt", translation: "translations/雲笈七籤119.md" },
         "雲笈七籤121": { original: "source_texts/雲笈七籤121.txt", translation: "translations/雲笈七籤121.md" },
         "雲笈七籤33": { original: "source_texts/雲笈七籤33.txt", translation: "translations/雲笈七籤33.md" },
         "雲笈七籤60中山玉櫃服氣經": { original: "source_texts/雲笈七籤60中山玉櫃服氣經.txt", translation: "translations/雲笈七籤60中山玉櫃服氣經.md" },
