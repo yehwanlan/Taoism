@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const nav = document.querySelector('nav');
 
     // SCRIPTURES_START
-
     const scriptures = {
         "太上太清天童護命妙經": { original: "source_texts/太上太清天童護命妙經.txt", translation: "translations/太上太清天童護命妙經.md" },
         "本經陰符七術": { original: "source_texts/本經陰符七術.text", translation: "translations/本經陰符七術.md" },
