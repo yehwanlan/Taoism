@@ -1,0 +1,49 @@
+{
+  "books": [
+    {
+      "name": "抱朴子",
+      "url": "https://www.shidianguji.com/book/SBCK109",
+      "enabled": true,
+      "translation_style": "classical",
+      "notes": "道教經典，需要保留專業術語"
+    },
+    {
+      "name": "道德經",
+      "url": "https://www.shidianguji.com/book/DAODEJING",
+      "enabled": false,
+      "translation_style": "philosophical",
+      "notes": "哲學經典，注重思想表達"
+    },
+    {
+      "name": "書籍_3",
+      "url": "https://www.shidianguji.com/book/DZ0065?page_from=bookshelf&mode=book",
+      "enabled": true,
+      "translation_style": "classical",
+      "notes": ""
+    },
+    {
+      "name": "書籍_4",
+      "url": "https://www.shidianguji.com/book/DZ0067?page_from=bookshelf&mode=book",
+      "enabled": true,
+      "translation_style": "classical",
+      "notes": ""
+    }
+  ],
+  "crawler_settings": {
+    "delay_between_requests": 2,
+    "max_retries": 3,
+    "timeout": 10,
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+  },
+  "translation_settings": {
+    "auto_translate": false,
+    "generate_templates": true,
+    "include_annotations": true,
+    "translation_language": "zh-TW"
+  },
+  "output_settings": {
+    "create_readme": true,
+    "generate_progress_report": true,
+    "backup_original": true
+  }
+}

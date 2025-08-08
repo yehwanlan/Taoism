@@ -1,0 +1,28 @@
+# 道教經典翻譯系統 v2.0 - 依賴套件
+
+# 核心依賴
+requests>=2.28.0
+beautifulsoup4>=4.11.0
+pathlib>=1.0.1
+
+# 網頁爬蟲相關
+selenium>=4.8.0
+lxml>=4.9.0
+
+# 資料處理
+json5>=0.9.0
+markdown>=3.4.0
+
+# 開發和測試
+pytest>=7.0.0
+pytest-cov>=4.0.0
+
+# 可選依賴（用於特定功能）
+# pandas>=1.5.0          # 資料分析（可選）
+# openpyxl>=3.0.0        # Excel 支援（可選）
+# python-dotenv>=0.19.0  # 環境變數管理（可選）
+
+# 注意：
+# 1. 安裝命令：pip install -r requirements.txt
+# 2. 更新命令：pip freeze > requirements.txt
+# 3. 虛擬環境建議：python -m venv venv && source venv/bin/activate (Linux/Mac) 或 venv\Scripts\activate (Windows)

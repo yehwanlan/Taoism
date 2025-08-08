@@ -1,53 +1,318 @@
-# 道教經典翻譯專案
+# 🏛️ 道教經典翻譯系統 v2.0
 
-## 專案概述
+## 🎯 專案概述
 
-這個專案旨在建立一個線上平台，用於展示道教經典的原文及其現代中文白話（繁體）翻譯。透過將原文與譯文並排顯示，方便讀者對照學習和理解。
+道教經典翻譯系統是一個全自動化的古籍翻譯和管理平台，專門用於處理道教經典的爬取、翻譯和追蹤。系統採用模組化設計，提供完整的CLI介面和實時監控功能。
 
-專案採用靜態網站技術，可輕鬆部署到 GitHub Pages，實現免費且便捷的線上分享。
+### ✨ 核心特色
 
-## 主要功能
+- 🤖 **全自動翻譯** - 一鍵完成從URL到翻譯模板的完整流程
+- 📊 **智能追蹤** - 自動記錄和統計所有經典資訊
+- 🔍 **實時監控** - 檔案操作和翻譯進度的即時追蹤
+- 🎛️ **統一介面** - 簡潔的命令列介面，支援互動模式
+- 📈 **詳細報告** - 自動生成統計報告和進度分析
 
-*   **原文與譯文並排顯示：** 提供清晰的閱讀體驗，方便對照。
-*   **經文選擇：** 透過下拉選單快速切換不同的經文。
-*   **自動化經文管理：** 透過 Python 腳本自動更新網頁上的經文列表，無需手動修改 JavaScript 程式碼。
-*   **Markdown 格式翻譯：** 翻譯內容使用 Markdown 格式編寫，易於閱讀和編輯。
+## 🎯 主要功能
 
-## 專案結構
+- 🕷️ **智能爬蟲** - 自動識別和爬取古籍網站內容
+- 🤖 **自動翻譯** - 生成標準化的翻譯模板
+- 📊 **進度追蹤** - 實時監控翻譯進度和統計
+- 📁 **檔案管理** - 自動組織原文和翻譯檔案
+- 📈 **報告生成** - 詳細的統計報告和分析
+- 🎛️ **CLI介面** - 簡潔易用的命令列操作
+- 🌐 **網頁介面** - 現代化的網頁閱讀介面，支援書籍和章節選擇
+
+## 🏗️ 系統架構
 
 ```
-.
-├── source_texts/             # 存放原始道教經典文本（例如：.txt, .html）
-├── translations/           # 存放翻譯後的現代中文白話文本（.md 格式）
-├── docs/                   # 存放網頁相關檔案（HTML, CSS, JavaScript）
-│   ├── css/                # 網頁樣式表
-│   │   └── style.css
-│   ├── js/                 # 網頁 JavaScript 邏輯
-│   │   └── script.js       # 包含自動生成的經文列表
-│   └── index.html          # 網站首頁
-├── generate_scriptures_js.py # 自動生成 script.js 中經文列表的 Python 腳本
-├── .git/                   # Git 版本控制相關檔案
-├── .vscode/                # VS Code 編輯器設定
-├── GIT.txt                 # 其他 Git 相關筆記
-├── README.md               # 本專案說明文件
-└── ...                     # 其他原始經文檔案
+Taoism/
+├── 📁 core/                    # 核心系統模組
+│   ├── translator.py           # 翻譯引擎核心
+│   ├── tracker.py             # 經典追蹤系統
+│   ├── file_monitor.py        # 檔案監控系統
+│   └── __init__.py            # 模組初始化
+│
+├── 📁 tools/                   # 命令列工具集
+│   ├── easy_cli.py            # 簡易翻譯介面
+│   ├── monitor_cli.py         # 監控介面
+│   └── folder_manager.py      # 資料夾管理工具
+│
+├── 📁 config/                  # 配置管理
+│   ├── settings.json          # 系統配置檔案
+│   └── templates/             # 模板檔案
+│
+├── 📁 data/                    # 資料儲存
+│   ├── tracking/              # 追蹤資料
+│   │   ├── classics.json      # 經典資料庫
+│   │   └── tracking_report.md # 追蹤報告
+│   └── logs/                  # 日誌檔案
+│       ├── file_operations.json # 檔案操作日誌
+│       └── activity_report.md   # 活動報告
+│
+├── 📁 docs/                    # 文檔和輸出
+│   ├── source_texts/          # 原文檔案
+│   ├── translations/          # 翻譯檔案
+│   └── system/                # 系統文檔
+│       ├── 工具使用指南.md     # 詳細使用指南
+│       ├── 追蹤系統說明.md     # 追蹤系統說明
+│       └── UPGRADE_SUMMARY.md # 升級總結報告
+│   └── translations/          # 翻譯檔案
+│
+├── 📁 crawler/                 # 爬蟲工具集（保留）
+│
+├── main.py                     # 🚀 主要入口點
+└── README.md                   # 專案說明
 ```
 
-## 如何開始 (本地設定)
+## 🚀 快速開始
 
-1.  **克隆專案：**
-    如果您尚未克隆本專案，請使用以下命令：
-    ```bash
-    git clone <您的GitHub儲存庫URL>
-    cd Taoism
-    ```
+### 1. 環境準備
 
-2.  **安裝 Python：**
-    請確保您的系統已安裝 Python 3。您可以從 [Python 官方網站](https://www.python.org/downloads/) 下載並安裝。
+```bash
+# 確保已安裝 Python 3.7+
+python --version
 
-## 工作流程
+# 安裝依賴套件
+pip install requests beautifulsoup4 pathlib
+```
 
-### 步驟一：新增與翻譯經文
+### 2. 基本使用
+
+```bash
+# 🌟 推薦：直接啟動互動模式
+python main.py
+
+# 或使用命令列模式
+python main.py info                                    # 顯示系統資訊
+python main.py translate --book "書籍URL"              # 翻譯單本書籍
+python main.py monitor dashboard                       # 查看監控儀表板
+python main.py monitor watch 30                        # 實時監控模式
+
+# 🌐 網頁介面使用
+# 1. 開啟 docs/index.html 在瀏覽器中
+# 2. 或使用 Python 啟動本地伺服器
+python -m http.server 8000 --directory docs
+# 然後訪問 http://localhost:8000
+```
+
+### 3. 互動模式特色
+
+- 🎯 **數字選單**: 輸入數字選擇操作，簡單直觀
+- 📋 **書籍管理**: 查看、添加、選擇書籍配置
+- 🔗 **直接貼上**: 支援直接貼上書籍URL進行翻譯
+- 📊 **即時狀態**: 隨時查看系統狀態和進度
+- 🎛️ **整合監控**: 內建監控儀表板和報告生成
+
+### 4. 網頁介面功能
+
+- 📚 **智能選擇**: 書籍和章節雙重選擇系統
+- 📖 **對照閱讀**: 原文與譯文並排顯示
+- 🎛️ **多種模式**: 原文模式、翻譯模式、對照模式
+- ⌨️ **快捷鍵**: 支援方向鍵導航和空格鍵切換模式
+- 📜 **向後相容**: 保留舊版經典的存取功能
+
+## 📖 詳細使用指南
+
+### 翻譯功能
+
+```bash
+# 翻譯單本書籍
+python main.py translate --book "https://www.shidianguji.com/book/DZ0001"
+
+# 查看已配置的書籍
+python main.py translate --list
+
+# 批量翻譯所有啟用的書籍
+python main.py translate --batch
+
+# 查看翻譯系統狀態
+python main.py translate --status
+```
+
+### 監控功能
+
+```bash
+# 查看完整儀表板
+python main.py monitor dashboard
+
+# 查看翻譯進度
+python main.py monitor progress
+
+# 查看最近活動（預設10項）
+python main.py monitor activity 20
+
+# 實時監控模式（每30秒更新）
+python main.py monitor watch 30
+
+# 生成所有報告
+python main.py monitor reports
+
+# 匯出系統狀態為JSON
+python main.py monitor export
+```
+
+### 系統資訊
+
+```bash
+# 查看系統資訊和當前狀態
+python main.py info
+
+# 查看幫助
+python main.py --help
+python main.py translate --help
+python main.py monitor --help
+```
+
+## 🔧 配置管理
+
+系統配置檔案位於 `config/settings.json`，包含：
+
+- **翻譯設定**: 爬蟲參數、延遲時間、重試次數
+- **追蹤設定**: 資料目錄、備份選項、日誌限制
+- **輸出設定**: 檔案路徑、報告生成選項
+- **書籍清單**: 預配置的書籍URL和設定
+
+## 📊 資料結構
+
+### 追蹤資料 (`data/tracking/`)
+- `classics.json` - 經典資料庫
+- `tracking_report.md` - 追蹤報告
+- `system_status.json` - 系統狀態快照
+
+### 日誌資料 (`data/logs/`)
+- `file_operations.json` - 檔案操作日誌
+- `activity_report.md` - 活動報告
+
+### 輸出資料 (`docs/`)
+- `source_texts/` - 爬取的原文檔案
+- `translations/` - 生成的翻譯模板
+
+## 🎯 工作流程
+
+### 步驟一：翻譯新經典
+
+```bash
+# 方法1: 直接翻譯
+python main.py translate --book "https://www.shidianguji.com/book/DZ0001"
+
+# 方法2: 先添加到配置，再批量處理
+# 編輯 config/settings.json 添加新書籍
+python main.py translate --batch
+```
+
+### 步驟二：監控進度
+
+```bash
+# 查看翻譯進度
+python main.py monitor progress
+
+# 實時監控
+python main.py monitor watch
+```
+
+### 步驟三：生成報告
+
+```bash
+# 生成所有報告
+python main.py monitor reports
+```
+
+## 🔄 從舊版本升級
+
+如果您使用的是舊版本（v1.x），系統提供了自動遷移工具：
+
+```bash
+# 執行資料遷移（已完成）
+python tools/migrate_data.py
+```
+
+遷移後的變更：
+- ✅ 所有舊檔案已備份到 `backup/` 和 `archive/` 目錄
+- ✅ 資料已遷移到新的模組化結構
+- ✅ 使用新的 `main.py` 統一入口點
+
+## 🛠️ 開發者資訊
+
+### 模組結構
+
+- **core/** - 核心功能模組
+  - `translator.py` - 翻譯引擎
+  - `tracker.py` - 追蹤系統
+  - `file_monitor.py` - 檔案監控
+  
+- **tools/** - 命令列工具
+  - `easy_cli.py` - 翻譯介面
+  - `monitor_cli.py` - 監控介面
+  - `migrate_data.py` - 資料遷移工具
+
+### 擴展功能
+
+系統採用模組化設計，可輕鬆擴展新功能：
+
+1. 在 `core/` 添加新的核心模組
+2. 在 `tools/` 添加新的CLI工具
+3. 在 `main.py` 中註冊新的子命令
+
+## 📝 更新日誌
+
+### v2.0.0 (2025-08-09)
+- 🎉 **重大重構**: 採用模組化架構
+- ✨ **統一入口**: 新增 `main.py` 統一介面
+- 📊 **增強追蹤**: 改進的追蹤和監控系統
+- 🔧 **配置管理**: 統一的配置檔案系統
+- 📦 **自動遷移**: 提供從v1.x的無縫升級
+
+### v1.x (歷史版本)
+- 基礎翻譯和追蹤功能
+- 多個獨立的工具檔案
+- 已歸檔到 `archive/` 目錄
+
+## 🤝 貢獻指南
+
+歡迎提交Issue和Pull Request！
+
+1. Fork 本專案
+2. 創建功能分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交變更 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 開啟Pull Request
+
+## 📚 詳細文檔
+
+- 🎯 **[使用示例](docs/system/使用示例.md)** - 實際操作示例和互動模式指南
+- 📖 **[工具使用指南](docs/system/工具使用指南.md)** - 完整的功能說明和使用方法
+- 📊 **[追蹤系統說明](docs/system/追蹤系統說明.md)** - 追蹤系統的詳細介紹
+- 🔄 **[升級總結報告](docs/system/UPGRADE_SUMMARY.md)** - v2.0重構的完整記錄
+- 🕷️ **[爬蟲工具文檔](crawler/)** - 21個專業爬蟲工具的說明
+
+## 📊 當前狀態
+
+- **經典總數**: 6部
+- **章節總數**: 45章
+- **總字數**: 102,050字
+- **系統版本**: v2.0.0
+
+## 🤝 貢獻指南
+
+歡迎提交Issue和Pull Request！
+
+1. Fork 本專案
+2. 創建功能分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交變更 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 開啟Pull Request
+
+## 📄 授權條款
+
+本專案採用 MIT 授權條款 - 詳見 [LICENSE](LICENSE) 檔案
+
+## 🙏 致謝
+
+感謝所有為道教經典數位化和翻譯工作做出貢獻的朋友們！
+
+---
+
+*道教經典翻譯系統 v2.0 - 讓古籍翻譯更簡單、更智能* 🏛️✨
 
 1.  **新增原始經文：**
     將新的道教經典文本檔案（例如 `.txt` 或 `.html`）放入 `source_texts/` 資料夾。

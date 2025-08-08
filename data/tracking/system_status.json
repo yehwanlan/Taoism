@@ -1,0 +1,25 @@
+{
+  "timestamp": "2025-08-09T03:34:13.127338",
+  "version": "2.0",
+  "classic_tracker": {
+    "statistics": {
+      "created": "2025-08-09T03:11:05.302509",
+      "last_updated": "2025-08-09T03:34:13.124190",
+      "total_classics": 6,
+      "total_chapters": 45,
+      "total_characters": 102050,
+      "migrated_at": "2025-08-09T03:32:58.329384",
+      "version": "2.0"
+    },
+    "classics_count": 6
+  },
+  "file_monitor": {
+    "statistics": {
+      "total_operations": 0,
+      "file_types": {},
+      "daily_activity": {},
+      "recent_activity": []
+    },
+    "recent_operations": []
+  }
+}

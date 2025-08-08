@@ -1,0 +1,113 @@
+# 道教經典翻譯系統 - Git 忽略檔案
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# 虛擬環境
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+*~
+
+# 系統檔案
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# 敏感配置檔案
+config/settings.json
+config/secrets.json
+config/local.json
+.env
+.env.local
+.env.production
+
+# API 金鑰和密碼
+api_keys.txt
+passwords.txt
+secrets/
+
+# 日誌檔案
+*.log
+logs/
+data/logs/*.log
+
+# 臨時檔案
+temp/
+tmp/
+*.tmp
+*.temp
+
+# 備份檔案
+backup/
+*.backup
+*.bak
+
+# 測試覆蓋率
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# 資料庫
+*.db
+*.sqlite
+*.sqlite3
+
+# 大型資料檔案（可選）
+# data/large_files/
+# docs/source_texts/*/原文/*.txt
+
+# 編譯檔案
+*.pyc
+*.pyo
+*.pyd
+
+# 打包檔案
+*.zip
+*.tar.gz
+*.rar
+
+# 本地開發檔案
+local_*
+dev_*
+test_*
+
+# 網頁快取
+docs/cache/
+docs/temp/

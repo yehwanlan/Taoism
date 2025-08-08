@@ -1,0 +1,554 @@
+{
+  "metadata": {
+    "created": "2025-08-09T03:11:05.302509",
+    "last_updated": "2025-08-09T03:34:13.124190",
+    "total_classics": 6,
+    "total_chapters": 45,
+    "total_characters": 102050,
+    "migrated_at": "2025-08-09T03:32:58.329384",
+    "version": "2.0"
+  },
+  "classics": {
+    "DZ0047": {
+      "book_info": {
+        "id": "DZ0047",
+        "title": "太上元始天尊证果真经",
+        "author": "[唐] 佚名 著",
+        "url": "https://www.shidianguji.com/book/DZ0047"
+      },
+      "folder_name": "太上元始天尊证果真经_DZ0047",
+      "source_dir": "docs/source_texts/太上元始天尊证果真经_DZ0047",
+      "translation_dir": "docs/translations/太上元始天尊证果真经_DZ0047",
+      "added_time": "2025-08-09T03:11:05.303097",
+      "last_modified": "2025-08-09T03:11:05.303099",
+      "chapter_count": 1,
+      "total_characters": 250,
+      "chapters": [
+        {
+          "number": 1,
+          "title": "太上元始天尊证果真经",
+          "file_size": 940,
+          "char_count": 250,
+          "file_hash": "6e0adfc2ebf321fe15b7dee194794df5",
+          "added_time": "2025-08-09T03:11:05.303078"
+        }
+      ],
+      "translation_status": {
+        "completed_chapters": 0,
+        "total_chapters": 1,
+        "completion_percentage": 0.0,
+        "last_translation_update": "2025-08-09T03:34:13.116939"
+      },
+      "tags": [
+        "太上",
+        "佚名",
+        "唐代",
+        "道教經典"
+      ],
+      "category": "道教經文",
+      "status": "新增"
+    },
+    "DZ0067": {
+      "book_info": {
+        "id": "DZ0067",
+        "title": "太上元始天尊说消殄虫蝗经",
+        "author": "[唐] 佚名 著",
+        "url": "https://www.shidianguji.com/book/DZ0067"
+      },
+      "folder_name": "太上元始天尊说消殄虫蝗经_DZ0067",
+      "source_dir": "docs/source_texts/太上元始天尊说消殄虫蝗经_DZ0067",
+      "translation_dir": "docs/translations/太上元始天尊说消殄虫蝗经_DZ0067",
+      "added_time": "2025-08-09T03:11:05.305727",
+      "last_modified": "2025-08-09T03:11:05.305728",
+      "chapter_count": 1,
+      "total_characters": 499,
+      "chapters": [
+        {
+          "number": 1,
+          "title": "太上元始天尊说消殄虫蝗经",
+          "file_size": 1810,
+          "char_count": 499,
+          "file_hash": "a9540297e8d04efa4ce486b3bf76dce1",
+          "added_time": "2025-08-09T03:11:05.305709"
+        }
+      ],
+      "translation_status": {
+        "completed_chapters": 0,
+        "total_chapters": 1,
+        "completion_percentage": 0.0,
+        "last_translation_update": "2025-08-09T03:34:13.117256"
+      },
+      "tags": [
+        "太上",
+        "佚名",
+        "唐代",
+        "道教經典"
+      ],
+      "category": "道教經文",
+      "status": "新增"
+    },
+    "DZ0065": {
+      "book_info": {
+        "id": "DZ0065",
+        "title": "太上真一报父母恩重经",
+        "author": "[唐] 佚名 著",
+        "url": "https://www.shidianguji.com/book/DZ0065"
+      },
+      "folder_name": "太上真一报父母恩重经_DZ0065",
+      "source_dir": "docs/source_texts/太上真一报父母恩重经_DZ0065",
+      "translation_dir": "docs/translations/太上真一报父母恩重经_DZ0065",
+      "added_time": "2025-08-09T03:11:05.308147",
+      "last_modified": "2025-08-09T03:11:05.308148",
+      "chapter_count": 1,
+      "total_characters": 498,
+      "chapters": [
+        {
+          "number": 1,
+          "title": "太上真一报父母恩重经",
+          "file_size": 1811,
+          "char_count": 498,
+          "file_hash": "7781ab9d01084f27d8eb0ee661571efb",
+          "added_time": "2025-08-09T03:11:05.308132"
+        }
+      ],
+      "translation_status": {
+        "completed_chapters": 0,
+        "total_chapters": 1,
+        "completion_percentage": 0.0,
+        "last_translation_update": "2025-08-09T03:34:13.117497"
+      },
+      "tags": [
+        "太上",
+        "佚名",
+        "唐代",
+        "道教經典"
+      ],
+      "category": "道教經文",
+      "status": "新增"
+    },
+    "DZ0046": {
+      "book_info": {
+        "id": "DZ0046",
+        "title": "太乙元真保命长生经",
+        "author": "[唐] 佚名 著",
+        "url": "https://www.shidianguji.com/book/DZ0046"
+      },
+      "folder_name": "太乙元真保命长生经_DZ0046",
+      "source_dir": "docs/source_texts/太乙元真保命长生经_DZ0046",
+      "translation_dir": "docs/translations/太乙元真保命长生经_DZ0046",
+      "added_time": "2025-08-09T03:11:05.310552",
+      "last_modified": "2025-08-09T03:11:05.310552",
+      "chapter_count": 1,
+      "total_characters": 609,
+      "chapters": [
+        {
+          "number": 1,
+          "title": "太乙元真保命长生经",
+          "file_size": 2324,
+          "char_count": 609,
+          "file_hash": "f52565ea3f0cee3e1c7be8d327ce58b4",
+          "added_time": "2025-08-09T03:11:05.310538"
+        }
+      ],
+      "translation_status": {
+        "completed_chapters": 0,
+        "total_chapters": 1,
+        "completion_percentage": 0.0,
+        "last_translation_update": "2025-08-09T03:34:13.117725"
+      },
+      "tags": [
+        "佚名",
+        "唐代"
+      ],
+      "category": "養生修煉",
+      "status": "新增"
+    },
+    "SBCK109": {
+      "book_info": {
+        "id": "SBCK109",
+        "title": "抱朴子（抱朴子内篇）",
+        "author": "[东晋] 葛洪 撰",
+        "url": "https://www.shidianguji.com/book/SBCK109"
+      },
+      "folder_name": "抱朴子（抱朴子内篇）_SBCK109",
+      "source_dir": "docs/source_texts/抱朴子（抱朴子内篇）_SBCK109",
+      "translation_dir": "docs/translations/抱朴子（抱朴子内篇）_SBCK109",
+      "added_time": "2025-08-09T03:11:05.342180",
+      "last_modified": "2025-08-09T03:11:05.342181",
+      "chapter_count": 38,
+      "total_characters": 97024,
+      "chapters": [
+        {
+          "number": 1,
+          "title": "刻抱朴子叙",
+          "file_size": 2301,
+          "char_count": 646,
+          "file_hash": "a6fcd25caaca6ed71ddf0f2e3c2cada9",
+          "added_time": "2025-08-09T03:11:05.313242"
+        },
+        {
+          "number": 2,
+          "title": "抱朴子序",
+          "file_size": 1753,
+          "char_count": 499,
+          "file_hash": "60dcdcff09acbf28dba6db4609137a3a",
+          "added_time": "2025-08-09T03:11:05.313545"
+        },
+        {
+          "number": 3,
+          "title": "抱朴子内篇卷一",
+          "file_size": 4013,
+          "char_count": 1121,
+          "file_hash": "8ccdf22c2d4ac9b258952bd7d800dd9c",
+          "added_time": "2025-08-09T03:11:05.313973"
+        },
+        {
+          "number": 4,
+          "title": "抱朴子内篇卷二",
+          "file_size": 16387,
+          "char_count": 4625,
+          "file_hash": "21cdc72acb8494c84a311b9808acbf1e",
+          "added_time": "2025-08-09T03:11:05.315363"
+        },
+        {
+          "number": 5,
+          "title": "抱朴子内篇卷三",
+          "file_size": 12716,
+          "char_count": 3554,
+          "file_hash": "05d2da9325fc7a8d7d43c0b8e44b5e00",
+          "added_time": "2025-08-09T03:11:05.316617"
+        },
+        {
+          "number": 6,
+          "title": "抱朴子内篇卷四",
+          "file_size": 25542,
+          "char_count": 7105,
+          "file_hash": "b4b190e70f2796104d1e3a944625fbf3",
+          "added_time": "2025-08-09T03:11:05.318595"
+        },
+        {
+          "number": 7,
+          "title": "抱朴子内篇卷五",
+          "file_size": 9887,
+          "char_count": 2787,
+          "file_hash": "27c1ceec250978926469d3480e8e0405",
+          "added_time": "2025-08-09T03:11:05.319908"
+        },
+        {
+          "number": 8,
+          "title": "抱朴子内篇卷六",
+          "file_size": 12530,
+          "char_count": 3487,
+          "file_hash": "1991029f58f0ce4a98490d731d34a124",
+          "added_time": "2025-08-09T03:11:05.321122"
+        },
+        {
+          "number": 9,
+          "title": "抱朴子内篇卷七",
+          "file_size": 9966,
+          "char_count": 2797,
+          "file_hash": "c6d02492d9befe94740495882a202a1f",
+          "added_time": "2025-08-09T03:11:05.322148"
+        },
+        {
+          "number": 10,
+          "title": "抱朴子内篇卷八",
+          "file_size": 12747,
+          "char_count": 3592,
+          "file_hash": "9cd2fdaf65876edf91610b4c075b730e",
+          "added_time": "2025-08-09T03:11:05.323102"
+        },
+        {
+          "number": 11,
+          "title": "抱朴子内篇卷九",
+          "file_size": 12207,
+          "char_count": 3417,
+          "file_hash": "06eec840a4e9e43352a4706b467ead9a",
+          "added_time": "2025-08-09T03:11:05.324186"
+        },
+        {
+          "number": 12,
+          "title": "抱朴子内篇卷十",
+          "file_size": 9277,
+          "char_count": 2588,
+          "file_hash": "2f264ecd518f34a6e7187a8086414dd4",
+          "added_time": "2025-08-09T03:11:05.325021"
+        },
+        {
+          "number": 13,
+          "title": "抱朴子内篇卷十一",
+          "file_size": 24030,
+          "char_count": 6660,
+          "file_hash": "96e2c22a7e65f17bf7596e2286a3f9e7",
+          "added_time": "2025-08-09T03:11:05.326354"
+        },
+        {
+          "number": 14,
+          "title": "抱朴子内篇卷十二",
+          "file_size": 9964,
+          "char_count": 2803,
+          "file_hash": "60594201bbc213336328fa2188f47f22",
+          "added_time": "2025-08-09T03:11:05.326992"
+        },
+        {
+          "number": 15,
+          "title": "抱朴子内篇卷十三",
+          "file_size": 12131,
+          "char_count": 3393,
+          "file_hash": "e7eefea34243de7db77ef7b97b038810",
+          "added_time": "2025-08-09T03:11:05.327591"
+        },
+        {
+          "number": 16,
+          "title": "抱朴子内篇卷十四",
+          "file_size": 14673,
+          "char_count": 4162,
+          "file_hash": "b9c3ef904659a50d14c247ecd42a4c5b",
+          "added_time": "2025-08-09T03:11:05.328282"
+        },
+        {
+          "number": 17,
+          "title": "抱朴子内篇卷十五",
+          "file_size": 16770,
+          "char_count": 4672,
+          "file_hash": "8174ac509b1ee45e59f8a41e8056487d",
+          "added_time": "2025-08-09T03:11:05.329591"
+        },
+        {
+          "number": 18,
+          "title": "抱朴子内篇卷十六",
+          "file_size": 10490,
+          "char_count": 2945,
+          "file_hash": "b71cf2ce0be837975185cf251f7ffcff",
+          "added_time": "2025-08-09T03:11:05.330659"
+        },
+        {
+          "number": 19,
+          "title": "抱朴子内篇卷十七",
+          "file_size": 17343,
+          "char_count": 4781,
+          "file_hash": "80640ec87c26ccfe47324f81681d0669",
+          "added_time": "2025-08-09T03:11:05.331784"
+        },
+        {
+          "number": 20,
+          "title": "抱朴子内篇卷十八",
+          "file_size": 6807,
+          "char_count": 1891,
+          "file_hash": "293553cd581c1e5426feb8f640ce0b26",
+          "added_time": "2025-08-09T03:11:05.332287"
+        },
+        {
+          "number": 21,
+          "title": "抱朴子内篇卷十九",
+          "file_size": 11958,
+          "char_count": 3306,
+          "file_hash": "62374ce71c62626475b95ed9070a83be",
+          "added_time": "2025-08-09T03:11:05.333153"
+        },
+        {
+          "number": 22,
+          "title": "抱朴子内篇卷二十",
+          "file_size": 10342,
+          "char_count": 2919,
+          "file_hash": "4e3c3a82d5df80563e08311f994853c9",
+          "added_time": "2025-08-09T03:11:05.333872"
+        },
+        {
+          "number": 23,
+          "title": "抱朴子别旨",
+          "file_size": 2058,
+          "char_count": 579,
+          "file_hash": "e2e4fffe28937a55a781c37f0fe98bee",
+          "added_time": "2025-08-09T03:11:05.334217"
+        },
+        {
+          "number": 24,
+          "title": "抱朴子外篇卷一",
+          "file_size": 10318,
+          "char_count": 2918,
+          "file_hash": "9bf5dfcfcac3a5fdeff6d0e1ef568ece",
+          "added_time": "2025-08-09T03:11:05.334854"
+        },
+        {
+          "number": 25,
+          "title": "抱朴子外篇卷二",
+          "file_size": 11610,
+          "char_count": 3217,
+          "file_hash": "c5b6d9fbd56722432e75fa31ebd57b9f",
+          "added_time": "2025-08-09T03:11:05.335619"
+        },
+        {
+          "number": 26,
+          "title": "抱朴子外篇卷三",
+          "file_size": 6324,
+          "char_count": 1785,
+          "file_hash": "75ec417047b60164fee27a317c449ec9",
+          "added_time": "2025-08-09T03:11:05.336327"
+        },
+        {
+          "number": 27,
+          "title": "抱朴子外篇卷四",
+          "file_size": 5378,
+          "char_count": 1509,
+          "file_hash": "f4ab7d52d6db1e1ddecc1c11bc1f28a0",
+          "added_time": "2025-08-09T03:11:05.337187"
+        },
+        {
+          "number": 28,
+          "title": "抱朴子外篇卷五",
+          "file_size": 10390,
+          "char_count": 2944,
+          "file_hash": "4529575612c32fcc33a8009868126e28",
+          "added_time": "2025-08-09T03:11:05.338247"
+        },
+        {
+          "number": 29,
+          "title": "抱朴子外篇卷六",
+          "file_size": 3777,
+          "char_count": 1047,
+          "file_hash": "03c3b470e867b9457e7effc532a78b1b",
+          "added_time": "2025-08-09T03:11:05.338834"
+        },
+        {
+          "number": 30,
+          "title": "抱朴子外篇卷七",
+          "file_size": 4204,
+          "char_count": 1173,
+          "file_hash": "53ff7ffbe63978cfb5088cf7f8ff1e2f",
+          "added_time": "2025-08-09T03:11:05.339338"
+        },
+        {
+          "number": 31,
+          "title": "抱朴子外篇卷八",
+          "file_size": 1332,
+          "char_count": 373,
+          "file_hash": "19f368c6e0471e3ba4cdfa455e9f9d0f",
+          "added_time": "2025-08-09T03:11:05.339656"
+        },
+        {
+          "number": 32,
+          "title": "抱朴子外篇卷之九",
+          "file_size": 941,
+          "char_count": 264,
+          "file_hash": "76023074a1fb448cf08e735ab7812d04",
+          "added_time": "2025-08-09T03:11:05.339945"
+        },
+        {
+          "number": 33,
+          "title": "抱朴子外篇卷十",
+          "file_size": 705,
+          "char_count": 199,
+          "file_hash": "9a47ff8f69ebe55eb7d1a23786902390",
+          "added_time": "2025-08-09T03:11:05.340205"
+        },
+        {
+          "number": 34,
+          "title": "抱朴子外篇卷十一",
+          "file_size": 1549,
+          "char_count": 446,
+          "file_hash": "2ee5e95603cbaee611985ae3162d225a",
+          "added_time": "2025-08-09T03:11:05.340474"
+        },
+        {
+          "number": 35,
+          "title": "抱朴子外篇卷十二",
+          "file_size": 1398,
+          "char_count": 389,
+          "file_hash": "0c81762df78989105b7083888bf036aa",
+          "added_time": "2025-08-09T03:11:05.340745"
+        },
+        {
+          "number": 36,
+          "title": "抱朴子外篇卷十三",
+          "file_size": 1195,
+          "char_count": 334,
+          "file_hash": "556046a4c2e2a03765718edc0b9a912e",
+          "added_time": "2025-08-09T03:11:05.341015"
+        },
+        {
+          "number": 37,
+          "title": "抱朴子外篇卷十四",
+          "file_size": 11177,
+          "char_count": 3113,
+          "file_hash": "28013b4f0fc53ed087c786cf5e5182b4",
+          "added_time": "2025-08-09T03:11:05.341588"
+        },
+        {
+          "number": 38,
+          "title": "抱朴子外篇卷十五",
+          "file_size": 10619,
+          "char_count": 2984,
+          "file_hash": "795af105cd51b90afdc23a82ac3959fa",
+          "added_time": "2025-08-09T03:11:05.342167"
+        }
+      ],
+      "translation_status": {
+        "completed_chapters": 0,
+        "total_chapters": 38,
+        "completion_percentage": 0.0,
+        "last_translation_update": "2025-08-09T03:34:13.123691"
+      },
+      "tags": [
+        "道教煉丹",
+        "東晉",
+        "抱朴子",
+        "葛洪"
+      ],
+      "category": "道教理論",
+      "status": "新增"
+    },
+    "DZ0095": {
+      "book_info": {
+        "id": "DZ0095",
+        "title": "洞玄灵宝无量度人经诀音义",
+        "author": "[唐] 张万福 著",
+        "url": "https://www.shidianguji.com/book/DZ0095"
+      },
+      "folder_name": "洞玄灵宝无量度人经诀音义_DZ0095",
+      "source_dir": "docs/source_texts/洞玄灵宝无量度人经诀音义_DZ0095",
+      "translation_dir": "docs/translations/洞玄灵宝无量度人经诀音义_DZ0095",
+      "added_time": "2025-08-09T03:11:05.347246",
+      "last_modified": "2025-08-09T03:11:05.347247",
+      "chapter_count": 3,
+      "total_characters": 3170,
+      "chapters": [
+        {
+          "number": 1,
+          "title": "下一篇",
+          "file_size": 1452,
+          "char_count": 441,
+          "file_hash": "92da6d13fe3c1d83e2a7664f0a2d0bf3",
+          "added_time": "2025-08-09T03:11:05.346238"
+        },
+        {
+          "number": 2,
+          "title": "洞玄灵宝无量度人经诀音义秋七",
+          "file_size": 7644,
+          "char_count": 2065,
+          "file_hash": "bfac129874cf59d12a732b0bcf6aba43",
+          "added_time": "2025-08-09T03:11:05.346853"
+        },
+        {
+          "number": 3,
+          "title": "诵诸天内音存念法",
+          "file_size": 2473,
+          "char_count": 664,
+          "file_hash": "ee833aa419c1b186af812f63791cba64",
+          "added_time": "2025-08-09T03:11:05.347234"
+        }
+      ],
+      "translation_status": {
+        "completed_chapters": 0,
+        "total_chapters": 3,
+        "completion_percentage": 0.0,
+        "last_translation_update": "2025-08-09T03:34:13.124183"
+      },
+      "tags": [
+        "唐代"
+      ],
+      "category": "度化經典",
+      "status": "新增"
+    }
+  }
+}
