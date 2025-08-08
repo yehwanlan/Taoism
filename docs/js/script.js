@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
         "雲笈七籤119": { original: "source_texts/雲笈七籤119.txt", translation: "translations/雲笈七籤119.md" },
         "雲笈七籤121": { original: "source_texts/雲笈七籤121.txt", translation: "translations/雲笈七籤121.md" },
         "雲笈七籤33": { original: "source_texts/雲笈七籤33.txt", translation: "translations/雲笈七籤33.md" },
+        "雲笈七籤59_1": { original: "source_texts/雲笈七籤59_1.txt", translation: "translations/雲笈七籤59_1.md" },
         "雲笈七籤60中山玉櫃服氣經": { original: "source_texts/雲笈七籤60中山玉櫃服氣經.txt", translation: "translations/雲笈七籤60中山玉櫃服氣經.md" },
         "黃帝陰符經": { original: "source_texts/黃帝陰符經.txt", translation: "translations/黃帝陰符經.md" }
     };
