@@ -45,14 +45,9 @@
 2.  **安裝 Python：**
     請確保您的系統已安裝 Python 3。您可以從 [Python 官方網站](https://www.python.org/downloads/) 下載並安裝。
 
-3.  **本地預覽：**
-    在專案的根目錄下，您可以啟動一個簡單的 Python 網頁伺服器來預覽網站：
-    ```bash
-    python -m http.server 8000
-    ```
-    然後在您的瀏覽器中打開 `http://localhost:8000/docs/`。
+## 工作流程
 
-## 新增經文與翻譯
+### 步驟一：新增與翻譯經文
 
 1.  **新增原始經文：**
     將新的道教經典文本檔案（例如 `.txt` 或 `.html`）放入 `source_texts/` 資料夾。
@@ -62,14 +57,23 @@
 
     在 `.md` 檔案中，您可以開始編寫經文的現代中文白話翻譯。您可以使用 Markdown 語法來格式化您的翻譯內容。
 
-3.  **更新網頁經文列表：**
-    每當您新增或修改了 `source_texts/` 或 `translations/` 資料夾中的檔案後，您需要執行 `generate_scriptures_js.py` 腳本來更新網頁的經文列表。在專案根目錄下執行：
-    ```bash
-    python generate_scriptures_js.py
-    ```
-    這個腳本會自動掃描資料夾，並更新 `docs/js/script.js` 中的 `scriptures` 物件，確保網頁能夠正確載入新的經文或更新後的翻譯。
+### 步驟二：更新經文列表
 
-## 部署到 GitHub Pages
+每當您新增或修改了 `source_texts/` 或 `translations/` 資料夾中的檔案後，您需要執行 `generate_scriptures_js.py` 腳本來更新網頁的經文列表。在專案根目錄下執行：
+```bash
+python generate_scriptures_js.py
+```
+這個腳本會自動掃描資料夾，並更新 `docs/js/script.js` 中的 `scriptures` 物件，確保網頁能夠正確載入新的經文或更新後的翻譯。
+
+### 步驟三：本地預覽
+
+在專案的根目錄下，您可以啟動一個簡單的 Python 網頁伺服器來預覽網站變更：
+```bash
+python -m http.server 8000
+```
+然後在您的瀏覽器中打開 `http://localhost:8000/docs/`。
+
+### 步驟四：部署到 GitHub Pages
 
 1.  **建立 GitHub 儲存庫：**
     如果您尚未將專案上傳到 GitHub，請在 GitHub 上建立一個新的儲存庫，並將本地專案推送到該儲存庫。
@@ -84,7 +88,7 @@
 
     GitHub Pages 會自動部署您的網站。通常在幾分鐘內，您就可以透過 `https://<您的GitHub使用者名稱>.github.io/<您的儲存庫名稱>/` 訪問您的網站。
 
-## 翻譯進度管理
+### 步驟五：管理翻譯進度
 
 *   **判斷翻譯狀態：** 您可以透過檢查 `translations/` 資料夾中是否存在對應的 `.md` 檔案來判斷一篇經文是否已經有翻譯。如果存在，就表示有翻譯；如果不存在，就表示還沒有翻譯。
 *   **`generate_scriptures_js.py` 的作用：** 該腳本會自動檢查 `translations/` 資料夾中是否存在對應的 `.md` 檔案。如果存在，它會將翻譯檔案的路徑包含在 `scriptures` 物件中；如果不存在，則翻譯路徑會留空，網頁會顯示載入失敗的訊息，提示該經文尚未翻譯。
