@@ -21,6 +21,7 @@
 - 📈 **報告生成** - 詳細的統計報告和分析
 - 🎛️ **CLI介面** - 簡潔易用的命令列操作
 - 🌐 **網頁介面** - 現代化的網頁閱讀介面，支援書籍和章節選擇
+- 🤖 **AI翻譯指導** - 專業的AI翻譯規範和品質評估系統
 
 ## 🏗️ 系統架構
 
@@ -72,8 +73,16 @@ Taoism/
 # 確保已安裝 Python 3.7+
 python --version
 
+# 建立虛擬環境（推薦）
+python -m venv venv
+source venv/bin/activate  # Linux/Mac
+# 或 venv\Scripts\activate  # Windows
+
 # 安裝依賴套件
-pip install requests beautifulsoup4 pathlib
+pip install -r requirements.txt
+
+# 複製配置檔案
+cp config/settings.example.json config/settings.json
 ```
 
 ### 2. 基本使用
@@ -165,12 +174,23 @@ python main.py monitor --help
 
 ## 🔧 配置管理
 
-系統配置檔案位於 `config/settings.json`，包含：
+### 配置檔案設定
+```bash
+# 1. 複製範例配置
+cp config/settings.example.json config/settings.json
 
-- **翻譯設定**: 爬蟲參數、延遲時間、重試次數
-- **追蹤設定**: 資料目錄、備份選項、日誌限制
-- **輸出設定**: 檔案路徑、報告生成選項
-- **書籍清單**: 預配置的書籍URL和設定
+# 2. 編輯配置檔案
+# 包含：翻譯設定、追蹤設定、輸出設定、書籍清單等
+```
+
+### 資料流程概覽
+```
+網站URL → crawler/ → docs/source_texts/ → core/translator.py → 
+docs/translations/ → core/tracker.py → data/tracking/ → 
+update_web_data.py → docs/index.html
+```
+
+詳細說明請參考：**[資料流程說明](docs/system/資料流程說明.md)**
 
 ## 📊 資料結構
 
@@ -279,11 +299,23 @@ python tools/migrate_data.py
 
 ## 📚 詳細文檔
 
-- 🎯 **[使用示例](docs/system/使用示例.md)** - 實際操作示例和互動模式指南
-- 📖 **[工具使用指南](docs/system/工具使用指南.md)** - 完整的功能說明和使用方法
-- 📊 **[追蹤系統說明](docs/system/追蹤系統說明.md)** - 追蹤系統的詳細介紹
-- 🔄 **[升級總結報告](docs/system/UPGRADE_SUMMARY.md)** - v2.0重構的完整記錄
-- 🕷️ **[爬蟲工具文檔](crawler/)** - 21個專業爬蟲工具的說明
+### 🎯 使用指南
+- **[使用示例](docs/system/使用示例.md)** - 實際操作示例和互動模式指南
+- **[工具使用指南](docs/system/工具使用指南.md)** - 完整的功能說明和使用方法
+- **[網頁使用說明](docs/system/網頁使用說明.md)** - 網頁介面使用指南
+
+### 🔧 技術文檔
+- **[環境設定指南](docs/system/環境設定指南.md)** - 完整的環境設定和依賴管理
+- **[資料流程說明](docs/system/資料流程說明.md)** - 資料處理流程和目錄關係
+- **[追蹤系統說明](docs/system/追蹤系統說明.md)** - 追蹤系統的詳細介紹
+
+### 🤖 AI翻譯指導
+- **[AI翻譯指導規範](docs/system/AI翻譯指導規範.md)** - AI翻譯專用指導和規範
+- **[AI翻譯工作流程](docs/system/AI翻譯工作流程.md)** - 完整的AI翻譯工作流程
+
+### 📋 參考資料
+- **[升級總結報告](docs/system/UPGRADE_SUMMARY.md)** - v2.0重構的完整記錄
+- **[爬蟲工具文檔](crawler/)** - 21個專業爬蟲工具的說明
 
 ## 📊 當前狀態
 

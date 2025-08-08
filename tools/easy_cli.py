@@ -16,6 +16,7 @@ from typing import Dict, List, Optional
 sys.path.append(str(Path(__file__).parent.parent))
 
 from core import TranslationEngine, get_tracker
+from core.ai_engine import AIEngine
 
 
 class EasyCLI:
@@ -27,6 +28,7 @@ class EasyCLI:
         self.config = self._load_config()
         self.engine = TranslationEngine(self.config.get("translation", {}))
         self.tracker = get_tracker()
+        self.ai_engine = AIEngine(self.config.get("ai", {}))
         
     def _load_config(self) -> Dict:
         """載入配置"""
@@ -50,6 +52,9 @@ class EasyCLI:
                 "max_retries": 3,
                 "timeout": 10
             },
+            "ai": {
+                "api_key": "YOUR_AI_API_KEY_HERE"
+            },
             "books": [],
             "output": {
                 "create_readme": True,
@@ -67,8 +72,10 @@ class EasyCLI:
             
     def add_book(self, url: str, name: str = None) -> None:
         """添加新書籍到配置"""
+        # 如果沒有提供名稱，嘗試從URL自動獲取
         if not name:
-            name = f"書籍_{len(self.config['books']) + 1}"
+            print("🔍 正在獲取書籍資訊...")
+            name = self._get_book_title_from_url(url)
             
         new_book = {
             "name": name,
@@ -84,6 +91,20 @@ class EasyCLI:
         print(f"✅ 已添加書籍: {name}")
         print(f"📖 URL: {url}")
         
+        # 不再重複詢問，因為在互動模式中已經處理了
+        
+    def _get_book_title_from_url(self, url: str) -> str:
+        """從URL自動獲取書籍標題"""
+        try:
+            from core.translator import TranslationEngine
+            engine = TranslationEngine()
+            book_info = engine.get_book_info(url)
+            return book_info.get('title', f"書籍_{len(self.config['books']) + 1}")
+        except Exception as e:
+            print(f"⚠️  無法自動獲取書名: {e}")
+            return f"書籍_{len(self.config['books']) + 1}"
+            
+
     def list_books(self) -> None:
         """列出所有書籍"""
         books = self.config.get("books", [])
@@ -201,10 +222,12 @@ class EasyCLI:
                 print("5. 📊 查看系統狀態")
                 print("6. 🔍 監控儀表板")
                 print("7. 📋 生成報告")
-                print("8. ❓ 幫助說明")
-                print("9. 👋 退出程式")
+                print("8. 📝 生成翻譯模板")
+                print("9. 🤖 AI智能翻譯")
+                print("10. ❓ 幫助說明")
+                print("11. 👋 退出程式")
                 
-                choice = input("\n請輸入選項 (1-9): ").strip()
+                choice = input("\n請輸入選項 (1-11): ").strip()
                 
                 if choice == "1":
                     self.list_books()
@@ -212,8 +235,20 @@ class EasyCLI:
                 elif choice == "2":
                     url = input("請輸入書籍URL: ").strip()
                     if url:
-                        name = input("請輸入書籍名稱 (可選，按Enter跳過): ").strip()
-                        self.add_book(url, name if name else None)
+                        # 自動獲取書名並添加書籍
+                        print("🔍 正在獲取書籍資訊...")
+                        book_name = self._get_book_title_from_url(url)
+                        self.add_book(url, book_name)
+                        
+                        # 詢問是否建立翻譯模板
+                        print(f"\n📝 發現新書籍: {book_name}")
+                        create_template = input("是否立即建立翻譯模板？(Y/n): ").strip().lower()
+                        
+                        if create_template in ['', 'y', 'yes', '是']:
+                            print("📝 開始建立翻譯模板...")
+                            self._create_translation_templates_for_book(url, book_name)
+                        else:
+                            print("📋 已跳過翻譯模板建立，您可以稍後使用選項 8 手動建立")
                     else:
                         print("❌ URL不能為空")
                         
@@ -270,14 +305,21 @@ class EasyCLI:
                     monitor.generate_reports()
                     
                 elif choice == "8":
-                    self._show_interactive_help()
+                    print("📝 啟動翻譯模板生成器...")
+                    self._generate_translation_templates()
                     
                 elif choice == "9":
+                    self._ai_translation_interface()
+                    
+                elif choice == "10":
+                    self._show_interactive_help()
+                    
+                elif choice == "11":
                     print("👋 感謝使用道教經典翻譯系統！")
                     break
                     
                 else:
-                    print("❌ 無效的選項，請輸入 1-9 之間的數字")
+                    print("❌ 無效的選項，請輸入 1-11 之間的數字")
                     
             except KeyboardInterrupt:
                 print("\n👋 再見！")
@@ -285,6 +327,47 @@ class EasyCLI:
             except Exception as e:
                 print(f"❌ 發生錯誤: {e}")
                 print("💡 請重新選擇操作")
+
+    def _ai_translation_interface(self) -> None:
+        """AI 智能翻譯互動介面"""
+        print("\n🤖 AI 智能翻譯")
+        print("=" * 50)
+        
+        # 使用 tracker 獲取進度
+        # 注意：這裡需要一個方法從 tracker 獲取未翻譯列表
+        # 假設 tracker 有一個 get_untranslated_files() 方法
+        try:
+            untranslated = self.tracker.get_untranslated_files()
+        except Exception as e:
+            print(f"⚠️  警告: 獲取未翻譯列表時發生錯誤: {e}")
+            untranslated = []
+
+        if not untranslated:
+            print("🎉 恭喜！所有經文都已翻譯完成。")
+            return
+
+        print("以下是尚未翻譯的經文列表：")
+        for i, filename in enumerate(untranslated, 1):
+            print(f"{i}. {filename}")
+
+        print("\n請選擇要翻譯的經文：")
+        print("a. 翻譯所有未翻譯的經文")
+        choice = input(f"請輸入編號 (1-{len(untranslated)}) 或 'a' 翻譯全部: ").strip().lower()
+
+        if choice == 'a':
+            print("\n🚀 開始批量準備 AI 翻譯任務...")
+            for filename in untranslated:
+                self.ai_engine.prepare_translation_task(filename)
+        else:
+            try:
+                index = int(choice) - 1
+                if 0 <= index < len(untranslated):
+                    filename = untranslated[index]
+                    self.ai_engine.prepare_translation_task(filename)
+                else:
+                    print("❌ 無效的編號。")
+            except ValueError:
+                print("❌ 無效的輸入。")
                 
     def _show_interactive_help(self) -> None:
         """顯示互動模式幫助"""
@@ -311,6 +394,38 @@ class EasyCLI:
   • 查看 docs/system/ 目錄的詳細文檔
   • 使用 python main.py --help 查看命令列選項
 """)
+            
+    def _generate_translation_templates(self) -> None:
+        """生成翻譯模板"""
+        try:
+            import sys
+            from pathlib import Path
+            sys.path.append(str(Path(__file__).parent))
+            from template_generator import TemplateGenerator
+            generator = TemplateGenerator()
+            generator.interactive_template_generation()
+        except ImportError:
+            print("❌ 無法載入模板生成器")
+        except Exception as e:
+            print(f"❌ 模板生成失敗: {e}")
+            
+    def _create_translation_templates_for_book(self, url: str, book_name: str) -> None:
+        """為指定書籍建立翻譯模板"""
+        try:
+            # 使用現有的翻譯系統來下載原文並生成模板
+            print("📥 正在下載書籍原文並生成翻譯模板...")
+            success = self.translate_book(url)
+            
+            if success:
+                print("✅ 翻譯模板建立完成！")
+                print("💡 您現在可以在 docs/translations/ 目錄中找到翻譯模板")
+            else:
+                print("❌ 翻譯模板建立失敗")
+                print("💡 您可以稍後使用選項 8 手動建立翻譯模板")
+                
+        except Exception as e:
+            print(f"❌ 建立翻譯模板失敗: {e}")
+            print("💡 您可以稍後使用選項 8 手動建立翻譯模板")
 
 
 def main():

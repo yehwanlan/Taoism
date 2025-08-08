@@ -15,7 +15,15 @@ sys.path.append(str(Path(__file__).parent))
 
 from tools.easy_cli import EasyCLI
 from tools.monitor_cli import MonitorCLI
-from core import TranslationEngine, get_tracker, get_file_monitor
+try:
+    from core.translator import TranslationEngine
+    from core.tracker import get_tracker
+    from core.file_monitor import get_file_monitor
+except ImportError:
+    # 如果導入失敗，提供備用方案
+    TranslationEngine = None
+    get_tracker = lambda: None
+    get_file_monitor = lambda: None
 
 
 def show_system_info():
@@ -146,16 +154,20 @@ def main():
         print("\n📊 當前系統狀態:")
         print("-" * 30)
         
-        tracker = get_tracker()
-        stats = tracker.get_statistics()
-        
-        print(f"📚 經典總數: {stats.get('total_classics', 0)}")
-        print(f"📖 章節總數: {stats.get('total_chapters', 0)}")
-        print(f"📝 總字數: {stats.get('total_characters', 0):,}")
-        
-        file_monitor = get_file_monitor()
-        file_stats = file_monitor.get_statistics()
-        print(f"📁 檔案操作: {file_stats['total_operations']}")
+        try:
+            tracker = get_tracker()
+            if tracker:
+                stats = tracker.get_statistics()
+                print(f"📚 經典總數: {stats.get('total_classics', 0)}")
+                print(f"📖 章節總數: {stats.get('total_chapters', 0)}")
+                print(f"📝 總字數: {stats.get('total_characters', 0):,}")
+            
+            file_monitor = get_file_monitor()
+            if file_monitor:
+                file_stats = file_monitor.get_statistics()
+                print(f"📁 檔案操作: {file_stats['total_operations']}")
+        except Exception as e:
+            print(f"⚠️  無法獲取系統狀態: {e}")
 
 
 if __name__ == "__main__":
