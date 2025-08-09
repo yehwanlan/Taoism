@@ -112,6 +112,11 @@ local_*
 dev_*
 test_*
 
+# 開發測試文件
+temp_test_*.py
+check_dependencies.py
+check_translation_progress.py
+
 # 網頁快取
 docs/cache/
 docs/temp/

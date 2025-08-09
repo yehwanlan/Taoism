@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggleViewButton = document.getElementById('toggle-view');
 
     // 系統資料結構
-        const booksData = {
+            const booksData = {
         "P.Ch.2471太上升玄护命经一卷_PC2471": {
             title: "P.Ch.2471太上升玄护命经一卷",
             chapters: [
