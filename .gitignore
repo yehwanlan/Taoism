@@ -33,6 +33,7 @@ venv.bak/
 # IDE
 .vscode/settings.json
 .idea/
+.kiro/
 *.swp
 *.swo
 *~
@@ -53,6 +54,9 @@ config/local.json
 .env
 .env.local
 .env.production
+
+# 歷史記錄檔案
+.history/
 
 # API 金鑰和密碼
 api_keys.txt
