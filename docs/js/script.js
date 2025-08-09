@@ -352,7 +352,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function loadSystemStats() {
         const totalBooks = Object.keys(booksData).length;
         const totalChapters = Object.values(booksData).reduce((sum, book) => sum + book.chapters.length, 0);
-        systemStatsDiv.textContent = `📚 ${totalBooks} 部經典 | 📖 ${totalChapters} 個章節 | 📝 102,050 字`;
+        systemStatsDiv.textContent = `📚 ${totalBooks} 部經典 | 📖 ${totalChapters} 個章節`;
     }
 
     // 填充書籍選擇器
@@ -615,16 +615,16 @@ document.addEventListener('DOMContentLoaded', () => {
         originalContentDiv.innerHTML = `
             <div class="welcome-message">
                 <h4>系統說明</h4>
-                <p>🏛️ <strong>收錄經典：</strong></p>
+                <p>🏛️ <strong>主要收錄經典：</strong></p>
                 <ul>
-                    <li><strong>太上元始天尊證果真經</strong> - 1章</li>
-                    <li><strong>太上元始天尊說消殄蟲蝗經</strong> - 1章</li>
-                    <li><strong>太上真一報父母恩重經</strong> - 1章</li>
-                    <li><strong>太乙元真保命長生經</strong> - 1章</li>
-                    <li><strong>抱朴子（抱朴子內篇）</strong> - 38章</li>
-                    <li><strong>洞玄靈寶無量度人經訣音義</strong> - 3章</li>
+                    <li><strong>南華真經口義</strong> - 71章（莊子註解）</li>
+                    <li><strong>抱朴子（抱朴子內篇）</strong> - 38章（葛洪著作）</li>
+                    <li><strong>太上洞玄靈寶業報因緣經</strong> - 27章</li>
+                    <li><strong>洞玄靈寶自然九天生神章經</strong> - 16章</li>
+                    <li><strong>元始天尊說十一曜大消災神咒經</strong> - 15章</li>
+                    <li><strong>其他經典</strong> - 19部單章經典</li>
                 </ul>
-                <p>📊 <strong>統計資訊：</strong> 總計6部經典，45個章節，102,050字</p>
+                <p>📊 <strong>統計資訊：</strong> 總計23部經典，188個章節</p>
             </div>
         `;
         
@@ -633,7 +633,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <h4>歡迎使用道教經典翻譯系統 v2.0</h4>
                 <p>🎯 <strong>功能特色：</strong></p>
                 <ul>
-                    <li>📚 <strong>6部經典</strong> - 包含45個章節，超過10萬字</li>
+                    <li>📚 <strong>23部經典</strong> - 包含188個章節，豐富的道教典籍</li>
                     <li>🔍 <strong>智能選擇</strong> - 書籍和章節雙重選擇系統</li>
                     <li>📖 <strong>對照閱讀</strong> - 原文與譯文並排顯示</li>
                     <li>🎛️ <strong>多種模式</strong> - 支援不同的閱讀模式</li>
@@ -646,12 +646,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 全域函數（供HTML調用）
     window.showSystemInfo = function() {
+        const totalBooks = Object.keys(booksData).length;
+        const totalChapters = Object.values(booksData).reduce((sum, book) => sum + book.chapters.length, 0);
+        
         alert(`道教經典翻譯系統 v2.0
 
 📊 系統統計：
-• 經典總數：6部
-• 章節總數：45章
-• 總字數：102,050字
+• 經典總數：${totalBooks}部
+• 章節總數：${totalChapters}章
+• 主要經典：南華真經口義、抱朴子內篇等
 
 🎯 功能特色：
 • 智能書籍和章節選擇
