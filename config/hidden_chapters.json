@@ -1,0 +1,21 @@
+{
+  "DZ0735": {
+    "book_title": "南华真经口义",
+    "hidden_chapters": [
+      {
+        "chapter_id": "1kd4w8pj6tu7n",
+        "title": "外篇刻意",
+        "level": 2,
+        "parent": "南华真经口义卷之十七",
+        "description": "卷之十七的子章節"
+      },
+      {
+        "chapter_id": "1kd4w8pj6thkj",
+        "title": "外篇缮性",
+        "level": 2,
+        "parent": "南华真经口义卷之十七",
+        "description": "卷之十七的子章節"
+      }
+    ]
+  }
+}

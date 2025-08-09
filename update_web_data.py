@@ -9,6 +9,7 @@
 import json
 import re
 from pathlib import Path
+from core.unicode_handler import safe_print
 
 
 def scan_books_data():
@@ -17,7 +18,7 @@ def scan_books_data():
     books_data = {}
     
     if not source_dir.exists():
-        print("❌ source_texts 目錄不存在")
+        safe_print("❌ source_texts 目錄不存在")
         return books_data
     
     for book_folder in source_dir.iterdir():
@@ -55,7 +56,7 @@ def scan_books_data():
                 "title": title,
                 "chapters": chapters
             }
-            print(f"✅ 掃描到: {title} ({len(chapters)} 章)")
+            safe_print(f"✅ 掃描到: {title} ({len(chapters)} 章)")
     
     return books_data
 
@@ -65,7 +66,7 @@ def update_javascript_file(books_data):
     js_file = Path("docs/js/script.js")
     
     if not js_file.exists():
-        print("❌ JavaScript檔案不存在")
+        safe_print("❌ JavaScript檔案不存在")
         return False
     
     try:
@@ -97,11 +98,11 @@ def update_javascript_file(books_data):
         with open(js_file, 'w', encoding='utf-8') as f:
             f.write(new_content)
         
-        print(f"✅ 已更新 JavaScript 檔案: {js_file}")
+        safe_print(f"✅ 已更新 JavaScript 檔案: {js_file}")
         return True
         
     except Exception as e:
-        print(f"❌ 更新 JavaScript 檔案失敗: {e}")
+        safe_print(f"❌ 更新 JavaScript 檔案失敗: {e}")
         return False
 
 
@@ -110,7 +111,7 @@ def generate_web_report():
     books_data = scan_books_data()
     
     if not books_data:
-        print("❌ 沒有找到任何書籍資料")
+        safe_print("❌ 沒有找到任何書籍資料")
         return
     
     total_books = len(books_data)
@@ -145,15 +146,15 @@ def generate_web_report():
     with open(report_file, 'w', encoding='utf-8') as f:
         f.write(report)
     
-    print(f"📋 報告已儲存: {report_file}")
+    safe_print(f"📋 報告已儲存: {report_file}")
     
     return books_data
 
 
 def main():
     """主函數"""
-    print("🔄 更新網頁資料...")
-    print("=" * 40)
+    safe_print("🔄 更新網頁資料...")
+    safe_print("=" * 40)
     
     # 掃描書籍資料
     books_data = generate_web_report()
@@ -163,11 +164,11 @@ def main():
     
     # 更新JavaScript檔案
     if update_javascript_file(books_data):
-        print("\n🎉 網頁資料更新完成！")
-        print(f"📊 總計: {len(books_data)} 部書籍")
-        print("💡 請重新載入網頁查看更新")
+        safe_print("\n🎉 網頁資料更新完成！")
+        safe_print(f"📊 總計: {len(books_data)} 部書籍")
+        safe_print("💡 請重新載入網頁查看更新")
     else:
-        print("\n❌ 更新失敗")
+        safe_print("\n❌ 更新失敗")
 
 
 if __name__ == "__main__":

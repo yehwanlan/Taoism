@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
+from core.unicode_handler import safe_print
 資料遷移工具
 
 將舊系統的資料遷移到新的模組化結構中
@@ -26,7 +27,7 @@ class DataMigrator:
         
     def migrate_tracking_data(self):
         """遷移追蹤資料"""
-        print("📊 遷移追蹤資料...")
+        safe_print("📊 遷移追蹤資料...")
         
         old_file = self.root_dir / "經典追蹤記錄.json"
         new_file = self.root_dir / "data/tracking/classics.json"
@@ -71,20 +72,20 @@ class DataMigrator:
             with open(new_file, 'w', encoding='utf-8') as f:
                 json.dump(old_data, f, ensure_ascii=False, indent=2)
                 
-            print(f"✅ 追蹤資料已遷移: {new_file}")
+            safe_print(f"✅ 追蹤資料已遷移: {new_file}")
             
             # 備份舊檔案
             backup_file = self.root_dir / "backup" / f"經典追蹤記錄_backup_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
             backup_file.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(old_file, backup_file)
-            print(f"📦 舊檔案已備份: {backup_file}")
+            safe_print(f"📦 舊檔案已備份: {backup_file}")
             
         else:
-            print("⚠️  未找到舊的追蹤記錄檔案")
+            safe_print("⚠️  未找到舊的追蹤記錄檔案")
             
     def migrate_file_logs(self):
         """遷移檔案日誌"""
-        print("📁 遷移檔案日誌...")
+        safe_print("📁 遷移檔案日誌...")
         
         old_file = self.root_dir / "檔案追蹤日誌.json"
         new_file = self.root_dir / "data/logs/file_operations.json"
@@ -117,20 +118,20 @@ class DataMigrator:
             with open(new_file, 'w', encoding='utf-8') as f:
                 json.dump(old_data, f, ensure_ascii=False, indent=2)
                 
-            print(f"✅ 檔案日誌已遷移: {new_file}")
+            safe_print(f"✅ 檔案日誌已遷移: {new_file}")
             
             # 備份舊檔案
             backup_file = self.root_dir / "backup" / f"檔案追蹤日誌_backup_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
             backup_file.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(old_file, backup_file)
-            print(f"📦 舊檔案已備份: {backup_file}")
+            safe_print(f"📦 舊檔案已備份: {backup_file}")
             
         else:
-            print("⚠️  未找到舊的檔案日誌")
+            safe_print("⚠️  未找到舊的檔案日誌")
             
     def migrate_reports(self):
         """遷移報告檔案"""
-        print("📋 遷移報告檔案...")
+        safe_print("📋 遷移報告檔案...")
         
         old_files = [
             "經典追蹤報告.md",
@@ -150,7 +151,7 @@ class DataMigrator:
                 
                 # 複製檔案
                 shutil.copy2(old_file, new_file)
-                print(f"✅ 已遷移: {old_filename} -> {new_file}")
+                safe_print(f"✅ 已遷移: {old_filename} -> {new_file}")
                 
                 # 備份舊檔案
                 backup_file = self.root_dir / "backup" / f"{old_filename}_backup_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
@@ -159,7 +160,7 @@ class DataMigrator:
                 
     def archive_old_files(self):
         """歸檔舊檔案"""
-        print("📦 歸檔舊檔案...")
+        safe_print("📦 歸檔舊檔案...")
         
         # 要歸檔的檔案
         old_files = [
@@ -188,14 +189,14 @@ class DataMigrator:
             if old_file.exists():
                 new_file = archive_dir / filename
                 shutil.move(str(old_file), str(new_file))
-                print(f"📁 已歸檔: {filename}")
+                safe_print(f"📁 已歸檔: {filename}")
                 archived_count += 1
                 
-        print(f"✅ 已歸檔 {archived_count} 個檔案到: {archive_dir}")
+        safe_print(f"✅ 已歸檔 {archived_count} 個檔案到: {archive_dir}")
         
     def clean_old_data_files(self):
         """清理舊的資料檔案"""
-        print("🧹 清理舊資料檔案...")
+        safe_print("🧹 清理舊資料檔案...")
         
         old_data_files = [
             "經典追蹤記錄.json",
@@ -208,12 +209,12 @@ class DataMigrator:
             old_file = self.root_dir / filename
             if old_file.exists():
                 old_file.unlink()
-                print(f"🗑️  已刪除: {filename}")
+                safe_print(f"🗑️  已刪除: {filename}")
                 
     def run_migration(self):
         """執行完整遷移"""
-        print("🚀 開始資料遷移...")
-        print("=" * 50)
+        safe_print("🚀 開始資料遷移...")
+        safe_print("=" * 50)
         
         try:
             # 1. 遷移追蹤資料
@@ -231,32 +232,32 @@ class DataMigrator:
             # 5. 清理舊資料檔案
             self.clean_old_data_files()
             
-            print("\n🎉 遷移完成！")
-            print("=" * 50)
-            print("✅ 所有資料已成功遷移到新的模組化結構")
-            print("📦 舊檔案已備份到 backup/ 和 archive/ 目錄")
-            print("🚀 現在可以使用新的 main.py 介面")
+            safe_print("\n🎉 遷移完成！")
+            safe_print("=" * 50)
+            safe_print("✅ 所有資料已成功遷移到新的模組化結構")
+            safe_print("📦 舊檔案已備份到 backup/ 和 archive/ 目錄")
+            safe_print("🚀 現在可以使用新的 main.py 介面")
             
         except Exception as e:
-            print(f"❌ 遷移過程發生錯誤: {e}")
-            print("💡 請檢查錯誤並重新執行遷移")
+            safe_print(f"❌ 遷移過程發生錯誤: {e}")
+            safe_print("💡 請檢查錯誤並重新執行遷移")
 
 
 def main():
     """主函數"""
     migrator = DataMigrator()
     
-    print("📋 道教經典翻譯系統 - 資料遷移工具")
-    print("=" * 50)
-    print("此工具將把舊系統的資料遷移到新的模組化結構中")
-    print("⚠️  遷移前會自動備份所有舊檔案")
+    safe_print("📋 道教經典翻譯系統 - 資料遷移工具")
+    safe_print("=" * 50)
+    safe_print("此工具將把舊系統的資料遷移到新的模組化結構中")
+    safe_print("⚠️  遷移前會自動備份所有舊檔案")
     
     confirm = input("\n確定要開始遷移嗎？(y/N): ").strip().lower()
     
     if confirm == 'y':
         migrator.run_migration()
     else:
-        print("❌ 遷移已取消")
+        safe_print("❌ 遷移已取消")
 
 
 if __name__ == "__main__":

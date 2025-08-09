@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
+from core.unicode_handler import safe_print
 AI翻譯品質評估工具
 
 用於評估AI翻譯的品質和規範符合度
@@ -310,12 +311,12 @@ def evaluate_translation_file(file_path: str) -> None:
         with open(report_path, 'w', encoding='utf-8') as f:
             f.write(report)
             
-        print(f"✅ 評估完成: {file_path}")
-        print(f"📊 總分: {results['overall_score']:.1f}/100")
-        print(f"📋 報告: {report_path}")
+        safe_print(f"✅ 評估完成: {file_path}")
+        safe_print(f"📊 總分: {results['overall_score']:.1f}/100")
+        safe_print(f"📋 報告: {report_path}")
         
     except Exception as e:
-        print(f"❌ 評估失敗: {e}")
+        safe_print(f"❌ 評估失敗: {e}")
 
 
 def main():
@@ -328,7 +329,7 @@ def main():
     args = parser.parse_args()
     
     if not Path(args.file).exists():
-        print(f"❌ 檔案不存在: {args.file}")
+        safe_print(f"❌ 檔案不存在: {args.file}")
         return 1
         
     evaluate_translation_file(args.file)

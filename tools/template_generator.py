@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
+from core.unicode_handler import safe_print
 智能翻譯模板生成器
 
 自動檢測現有經典並生成翻譯模板
@@ -25,7 +26,7 @@ class TemplateGenerator:
         untranslated = []
         
         if not self.source_dir.exists():
-            print("❌ 原文目錄不存在")
+            safe_print("❌ 原文目錄不存在")
             return untranslated
             
         for book_folder in self.source_dir.iterdir():
@@ -123,7 +124,7 @@ class TemplateGenerator:
         chapters = book_data["chapters"]
         translation_dir = book_data["translation_dir"]
         
-        print(f"📝 為《{book_info['title']}》生成翻譯模板...")
+        safe_print(f"📝 為《{book_info['title']}》生成翻譯模板...")
         
         # 建立翻譯目錄
         translation_dir.mkdir(parents=True, exist_ok=True)
@@ -146,13 +147,13 @@ class TemplateGenerator:
                 with open(template_file, 'w', encoding='utf-8') as f:
                     f.write(template_content)
                     
-                print(f"  ✅ 第{chapter['number']}章: {chapter['title']}")
+                safe_print(f"  ✅ 第{chapter['number']}章: {chapter['title']}")
                 success_count += 1
                 
             except Exception as e:
-                print(f"  ❌ 第{chapter['number']}章失敗: {e}")
+                safe_print(f"  ❌ 第{chapter['number']}章失敗: {e}")
                 
-        print(f"📊 完成 {success_count}/{len(chapters)} 個翻譯模板")
+        safe_print(f"📊 完成 {success_count}/{len(chapters)} 個翻譯模板")
         return success_count > 0
         
     def _create_template_content(self, book_info: Dict, chapter: Dict, original_content: str) -> str:
@@ -221,17 +222,17 @@ class TemplateGenerator:
         
     def interactive_template_generation(self) -> None:
         """互動式模板生成"""
-        print("📝 智能翻譯模板生成器")
-        print("=" * 40)
+        safe_print("📝 智能翻譯模板生成器")
+        safe_print("=" * 40)
         
         # 掃描尚未翻譯的經典
         untranslated = self.scan_untranslated_classics()
         
         if not untranslated:
-            print("✅ 所有經典都已有翻譯模板")
+            safe_print("✅ 所有經典都已有翻譯模板")
             return
             
-        print(f"🔍 發現 {len(untranslated)} 部尚未建立翻譯模板的經典:\n")
+        safe_print(f"🔍 發現 {len(untranslated)} 部尚未建立翻譯模板的經典:\n")
         
         # 顯示列表
         for i, book in enumerate(untranslated, 1):
@@ -239,11 +240,11 @@ class TemplateGenerator:
             chapter_count = len(book["chapters"])
             total_chars = sum(ch["char_count"] for ch in book["chapters"])
             
-            print(f"{i}. 📚 {book_info['title']}")
-            print(f"   👤 作者: {book_info['author']}")
-            print(f"   📖 章節: {chapter_count} 章")
-            print(f"   📝 字數: {total_chars:,} 字")
-            print()
+            safe_print(f"{i}. 📚 {book_info['title']}")
+            safe_print(f"   👤 作者: {book_info['author']}")
+            safe_print(f"   📖 章節: {chapter_count} 章")
+            safe_print(f"   📝 字數: {total_chars:,} 字")
+            safe_print()
             
         # 詢問用戶選擇
         while True:
@@ -251,14 +252,14 @@ class TemplateGenerator:
                 choice = input("請選擇要生成模板的經典編號 (輸入 'all' 生成全部，'q' 退出): ").strip()
                 
                 if choice.lower() == 'q':
-                    print("👋 已退出模板生成")
+                    safe_print("👋 已退出模板生成")
                     break
                 elif choice.lower() == 'all':
                     # 生成所有模板
-                    print("🚀 開始生成所有翻譯模板...")
+                    safe_print("🚀 開始生成所有翻譯模板...")
                     for book in untranslated:
                         self.generate_translation_template(book)
-                    print("🎉 所有翻譯模板生成完成！")
+                    safe_print("🎉 所有翻譯模板生成完成！")
                     break
                 else:
                     # 生成指定經典的模板
@@ -272,12 +273,12 @@ class TemplateGenerator:
                         if continue_choice not in ['y', 'yes', '是']:
                             break
                     else:
-                        print("❌ 無效的編號")
+                        safe_print("❌ 無效的編號")
                         
             except ValueError:
-                print("❌ 請輸入有效的數字")
+                safe_print("❌ 請輸入有效的數字")
             except KeyboardInterrupt:
-                print("\n👋 已退出模板生成")
+                safe_print("\n👋 已退出模板生成")
                 break
 
 

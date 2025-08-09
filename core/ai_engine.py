@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from core.unicode_handler import safe_print
 
 class AIEngine:
     """AI 翻譯引擎，負責準備翻譯任務並生成指令給 Gemini CLI。"""
@@ -22,7 +23,7 @@ class AIEngine:
         try:
             book_dir_name = Path(filename).parts[0]
         except IndexError:
-            print(f"錯誤：無法從 '{filename}' 中提取書籍目錄。")
+            safe_print(f"錯誤：無法從 '{filename}' 中提取書籍目錄。")
             return None
 
         # Construct the correct translation path
@@ -33,25 +34,25 @@ class AIEngine:
         translation_path = translation_sub_dir / translation_filename
 
         if not source_path.exists():
-            print(f"錯誤：找不到原始經文檔案 '{source_path}'")
+            safe_print(f"錯誤：找不到原始經文檔案 '{source_path}'")
             return None
 
         # We don't check for existence of translation_path anymore because
         # the tracker already determined it's untranslated.
 
         if not self.guidelines_path.exists():
-            print(f"錯誤：找不到翻譯準則檔案 '{self.guidelines_path}'")
+            safe_print(f"錯誤：找不到翻譯準則檔案 '{self.guidelines_path}'")
             return None
 
-        print("\n" + "="*60)
-        print("✅ 翻譯任務已準備就緒！")
-        print("="*60)
-        print("下一步，請複製並執行以下指令來開始翻譯：")
-        print("\n" + "-"*60)
+        safe_print("\n" + "="*60)
+        safe_print("✅ 翻譯任務已準備就緒！")
+        safe_print("="*60)
+        safe_print("下一步，請複製並執行以下指令來開始翻譯：")
+        safe_print("\n" + "-"*60)
         # Use absolute paths in the final command for clarity
         gemini_command = f"翻譯檔案 '{source_path.resolve()}' 至 '{translation_path.resolve()}'，並使用準則 '{self.guidelines_path.resolve()}'"
-        print(gemini_command)
-        print("-"*60 + "\n")
+        safe_print(gemini_command)
+        safe_print("-"*60 + "\n")
         
         return gemini_command
 

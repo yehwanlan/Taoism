@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
+from core.unicode_handler import safe_print
 依賴檢查腳本
 
 檢查系統依賴和配置是否正確設定
@@ -14,20 +15,20 @@ from pathlib import Path
 
 def check_python_version():
     """檢查 Python 版本"""
-    print("🐍 檢查 Python 版本...")
+    safe_print("🐍 檢查 Python 版本...")
     
     version = sys.version_info
     if version.major >= 3 and version.minor >= 7:
-        print(f"✅ Python {version.major}.{version.minor}.{version.micro} - 版本符合要求")
+        safe_print(f"✅ Python {version.major}.{version.minor}.{version.micro} - 版本符合要求")
         return True
     else:
-        print(f"❌ Python {version.major}.{version.minor}.{version.micro} - 需要 Python 3.7+")
+        safe_print(f"❌ Python {version.major}.{version.minor}.{version.micro} - 需要 Python 3.7+")
         return False
 
 
 def check_required_packages():
     """檢查必要套件"""
-    print("\n📦 檢查必要套件...")
+    safe_print("\n📦 檢查必要套件...")
     
     required_packages = [
         ('requests', '網路請求'),
@@ -42,9 +43,9 @@ def check_required_packages():
     for package, description in required_packages:
         try:
             importlib.import_module(package)
-            print(f"✅ {package} - {description}")
+            safe_print(f"✅ {package} - {description}")
         except ImportError:
-            print(f"❌ {package} - {description} (未安裝)")
+            safe_print(f"❌ {package} - {description} (未安裝)")
             all_ok = False
     
     return all_ok
@@ -52,7 +53,7 @@ def check_required_packages():
 
 def check_optional_packages():
     """檢查可選套件"""
-    print("\n🔧 檢查可選套件...")
+    safe_print("\n🔧 檢查可選套件...")
     
     optional_packages = [
         ('selenium', 'Selenium 網頁自動化'),
@@ -64,14 +65,14 @@ def check_optional_packages():
     for package, description in optional_packages:
         try:
             importlib.import_module(package)
-            print(f"✅ {package} - {description}")
+            safe_print(f"✅ {package} - {description}")
         except ImportError:
-            print(f"⚠️  {package} - {description} (未安裝，可選)")
+            safe_print(f"⚠️  {package} - {description} (未安裝，可選)")
 
 
 def check_config_files():
     """檢查配置檔案"""
-    print("\n⚙️ 檢查配置檔案...")
+    safe_print("\n⚙️ 檢查配置檔案...")
     
     config_files = [
         ('config/settings.json', '主要配置檔案', True),
@@ -85,31 +86,31 @@ def check_config_files():
     for file_path, description, required in config_files:
         path = Path(file_path)
         if path.exists():
-            print(f"✅ {file_path} - {description}")
+            safe_print(f"✅ {file_path} - {description}")
             
             # 檢查 JSON 檔案格式
             if file_path.endswith('.json'):
                 try:
                     with open(path, 'r', encoding='utf-8') as f:
                         json.load(f)
-                    print(f"   📄 JSON 格式正確")
+                    safe_print(f"   📄 JSON 格式正確")
                 except json.JSONDecodeError as e:
-                    print(f"   ❌ JSON 格式錯誤: {e}")
+                    safe_print(f"   ❌ JSON 格式錯誤: {e}")
                     all_ok = False
                     
         else:
             if required:
-                print(f"❌ {file_path} - {description} (缺少)")
+                safe_print(f"❌ {file_path} - {description} (缺少)")
                 all_ok = False
             else:
-                print(f"⚠️  {file_path} - {description} (建議建立)")
+                safe_print(f"⚠️  {file_path} - {description} (建議建立)")
     
     return all_ok
 
 
 def check_directory_structure():
     """檢查目錄結構"""
-    print("\n📁 檢查目錄結構...")
+    safe_print("\n📁 檢查目錄結構...")
     
     required_dirs = [
         ('core', '核心模組'),
@@ -125,9 +126,9 @@ def check_directory_structure():
     for dir_path, description in required_dirs:
         path = Path(dir_path)
         if path.exists() and path.is_dir():
-            print(f"✅ {dir_path}/ - {description}")
+            safe_print(f"✅ {dir_path}/ - {description}")
         else:
-            print(f"❌ {dir_path}/ - {description} (缺少)")
+            safe_print(f"❌ {dir_path}/ - {description} (缺少)")
             all_ok = False
     
     return all_ok
@@ -135,7 +136,7 @@ def check_directory_structure():
 
 def check_main_files():
     """檢查主要檔案"""
-    print("\n📄 檢查主要檔案...")
+    safe_print("\n📄 檢查主要檔案...")
     
     main_files = [
         ('main.py', '主要入口點'),
@@ -150,9 +151,9 @@ def check_main_files():
     for file_path, description in main_files:
         path = Path(file_path)
         if path.exists():
-            print(f"✅ {file_path} - {description}")
+            safe_print(f"✅ {file_path} - {description}")
         else:
-            print(f"❌ {file_path} - {description} (缺少)")
+            safe_print(f"❌ {file_path} - {description} (缺少)")
             all_ok = False
     
     return all_ok
@@ -160,36 +161,36 @@ def check_main_files():
 
 def run_basic_tests():
     """執行基本功能測試"""
-    print("\n🧪 執行基本功能測試...")
+    safe_print("\n🧪 執行基本功能測試...")
     
     try:
         # 測試核心模組導入
         sys.path.append('.')
         from core import get_tracker, get_file_monitor
-        print("✅ 核心模組導入成功")
+        safe_print("✅ 核心模組導入成功")
         
         # 測試追蹤器
         tracker = get_tracker()
         stats = tracker.get_statistics()
-        print(f"✅ 追蹤系統正常 (經典數: {stats.get('total_classics', 0)})")
+        safe_print(f"✅ 追蹤系統正常 (經典數: {stats.get('total_classics', 0)})")
         
         # 測試檔案監控
         monitor = get_file_monitor()
         file_stats = monitor.get_statistics()
-        print(f"✅ 檔案監控正常 (操作數: {file_stats.get('total_operations', 0)})")
+        safe_print(f"✅ 檔案監控正常 (操作數: {file_stats.get('total_operations', 0)})")
         
         return True
         
     except Exception as e:
-        print(f"❌ 功能測試失敗: {e}")
+        safe_print(f"❌ 功能測試失敗: {e}")
         return False
 
 
 def generate_report():
     """生成檢查報告"""
-    print("\n" + "=" * 60)
-    print("📋 依賴檢查報告")
-    print("=" * 60)
+    safe_print("\n" + "=" * 60)
+    safe_print("📋 依賴檢查報告")
+    safe_print("=" * 60)
     
     checks = [
         ("Python 版本", check_python_version()),
@@ -207,33 +208,33 @@ def generate_report():
     passed = sum(1 for _, result in checks if result)
     total = len(checks)
     
-    print(f"\n📊 檢查結果: {passed}/{total} 項通過")
+    safe_print(f"\n📊 檢查結果: {passed}/{total} 項通過")
     
     if passed == total:
-        print("🎉 所有檢查都通過！系統已準備就緒。")
+        safe_print("🎉 所有檢查都通過！系統已準備就緒。")
         return True
     else:
-        print("⚠️  部分檢查未通過，請根據上述提示進行修復。")
+        safe_print("⚠️  部分檢查未通過，請根據上述提示進行修復。")
         return False
 
 
 def main():
     """主函數"""
-    print("🔍 道教經典翻譯系統 v2.0 - 依賴檢查")
-    print("=" * 60)
+    safe_print("🔍 道教經典翻譯系統 v2.0 - 依賴檢查")
+    safe_print("=" * 60)
     
     success = generate_report()
     
     if success:
-        print("\n💡 建議的下一步:")
-        print("   1. python main.py info - 查看系統資訊")
-        print("   2. python main.py translate --interactive - 啟動互動模式")
-        print("   3. python -m http.server 8000 --directory docs - 啟動網頁服務")
+        safe_print("\n💡 建議的下一步:")
+        safe_print("   1. python main.py info - 查看系統資訊")
+        safe_print("   2. python main.py translate --interactive - 啟動互動模式")
+        safe_print("   3. python -m http.server 8000 --directory docs - 啟動網頁服務")
     else:
-        print("\n🔧 修復建議:")
-        print("   1. pip install -r requirements.txt - 安裝依賴套件")
-        print("   2. cp config/settings.example.json config/settings.json - 複製配置")
-        print("   3. 檢查並修復上述錯誤")
+        safe_print("\n🔧 修復建議:")
+        safe_print("   1. pip install -r requirements.txt - 安裝依賴套件")
+        safe_print("   2. cp config/settings.example.json config/settings.json - 複製配置")
+        safe_print("   3. 檢查並修復上述錯誤")
     
     return 0 if success else 1
 

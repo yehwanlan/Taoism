@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
+from core.unicode_handler import safe_print
 道教經典翻譯系統 - 監控命令列介面
 
 整合原有的 tracking_monitor.py 功能，提供統一的監控介面
@@ -29,36 +30,36 @@ class MonitorCLI:
         
     def show_status(self) -> None:
         """顯示當前狀態"""
-        print("📊 經典追蹤系統狀態")
-        print("=" * 50)
+        safe_print("📊 經典追蹤系統狀態")
+        safe_print("=" * 50)
         
         # 經典追蹤統計
         stats = self.tracker.get_statistics()
-        print(f"📚 經典總數: {stats.get('total_classics', 0)}")
-        print(f"📖 章節總數: {stats.get('total_chapters', 0)}")
-        print(f"📝 總字數: {stats.get('total_characters', 0):,}")
-        print(f"🕒 最後更新: {stats.get('last_updated', 'N/A')[:19].replace('T', ' ')}")
+        safe_print(f"📚 經典總數: {stats.get('total_classics', 0)}")
+        safe_print(f"📖 章節總數: {stats.get('total_chapters', 0)}")
+        safe_print(f"📝 總字數: {stats.get('total_characters', 0):,}")
+        safe_print(f"🕒 最後更新: {stats.get('last_updated', 'N/A')[:19].replace('T', ' ')}")
         
-        print("\n" + "-" * 30)
+        safe_print("\n" + "-" * 30)
         
         # 檔案操作統計
         file_stats = self.file_monitor.get_statistics()
-        print(f"📁 檔案操作總數: {file_stats['total_operations']}")
+        safe_print(f"📁 檔案操作總數: {file_stats['total_operations']}")
         
         if file_stats['file_types']:
-            print("📂 檔案類型分佈:")
+            safe_print("📂 檔案類型分佈:")
             for file_type, count in file_stats['file_types'].items():
-                print(f"   {file_type}: {count}")
+                safe_print(f"   {file_type}: {count}")
                 
     def show_recent_activity(self, limit: int = 5) -> None:
         """顯示最近活動"""
-        print(f"\n🕒 最近 {limit} 項活動")
-        print("-" * 30)
+        safe_print(f"\n🕒 最近 {limit} 項活動")
+        safe_print("-" * 30)
         
         recent_ops = self.file_monitor.get_recent_operations(limit)
         
         if not recent_ops:
-            print("暫無活動記錄")
+            safe_print("暫無活動記錄")
             return
             
         for op in reversed(recent_ops):
@@ -69,25 +70,25 @@ class MonitorCLI:
             # 根據操作類型選擇圖示
             icon = "📝" if operation == "create" else "🔄"
             
-            print(f"{icon} {timestamp} - {operation}: {file_name}")
+            safe_print(f"{icon} {timestamp} - {operation}: {file_name}")
             
             # 顯示詳細資訊
             if op.get('details'):
                 details = op['details']
                 if 'title' in details:
-                    print(f"   📖 標題: {details['title']}")
+                    safe_print(f"   📖 標題: {details['title']}")
                 if 'chapter_number' in details:
-                    print(f"   📄 章節: 第{details['chapter_number']}章")
+                    safe_print(f"   📄 章節: 第{details['chapter_number']}章")
                     
     def show_translation_progress(self) -> None:
         """顯示翻譯進度"""
-        print("\n📈 翻譯進度概覽")
-        print("-" * 30)
+        safe_print("\n📈 翻譯進度概覽")
+        safe_print("-" * 30)
         
         classics = self.tracker.get_all_classics()
         
         if not classics:
-            print("暫無經典記錄")
+            safe_print("暫無經典記錄")
             return
             
         total_chapters = 0
@@ -107,15 +108,15 @@ class MonitorCLI:
             # 進度條
             progress_bar = self._create_progress_bar(percentage)
             
-            print(f"📚 {book_title}")
-            print(f"   {progress_bar} {completed}/{chapter_count} ({percentage}%)")
+            safe_print(f"📚 {book_title}")
+            safe_print(f"   {progress_bar} {completed}/{chapter_count} ({percentage}%)")
             
         # 總體進度
         overall_percentage = (completed_chapters / total_chapters * 100) if total_chapters > 0 else 0
         overall_progress_bar = self._create_progress_bar(overall_percentage)
         
-        print(f"\n🎯 總體進度:")
-        print(f"   {overall_progress_bar} {completed_chapters}/{total_chapters} ({overall_percentage:.1f}%)")
+        safe_print(f"\n🎯 總體進度:")
+        safe_print(f"   {overall_progress_bar} {completed_chapters}/{total_chapters} ({overall_percentage:.1f}%)")
         
     def _create_progress_bar(self, percentage: float, width: int = 20) -> str:
         """創建進度條"""
@@ -125,8 +126,8 @@ class MonitorCLI:
         
     def show_category_breakdown(self) -> None:
         """顯示分類統計"""
-        print("\n📊 分類統計")
-        print("-" * 30)
+        safe_print("\n📊 分類統計")
+        safe_print("-" * 30)
         
         classics = self.tracker.get_all_classics()
         categories = {}
@@ -139,27 +140,27 @@ class MonitorCLI:
             categories[category]['chapters'] += classic.get('chapter_count', 0)
             
         for category, stats in categories.items():
-            print(f"📂 {category}: {stats['count']} 部, {stats['chapters']} 章")
+            safe_print(f"📂 {category}: {stats['count']} 部, {stats['chapters']} 章")
             
     def generate_dashboard(self) -> None:
         """生成完整儀表板"""
-        print("\n" + "=" * 60)
-        print("🎛️  經典追蹤系統儀表板 v2.0")
-        print("=" * 60)
+        safe_print("\n" + "=" * 60)
+        safe_print("🎛️  經典追蹤系統儀表板 v2.0")
+        safe_print("=" * 60)
         
         self.show_status()
         self.show_recent_activity()
         self.show_translation_progress()
         self.show_category_breakdown()
         
-        print("\n" + "=" * 60)
-        print(f"📅 報告生成時間: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-        print("=" * 60)
+        safe_print("\n" + "=" * 60)
+        safe_print(f"📅 報告生成時間: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        safe_print("=" * 60)
         
     def watch_mode(self, interval: int = 30) -> None:
         """監控模式 - 定期更新顯示"""
-        print("👁️  啟動監控模式 v2.0 (按 Ctrl+C 退出)")
-        print(f"🔄 更新間隔: {interval} 秒")
+        safe_print("👁️  啟動監控模式 v2.0 (按 Ctrl+C 退出)")
+        safe_print(f"🔄 更新間隔: {interval} 秒")
         
         try:
             while True:
@@ -169,11 +170,11 @@ class MonitorCLI:
                 
                 self.generate_dashboard()
                 
-                print(f"\n⏰ 下次更新: {interval} 秒後...")
+                safe_print(f"\n⏰ 下次更新: {interval} 秒後...")
                 time.sleep(interval)
                 
         except KeyboardInterrupt:
-            print("\n👋 監控模式已退出")
+            safe_print("\n👋 監控模式已退出")
             
     def export_status_json(self) -> Path:
         """匯出狀態為JSON"""
@@ -196,12 +197,12 @@ class MonitorCLI:
         with open(status_file, 'w', encoding='utf-8') as f:
             json.dump(status, f, ensure_ascii=False, indent=2)
             
-        print(f"📄 狀態已匯出: {status_file}")
+        safe_print(f"📄 狀態已匯出: {status_file}")
         return status_file
         
     def generate_reports(self) -> None:
         """生成所有報告"""
-        print("📊 正在生成報告...")
+        safe_print("📊 正在生成報告...")
         
         # 更新翻譯進度
         self.tracker.check_translation_progress()
@@ -215,10 +216,10 @@ class MonitorCLI:
         # 匯出狀態
         status_file = self.export_status_json()
         
-        print("✅ 報告生成完成:")
-        print(f"   📋 追蹤報告: {tracking_report}")
-        print(f"   📊 活動報告: {activity_report}")
-        print(f"   📄 狀態檔案: {status_file}")
+        safe_print("✅ 報告生成完成:")
+        safe_print(f"   📋 追蹤報告: {tracking_report}")
+        safe_print(f"   📊 活動報告: {activity_report}")
+        safe_print(f"   📄 狀態檔案: {status_file}")
 
 
 def main():

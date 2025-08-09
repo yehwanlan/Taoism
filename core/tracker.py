@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
+from core.unicode_handler import safe_print
 道教經典翻譯系統 - 經典追蹤核心
 
 整合原有的 classic_tracker.py 功能，提供統一的追蹤介面
@@ -121,10 +122,10 @@ class ClassicTracker:
         
         # 記錄狀態
         if classic_id not in self.data["classics"]:
-            print(f"📚 新增經典: {book_info['title']}")
+            safe_print(f"📚 新增經典: {book_info['title']}")
             classic_record["status"] = "新增"
         else:
-            print(f"🔄 更新經典: {book_info['title']}")
+            safe_print(f"🔄 更新經典: {book_info['title']}")
             classic_record["status"] = "更新"
             # 保留舊的添加時間
             old_record = self.data["classics"][classic_id]
@@ -204,7 +205,7 @@ class ClassicTracker:
         
     def check_translation_progress(self) -> None:
         """檢查翻譯進度"""
-        print("🔍 檢查翻譯進度...")
+        safe_print("🔍 檢查翻譯進度...")
         
         for classic_id, classic in self.data["classics"].items():
             translation_dir = Path(classic["translation_dir"])
@@ -350,7 +351,7 @@ class ClassicTracker:
         with open(report_file, 'w', encoding='utf-8') as f:
             f.write(report)
             
-        print(f"📋 報告已儲存: {report_file}")
+        safe_print(f"📋 報告已儲存: {report_file}")
         return report_file
 
     def get_untranslated_files(self) -> List[str]:

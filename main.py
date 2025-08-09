@@ -13,6 +13,7 @@ from pathlib import Path
 # 添加當前目錄到路徑
 sys.path.append(str(Path(__file__).parent))
 
+from core.unicode_handler import safe_print
 from tools.easy_cli import EasyCLI
 from tools.monitor_cli import MonitorCLI
 try:
@@ -28,7 +29,7 @@ except ImportError:
 
 def show_system_info():
     """顯示系統資訊"""
-    print("""
+    safe_print("""
 🏛️  道教經典翻譯系統 v2.0
 ================================
 
@@ -99,10 +100,10 @@ def main():
     
     # 如果沒有提供子命令，直接進入翻譯互動模式
     if not args.command:
-        print("🏛️  道教經典翻譯系統 v2.0")
-        print("=" * 40)
-        print("💡 未指定命令，啟動互動模式...")
-        print("   使用 'python main.py --help' 查看所有命令")
+        safe_print("🏛️  道教經典翻譯系統 v2.0")
+        safe_print("=" * 40)
+        safe_print("💡 未指定命令，啟動互動模式...")
+        safe_print("   使用 'python main.py --help' 查看所有命令")
         
         cli = EasyCLI()
         cli.interactive_mode()
@@ -151,23 +152,23 @@ def main():
         show_system_info()
         
         # 顯示系統狀態
-        print("\n📊 當前系統狀態:")
-        print("-" * 30)
+        safe_print("\n📊 當前系統狀態:")
+        safe_print("-" * 30)
         
         try:
             tracker = get_tracker()
             if tracker:
                 stats = tracker.get_statistics()
-                print(f"📚 經典總數: {stats.get('total_classics', 0)}")
-                print(f"📖 章節總數: {stats.get('total_chapters', 0)}")
-                print(f"📝 總字數: {stats.get('total_characters', 0):,}")
+                safe_print(f"📚 經典總數: {stats.get('total_classics', 0)}")
+                safe_print(f"📖 章節總數: {stats.get('total_chapters', 0)}")
+                safe_print(f"📝 總字數: {stats.get('total_characters', 0):,}")
             
             file_monitor = get_file_monitor()
             if file_monitor:
                 file_stats = file_monitor.get_statistics()
-                print(f"📁 檔案操作: {file_stats['total_operations']}")
+                safe_print(f"📁 檔案操作: {file_stats['total_operations']}")
         except Exception as e:
-            print(f"⚠️  無法獲取系統狀態: {e}")
+            safe_print(f"⚠️  無法獲取系統狀態: {e}")
 
 
 if __name__ == "__main__":

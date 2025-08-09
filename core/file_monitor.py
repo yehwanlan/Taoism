@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
+from core.unicode_handler import safe_print
 道教經典翻譯系統 - 檔案監控核心
 
 整合原有的 file_tracker.py 功能，提供統一的檔案監控介面
@@ -87,7 +88,7 @@ class FileMonitor:
             
         self.save_log_data()
         
-        print(f"📝 記錄檔案操作: {operation['operation']} - {file_path.name}")
+        safe_print(f"📝 記錄檔案操作: {operation['operation']} - {file_path.name}")
         
         # 如果是經典相關檔案，觸發自動分析
         if self._is_classic_file(file_path):
@@ -109,7 +110,7 @@ class FileMonitor:
                 self._handle_translation_file(file_path)
                 
         except Exception as e:
-            print(f"⚠️  分析經典檔案失敗: {e}")
+            safe_print(f"⚠️  分析經典檔案失敗: {e}")
             
     def _handle_source_file(self, file_path: Path) -> None:
         """處理原文檔案"""
@@ -119,14 +120,14 @@ class FileMonitor:
             
             if source_texts_idx + 1 < len(path_parts):
                 classic_folder = path_parts[source_texts_idx + 1]
-                print(f"🔍 檢測到新的原文檔案: {classic_folder}")
+                safe_print(f"🔍 檢測到新的原文檔案: {classic_folder}")
                 
         except ValueError:
             pass
             
     def _handle_translation_file(self, file_path: Path) -> None:
         """處理翻譯檔案"""
-        print(f"📖 檢測到翻譯檔案更新: {file_path.name}")
+        safe_print(f"📖 檢測到翻譯檔案更新: {file_path.name}")
         
     def get_recent_operations(self, limit: int = 10) -> List[Dict]:
         """獲取最近的操作記錄"""
@@ -239,7 +240,7 @@ class FileMonitor:
         with open(report_file, 'w', encoding='utf-8') as f:
             f.write(report)
             
-        print(f"📋 活動報告已儲存: {report_file}")
+        safe_print(f"📋 活動報告已儲存: {report_file}")
         return report_file
 
 

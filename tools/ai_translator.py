@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
+from core.unicode_handler import safe_print
 生成式AI經文翻譯工具
 
 基於AI翻譯指導規範，使用生成式AI進行道教經文翻譯
@@ -148,21 +149,21 @@ class AITranslator:
             )
             
             if result.returncode == 0:
-                print(f"DEBUG: Gemini CLI Stdout: {result.stdout.strip()}")
+                safe_print(f"DEBUG: Gemini CLI Stdout: {result.stdout.strip()}")
                 return result.stdout.strip()
             else:
-                print(f"DEBUG: Gemini CLI Stderr: {result.stderr.strip()}")
-                print(f"❌ Gemini CLI錯誤: {result.stderr}")
+                safe_print(f"DEBUG: Gemini CLI Stderr: {result.stderr.strip()}")
+                safe_print(f"❌ Gemini CLI錯誤: {result.stderr}")
                 return None
                 
         except subprocess.TimeoutExpired:
-            print("❌ 翻譯超時")
+            safe_print("❌ 翻譯超時")
             return None
         except FileNotFoundError:
-            print("❌ 未找到gemini命令，請確認已安裝Gemini CLI")
+            safe_print("❌ 未找到gemini命令，請確認已安裝Gemini CLI")
             return None
         except Exception as e:
-            print(f"❌ 翻譯失敗: {e}")
+            safe_print(f"❌ 翻譯失敗: {e}")
             return None
             
     def translate_with_openai(self, prompt: str) -> Optional[str]:
@@ -170,10 +171,10 @@ class AITranslator:
         try:
             # 這裡可以添加OpenAI API調用
             # 需要安裝openai庫並設置API密鑰
-            print("💡 OpenAI翻譯功能需要額外配置")
+            safe_print("💡 OpenAI翻譯功能需要額外配置")
             return None
         except Exception as e:
-            print(f"❌ OpenAI翻譯失敗: {e}")
+            safe_print(f"❌ OpenAI翻譯失敗: {e}")
             return None
             
     def translate_text(self, original_text: str, context: Dict = None) -> Optional[str]:
@@ -194,7 +195,7 @@ class AITranslator:
         file_path = Path(file_path)
         
         if not file_path.exists():
-            print(f"❌ 檔案不存在: {file_path}")
+            safe_print(f"❌ 檔案不存在: {file_path}")
             return False
             
         try:
@@ -209,17 +210,17 @@ class AITranslator:
             original_text = self.extract_original_text(content)
             
             if not original_text:
-                print(f"❌ 無法提取原文內容: {file_path}")
+                safe_print(f"❌ 無法提取原文內容: {file_path}")
                 return False
                 
-            print(f"📝 開始翻譯: {file_path.name}")
-            print(f"📊 原文字數: {len(original_text)} 字")
+            safe_print(f"📝 開始翻譯: {file_path.name}")
+            safe_print(f"📊 原文字數: {len(original_text)} 字")
             
             # 進行翻譯
             translation_result = self.translate_text(original_text, context)
             
             if not translation_result:
-                print(f"❌ 翻譯失敗: {file_path}")
+                safe_print(f"❌ 翻譯失敗: {file_path}")
                 return False
                 
             # 更新翻譯模板
@@ -232,11 +233,11 @@ class AITranslator:
             with open(output_path, 'w', encoding='utf-8') as f:
                 f.write(updated_content)
                 
-            print(f"✅ 翻譯完成: {output_path}")
+            safe_print(f"✅ 翻譯完成: {output_path}")
             return True
             
         except Exception as e:
-            print(f"❌ 翻譯檔案失敗: {e}")
+            safe_print(f"❌ 翻譯檔案失敗: {e}")
             return False
             
     def extract_file_context(self, file_path: Path, content: str) -> Dict:
@@ -341,21 +342,21 @@ class AITranslator:
         directory = Path(directory)
         
         if not directory.exists():
-            print(f"❌ 目錄不存在: {directory}")
+            safe_print(f"❌ 目錄不存在: {directory}")
             return {"success": 0, "failed": 0, "files": []}
             
         files = list(directory.glob(f"**/{pattern}"))
         
         if not files:
-            print(f"❌ 未找到符合條件的檔案: {directory}/{pattern}")
+            safe_print(f"❌ 未找到符合條件的檔案: {directory}/{pattern}")
             return {"success": 0, "failed": 0, "files": []}
             
-        print(f"🚀 開始批量翻譯: {len(files)} 個檔案")
+        safe_print(f"🚀 開始批量翻譯: {len(files)} 個檔案")
         
         results = {"success": 0, "failed": 0, "files": []}
         
         for i, file_path in enumerate(files, 1):
-            print(f"\n📝 進度: {i}/{len(files)} - {file_path.name}")
+            safe_print(f"\n📝 進度: {i}/{len(files)} - {file_path.name}")
             
             if self.progress_callback:
                 self.progress_callback(i, len(files), file_path.name)
@@ -372,9 +373,9 @@ class AITranslator:
             # 避免API限制，添加延遲
             time.sleep(2)
             
-        print(f"\n🎉 批量翻譯完成!")
-        print(f"✅ 成功: {results['success']} 個")
-        print(f"❌ 失敗: {results['failed']} 個")
+        safe_print(f"\n🎉 批量翻譯完成!")
+        safe_print(f"✅ 成功: {results['success']} 個")
+        safe_print(f"❌ 失敗: {results['failed']} 個")
         
         return results
         
@@ -414,11 +415,11 @@ class TranslationProgressTracker:
                 
             progress_percent = (completed / total) * 100
             
-            print(f"📊 進度: {completed}/{total} ({progress_percent:.1f}%)")
-            print(f"⏱️  已用時間: {time.strftime('%H:%M:%S', time.gmtime(elapsed))}")
-            print(f"🕐 預計剩餘: {eta}")
-            print(f"📄 當前檔案: {current_file}")
-            print("=" * 50)
+            safe_print(f"📊 進度: {completed}/{total} ({progress_percent:.1f}%)")
+            safe_print(f"⏱️  已用時間: {time.strftime('%H:%M:%S', time.gmtime(elapsed))}")
+            safe_print(f"🕐 預計剩餘: {eta}")
+            safe_print(f"📄 當前檔案: {current_file}")
+            safe_print("=" * 50)
 
 
 def main():
@@ -451,14 +452,14 @@ def main():
         
     else:
         # 互動模式
-        print("🤖 生成式AI經文翻譯工具")
-        print("=" * 40)
+        safe_print("🤖 生成式AI經文翻譯工具")
+        safe_print("=" * 40)
         
         while True:
-            print("\n請選擇操作：")
-            print("1. 翻譯單個檔案")
-            print("2. 批量翻譯目錄")
-            print("3. 退出")
+            safe_print("\n請選擇操作：")
+            safe_print("1. 翻譯單個檔案")
+            safe_print("2. 批量翻譯目錄")
+            safe_print("3. 退出")
             
             choice = input("\n請輸入選項 (1-3): ").strip()
             
@@ -474,11 +475,11 @@ def main():
                     translator.batch_translate_directory(directory, pattern)
                     
             elif choice == "3":
-                print("👋 再見！")
+                safe_print("👋 再見！")
                 break
                 
             else:
-                print("❌ 無效選項")
+                safe_print("❌ 無效選項")
                 
         return 0
 

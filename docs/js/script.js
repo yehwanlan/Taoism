@@ -14,33 +14,240 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggleViewButton = document.getElementById('toggle-view');
 
     // 系統資料結構
-    const booksData = {
-        "太上元始天尊证果真经_DZ0047": {
-            title: "太上元始天尊證果真經",
+        const booksData = {
+        "P.Ch.2471太上升玄护命经一卷_PC2471": {
+            title: "P.Ch.2471太上升玄护命经一卷",
             chapters: [
-                { number: "01", title: "太上元始天尊证果真经" }
+                { number: "01", title: "太上升玄护命经一卷" },
+            ]
+        },
+        "元始天尊说十一曜大消灾神咒经_DZ0043": {
+            title: "元始天尊说十一曜大消灾神咒经",
+            chapters: [
+                { number: "01", title: "元始天尊说十一曜大消灾神咒经" },
+                { number: "02", title: "九星都咒" },
+                { number: "03", title: "五星神咒" },
+                { number: "04", title: "太阳真君神咒" },
+                { number: "05", title: "太阴真君神咒" },
+                { number: "06", title: "木星真君神咒" },
+                { number: "07", title: "火星真君神咒" },
+                { number: "08", title: "金星真君神咒" },
+                { number: "09", title: "水星真君神咒" },
+                { number: "10", title: "土星真君神咒" },
+                { number: "11", title: "罗睺真君神咒" },
+                { number: "12", title: "计都真君神咒" },
+                { number: "13", title: "紫气真君神咒" },
+                { number: "14", title: "月孛真君神咒" },
+                { number: "15", title: "三启颂" },
+            ]
+        },
+        "南华真经口义_DZ0735": {
+            title: "南华真经口义",
+            chapters: [
+                { number: "01", title: "庄子口义发题" },
+                { number: "02", title: "庄子口义发题" },
+                { number: "03", title: "南华真经口义卷之一" },
+                { number: "04", title: "南华真经口义卷之二" },
+                { number: "05", title: "南华真经口义卷之三" },
+                { number: "06", title: "南华真经口义卷之四" },
+                { number: "07", title: "南华真经口义卷之五" },
+                { number: "08", title: "南华真经口义卷之六" },
+                { number: "09", title: "南华真经口义卷之七" },
+                { number: "10", title: "南华真经口义卷之八" },
+                { number: "11", title: "南华真经口义卷之九" },
+                { number: "12", title: "南华真经口义卷之十" },
+                { number: "13", title: "南华真经口义卷之十一" },
+                { number: "14", title: "南华真经口义卷之十二" },
+                { number: "15", title: "南华真经口义卷之十三" },
+                { number: "16", title: "南华真经口义卷之十四" },
+                { number: "17", title: "南华真经口义卷之十五" },
+                { number: "18", title: "南华真经口义卷之十六" },
+                { number: "19", title: "南华真经口义卷之十七" },
+                { number: "20", title: "南华真经口义卷之十八" },
+                { number: "21", title: "南华真经口义卷之十九" },
+                { number: "22", title: "南华真经口义卷之二十" },
+                { number: "23", title: "南华真经口义卷之二十一" },
+                { number: "24", title: "南华真经口义卷之二十二" },
+                { number: "25", title: "南华真经口义卷之二十三" },
+                { number: "26", title: "南华真经口义卷之二十四" },
+                { number: "27", title: "南华真经口义卷之二十五" },
+                { number: "28", title: "南华真经口义卷之二十六" },
+                { number: "29", title: "南华真经口义卷之二十七" },
+                { number: "30", title: "南华真经口义卷之二十八" },
+                { number: "31", title: "南华真经口义卷之二十九" },
+                { number: "32", title: "南华真经口义卷之三十" },
+                { number: "33", title: "南华真经口义卷之三十一" },
+                { number: "34", title: "南华真经口义卷之三十二" },
+                { number: "35", title: "内篇逍遥游" },
+                { number: "36", title: "内篇齐物论上" },
+                { number: "37", title: "内篇齐物论下" },
+                { number: "38", title: "内篇养生主" },
+                { number: "39", title: "内篇人间世上" },
+                { number: "40", title: "内篇人间世下" },
+                { number: "41", title: "内篇德充符" },
+                { number: "42", title: "内篇大宗师上" },
+                { number: "43", title: "内篇大宗师下" },
+                { number: "44", title: "内篇应帝王" },
+                { number: "45", title: "外篇骈拇" },
+                { number: "46", title: "外篇马蹄" },
+                { number: "47", title: "外篇胠箧" },
+                { number: "48", title: "外篇在宥" },
+                { number: "49", title: "外篇天地" },
+                { number: "50", title: "外篇天道" },
+                { number: "51", title: "外篇天运" },
+                { number: "52", title: "外篇刻意" },
+                { number: "53", title: "外篇缮性" },
+                { number: "54", title: "外篇秋水" },
+                { number: "55", title: "外篇至乐" },
+                { number: "56", title: "外篇达生" },
+                { number: "57", title: "外篇山木" },
+                { number: "58", title: "外篇田子方" },
+                { number: "59", title: "外篇知北游" },
+                { number: "60", title: "杂篇庚桑楚" },
+                { number: "61", title: "杂篇徐无鬼" },
+                { number: "62", title: "杂篇则阳" },
+                { number: "63", title: "杂篇外物" },
+                { number: "64", title: "杂篇寓言" },
+                { number: "65", title: "杂篇让王" },
+                { number: "66", title: "杂篇盗跖" },
+                { number: "67", title: "杂篇说剑" },
+                { number: "68", title: "杂篇渔父" },
+                { number: "69", title: "杂篇列御寇" },
+                { number: "70", title: "杂篇天下" },
+                { number: "71", title: "南华真经口义后序" },
+            ]
+        },
+        "太上七星神咒经_DZ0383": {
+            title: "太上七星神咒经",
+            chapters: [
+                { number: "01", title: "太上七星神咒经" },
+            ]
+        },
+        "太上元始天尊证果真经_DZ0047": {
+            title: "太上元始天尊证果真经",
+            chapters: [
+                { number: "01", title: "太上元始天尊证果真经" },
             ]
         },
         "太上元始天尊说消殄虫蝗经_DZ0067": {
-            title: "太上元始天尊說消殄蟲蝗經",
+            title: "太上元始天尊说消殄虫蝗经",
             chapters: [
-                { number: "01", title: "太上元始天尊说消殄虫蝗经" }
+                { number: "01", title: "太上元始天尊说消殄虫蝗经" },
+            ]
+        },
+        "太上元始天尊说金光明经_DZ0070": {
+            title: "太上元始天尊说金光明经",
+            chapters: [
+                { number: "01", title: "太上元始天尊说金光明经" },
+            ]
+        },
+        "太上洞玄宝元上经_DZ0368": {
+            title: "太上洞玄宝元上经",
+            chapters: [
+                { number: "01", title: "太上洞玄宝元上经" },
+            ]
+        },
+        "太上洞玄灵宝业报因缘经_DZ0336": {
+            title: "太上洞玄灵宝业报因缘经",
+            chapters: [
+                { number: "03", title: "开度品第一" },
+                { number: "05", title: "善对品第二" },
+                { number: "06", title: "恶报品第三" },
+                { number: "07", title: "受罪品第四" },
+                { number: "09", title: "忏悔品第五" },
+                { number: "11", title: "奉戒品第六" },
+                { number: "12", title: "持斋品第七" },
+                { number: "14", title: "诵念品第八" },
+                { number: "15", title: "行道品第九" },
+                { number: "16", title: "弘誓品第十" },
+                { number: "17", title: "发愿品第十一" },
+                { number: "18", title: "赞叹品第十二" },
+                { number: "19", title: "布施品第十三" },
+                { number: "21", title: "慈济品第十四" },
+                { number: "22", title: "救苦品第十五" },
+                { number: "24", title: "功德品第十六" },
+                { number: "25", title: "应感品第十七" },
+                { number: "26", title: "福报品第十八" },
+                { number: "28", title: "生神品第十九" },
+                { number: "30", title: "弘救品第二十" },
+                { number: "31", title: "证实品第二十一" },
+                { number: "32", title: "摄因品第二十二" },
+                { number: "33", title: "生化品第二十三" },
+                { number: "35", title: "广统品第二十四" },
+                { number: "36", title: "会真品第二十五" },
+                { number: "37", title: "叙教品第二十六" },
+                { number: "38", title: "流通品第二十七" },
+            ]
+        },
+        "太上洞玄灵宝净供妙经_DZ0376": {
+            title: "太上洞玄灵宝净供妙经",
+            chapters: [
+                { number: "01", title: "太上洞玄灵宝净供妙经" },
+            ]
+        },
+        "太上洞玄灵宝法烛经_DZ0349": {
+            title: "太上洞玄灵宝法烛经",
+            chapters: [
+                { number: "01", title: "太上洞玄灵宝法躅经" },
+            ]
+        },
+        "太上洞玄灵宝灭度五炼生尸妙经_DZ0369": {
+            title: "太上洞玄灵宝灭度五炼生尸妙经",
+            chapters: [
+                { number: "01", title: "太上洞玄灵宝灭度五炼生尸妙经" },
+            ]
+        },
+        "太上洞玄灵宝赤书玉诀妙经_DZ0352": {
+            title: "太上洞玄灵宝赤书玉诀妙经",
+            chapters: [
+                { number: "01", title: "太上洞玄灵宝赤书玉诀妙经卷上乃一" },
+                { number: "02", title: "太上洞玄灵宝赤书玉诀妙经卷下" },
+            ]
+        },
+        "太上灵宝智慧观身经_DZ0350": {
+            title: "太上灵宝智慧观身经",
+            chapters: [
+                { number: "01", title: "太上灵宝智慧观身经" },
+            ]
+        },
+        "太上灵宝补谢灶王经_DZ0364": {
+            title: "太上灵宝补谢灶王经",
+            chapters: [
+                { number: "01", title: "太上灵宝补谢灶王经" },
+            ]
+        },
+        "太上玄都妙本清静身心经_DZ0035": {
+            title: "太上玄都妙本清静身心经",
+            chapters: [
+                { number: "01", title: "太上玄都妙本清静身心经" },
             ]
         },
         "太上真一报父母恩重经_DZ0065": {
-            title: "太上真一報父母恩重經",
+            title: "太上真一报父母恩重经",
             chapters: [
-                { number: "01", title: "太上真一报父母恩重经" }
+                { number: "01", title: "太上真一报父母恩重经" },
+            ]
+        },
+        "太上神咒延寿妙经_DZ0358": {
+            title: "太上神咒延寿妙经",
+            chapters: [
+                { number: "01", title: "太上神咒延寿妙经" },
+            ]
+        },
+        "太上虚皇保生神咒经_DZ0384": {
+            title: "太上虚皇保生神咒经",
+            chapters: [
+                { number: "01", title: "太上虚皇保生神咒经" },
             ]
         },
         "太乙元真保命长生经_DZ0046": {
-            title: "太乙元真保命長生經",
+            title: "太乙元真保命长生经",
             chapters: [
-                { number: "01", title: "太乙元真保命长生经" }
+                { number: "01", title: "太乙元真保命长生经" },
             ]
         },
         "抱朴子（抱朴子内篇）_SBCK109": {
-            title: "抱朴子（抱朴子內篇）",
+            title: "抱朴子(抱朴子内篇)",
             chapters: [
                 { number: "01", title: "刻抱朴子叙" },
                 { number: "02", title: "抱朴子序" },
@@ -79,17 +286,38 @@ document.addEventListener('DOMContentLoaded', () => {
                 { number: "35", title: "抱朴子外篇卷十二" },
                 { number: "36", title: "抱朴子外篇卷十三" },
                 { number: "37", title: "抱朴子外篇卷十四" },
-                { number: "38", title: "抱朴子外篇卷十五" }
+                { number: "38", title: "抱朴子外篇卷十五" },
             ]
         },
         "洞玄灵宝无量度人经诀音义_DZ0095": {
-            title: "洞玄靈寶無量度人經訣音義",
+            title: "洞玄灵宝无量度人经诀音义",
             chapters: [
                 { number: "01", title: "下一篇" },
                 { number: "02", title: "洞玄灵宝无量度人经诀音义秋七" },
-                { number: "03", title: "诵诸天内音存念法" }
+                { number: "03", title: "诵诸天内音存念法" },
             ]
-        }
+        },
+        "洞玄灵宝自然九天生神章经_DZ0318": {
+            title: "洞玄灵宝自然九天生神章经",
+            chapters: [
+                { number: "01", title: "下一篇" },
+                { number: "02", title: "洞玄灵宝自然九天生神章经" },
+                { number: "03", title: "三宝大有金书" },
+                { number: "04", title: "始青清微天宝章" },
+                { number: "05", title: "元白禹余灵宝章" },
+                { number: "06", title: "玄黄太赤神宝章" },
+                { number: "07", title: "郁单无量天生神章第一" },
+                { number: "08", title: "上上禅善无量寿天生神章第二" },
+                { number: "09", title: "梵监须延天生神章第三" },
+                { number: "10", title: "寂然兜术天生神章第四" },
+                { number: "11", title: "波罗尼蜜不骄乐天生神章第五" },
+                { number: "12", title: "洞元化应声天生神章第六" },
+                { number: "13", title: "灵化梵辅天生神章第七" },
+                { number: "14", title: "高虚清明天生神章第八" },
+                { number: "15", title: "无想无结无爱天生神章第九" },
+                { number: "16", title: "诵经应验" },
+            ]
+        },
     };
 
     // 舊版經典資料（保持向後相容）

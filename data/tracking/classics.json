@@ -1,7 +1,7 @@
 {
   "metadata": {
     "created": "2025-08-09T03:11:05.302509",
-    "last_updated": "2025-08-09T05:15:57.413383",
+    "last_updated": "2025-08-10T03:11:19.418245",
     "total_classics": 6,
     "total_chapters": 45,
     "total_characters": 102050,
@@ -37,7 +37,7 @@
         "completed_chapters": 0,
         "total_chapters": 1,
         "completion_percentage": 0.0,
-        "last_translation_update": "2025-08-09T05:15:57.405336"
+        "last_translation_update": "2025-08-10T03:11:19.409855"
       },
       "tags": [
         "太上",
@@ -73,10 +73,10 @@
         }
       ],
       "translation_status": {
-        "completed_chapters": 0,
+        "completed_chapters": 1,
         "total_chapters": 1,
-        "completion_percentage": 0.0,
-        "last_translation_update": "2025-08-09T05:15:57.405562"
+        "completion_percentage": 100.0,
+        "last_translation_update": "2025-08-10T03:11:19.410134"
       },
       "tags": [
         "太上",
@@ -115,7 +115,7 @@
         "completed_chapters": 0,
         "total_chapters": 1,
         "completion_percentage": 0.0,
-        "last_translation_update": "2025-08-09T05:15:57.405761"
+        "last_translation_update": "2025-08-10T03:11:19.410324"
       },
       "tags": [
         "太上",
@@ -154,7 +154,7 @@
         "completed_chapters": 0,
         "total_chapters": 1,
         "completion_percentage": 0.0,
-        "last_translation_update": "2025-08-09T05:15:57.405950"
+        "last_translation_update": "2025-08-10T03:11:19.410507"
       },
       "tags": [
         "佚名",
@@ -487,7 +487,7 @@
         "completed_chapters": 0,
         "total_chapters": 38,
         "completion_percentage": 0.0,
-        "last_translation_update": "2025-08-09T05:15:57.412858"
+        "last_translation_update": "2025-08-10T03:11:19.417763"
       },
       "tags": [
         "道教煉丹",
@@ -542,7 +542,7 @@
         "completed_chapters": 0,
         "total_chapters": 3,
         "completion_percentage": 0.0,
-        "last_translation_update": "2025-08-09T05:15:57.413366"
+        "last_translation_update": "2025-08-10T03:11:19.418239"
       },
       "tags": [
         "唐代"
