@@ -16,6 +16,7 @@ pip install selenium
 import time
 import os
 from pathlib import Path
+from core.unicode_handler import safe_print
 
 try:
     from selenium import webdriver
@@ -27,7 +28,7 @@ try:
     SELENIUM_AVAILABLE = True
 except ImportError:
     SELENIUM_AVAILABLE = False
-    print("⚠️  Selenium未安裝，請執行: pip install selenium")
+    safe_print("⚠️  Selenium未安裝，請執行: pip install selenium")
 
 from base_crawler import BaseCrawler
 
@@ -44,7 +45,7 @@ class SeleniumCrawler(BaseCrawler):
             
     def setup_driver(self):
         """設定瀏覽器驅動"""
-        print("🔧 設定瀏覽器驅動...")
+        safe_print("🔧 設定瀏覽器驅動...")
         
         chrome_options = Options()
         if self.headless:
@@ -60,16 +61,16 @@ class SeleniumCrawler(BaseCrawler):
         try:
             self.driver = webdriver.Chrome(options=chrome_options)
             self.driver.implicitly_wait(10)  # 隱式等待
-            print("✅ Chrome驅動設定成功")
+            safe_print("✅ Chrome驅動設定成功")
             return True
         except Exception as e:
-            print(f"❌ Chrome驅動設定失敗: {e}")
-            print("💡 請確保已安裝ChromeDriver或使用webdriver-manager")
+            safe_print(f"❌ Chrome驅動設定失敗: {e}")
+            safe_print("💡 請確保已安裝ChromeDriver或使用webdriver-manager")
             return False
             
     def wait_for_content(self, timeout=15):
         """等待頁面內容載入"""
-        print("⏳ 等待頁面載入...")
+        safe_print("⏳ 等待頁面載入...")
         
         # 等待頁面基本載入完成
         WebDriverWait(self.driver, timeout).until(
@@ -79,11 +80,11 @@ class SeleniumCrawler(BaseCrawler):
         # 額外等待JavaScript執行
         time.sleep(3)
         
-        print("✅ 頁面載入完成")
+        safe_print("✅ 頁面載入完成")
         
     def extract_dynamic_content(self, url):
         """提取動態載入的內容"""
-        print(f"🌐 開始載入動態頁面: {url}")
+        safe_print(f"🌐 開始載入動態頁面: {url}")
         
         if not self.driver:
             if not self.setup_driver():
@@ -112,7 +113,7 @@ class SeleniumCrawler(BaseCrawler):
                 try:
                     elements = self.driver.find_elements(By.XPATH, selector)
                     if elements:
-                        print(f"✅ 找到內容 (選擇器: {selector}, 元素數: {len(elements)})")
+                        safe_print(f"✅ 找到內容 (選擇器: {selector}, 元素數: {len(elements)})")
                         for elem in elements:
                             text = elem.text.strip()
                             if len(text) > 50:  # 只收集有意義的內容
@@ -131,24 +132,24 @@ class SeleniumCrawler(BaseCrawler):
                         seen.add(content)
                         
                 final_content = '\n\n'.join(unique_content)
-                print(f"📝 提取到內容，總長度: {len(final_content)} 字符")
+                safe_print(f"📝 提取到內容，總長度: {len(final_content)} 字符")
                 return final_content
             else:
-                print("❌ 未找到有效內容")
+                safe_print("❌ 未找到有效內容")
                 return None
                 
         except TimeoutException:
-            print("⏰ 頁面載入超時")
+            safe_print("⏰ 頁面載入超時")
             return None
         except Exception as e:
-            print(f"❌ 提取內容時發生錯誤: {e}")
+            safe_print(f"❌ 提取內容時發生錯誤: {e}")
             return None
             
     def crawl_dynamic_page(self, url, title=None):
         """爬取動態頁面"""
-        print(f"🕷️ 開始爬取動態頁面")
-        print(f"網址: {url}")
-        print("-" * 50)
+        safe_print(f"🕷️ 開始爬取動態頁面")
+        safe_print(f"網址: {url}")
+        safe_print("-" * 50)
         
         content = self.extract_dynamic_content(url)
         
@@ -170,8 +171,8 @@ class SeleniumCrawler(BaseCrawler):
         filename = f"{title}.txt"
         self.save_text(cleaned_content, filename, "../docs/source_texts")
         
-        print(f"✅ 成功爬取: {title}")
-        print(f"內容長度: {len(cleaned_content)} 字符")
+        safe_print(f"✅ 成功爬取: {title}")
+        safe_print(f"內容長度: {len(cleaned_content)} 字符")
         
         return True
         
@@ -179,16 +180,16 @@ class SeleniumCrawler(BaseCrawler):
         """關閉瀏覽器"""
         if self.driver:
             self.driver.quit()
-            print("🔒 瀏覽器已關閉")
+            safe_print("🔒 瀏覽器已關閉")
 
 # 使用示例
 def crawl_shidian_with_selenium():
     """使用Selenium爬取十典古籍"""
     
     if not SELENIUM_AVAILABLE:
-        print("❌ Selenium未安裝，無法使用動態爬蟲")
-        print("請執行: pip install selenium")
-        print("並下載ChromeDriver: https://chromedriver.chromium.org/")
+        safe_print("❌ Selenium未安裝，無法使用動態爬蟲")
+        safe_print("請執行: pip install selenium")
+        safe_print("並下載ChromeDriver: https://chromedriver.chromium.org/")
         return
         
     crawler = SeleniumCrawler(headless=True)  # 設為False可以看到瀏覽器操作
@@ -199,9 +200,9 @@ def crawl_shidian_with_selenium():
         success = crawler.crawl_dynamic_page(url, "抱朴子_第一章_十典古籍")
         
         if success:
-            print("\n🎉 動態爬取成功！")
+            safe_print("\n🎉 動態爬取成功！")
         else:
-            print("\n❌ 動態爬取失敗")
+            safe_print("\n❌ 動態爬取失敗")
             
     finally:
         crawler.close()

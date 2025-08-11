@@ -11,8 +11,27 @@
 """
 
 import re
+
+def safe_print(*args, **kwargs):
+    """安全的打印函數，自動處理導入問題"""
+    try:
+        from core.unicode_handler import safe_print as _safe_print
+        _safe_print(*args, **kwargs)
+    except ImportError:
+        try:
+            import sys
+            from pathlib import Path
+            sys.path.append(str(Path(__file__).parent.parent))
+            from core.unicode_handler import safe_print as _safe_print
+            _safe_print(*args, **kwargs)
+        except ImportError:
+            print(*args, **kwargs)
+    except Exception:
+        print(*args, **kwargs)
+
 import json
 from base_crawler import BaseCrawler
+from core.unicode_handler import safe_print
 
 class SmartCrawler(BaseCrawler):
     """智能爬蟲"""
@@ -22,7 +41,7 @@ class SmartCrawler(BaseCrawler):
         
     def extract_raw_html(self, url):
         """提取原始HTML並分析"""
-        print(f"🔍 提取原始HTML: {url}")
+        safe_print(f"🔍 提取原始HTML: {url}")
         
         response = self.make_request(url)
         if not response:
@@ -31,19 +50,19 @@ class SmartCrawler(BaseCrawler):
         # 儲存原始HTML以供分析
         with open("debug_page.html", "w", encoding="utf-8") as f:
             f.write(response.text)
-        print("💾 原始HTML已儲存為 debug_page.html")
+        safe_print("💾 原始HTML已儲存為 debug_page.html")
         
         return response.text
         
     def find_content_in_html(self, html_content):
         """在HTML中尋找實際內容"""
-        print("🔎 在HTML中搜尋內容...")
+        safe_print("🔎 在HTML中搜尋內容...")
         
         soup = self.parse_html(html_content)
         
         # 方法1: 尋找所有文本節點
         all_text = soup.get_text()
-        print(f"總文本長度: {len(all_text)} 字符")
+        safe_print(f"總文本長度: {len(all_text)} 字符")
         
         # 方法2: 尋找包含中文的長段落
         chinese_pattern = re.compile(r'[\u4e00-\u9fff]+')
@@ -63,24 +82,24 @@ class SmartCrawler(BaseCrawler):
         # 按長度排序
         paragraphs.sort(key=lambda x: x['length'], reverse=True)
         
-        print(f"找到 {len(paragraphs)} 個中文段落")
+        safe_print(f"找到 {len(paragraphs)} 個中文段落")
         
         # 顯示最長的幾個段落
         for i, para in enumerate(paragraphs[:5]):
-            print(f"段落 {i+1}: {para['length']} 字符")
-            print(f"  標籤: {para['tag']}")
+            safe_print(f"段落 {i+1}: {para['length']} 字符")
+            safe_print(f"  標籤: {para['tag']}")
             if para['class']:
-                print(f"  類別: {' '.join(para['class'])}")
+                safe_print(f"  類別: {' '.join(para['class'])}")
             if para['id']:
-                print(f"  ID: {para['id']}")
-            print(f"  預覽: {para['text'][:100]}...")
-            print()
+                safe_print(f"  ID: {para['id']}")
+            safe_print(f"  預覽: {para['text'][:100]}...")
+            safe_print()
             
         return paragraphs
         
     def extract_book_content(self, paragraphs):
         """從段落中提取書籍內容"""
-        print("📖 提取書籍內容...")
+        safe_print("📖 提取書籍內容...")
         
         # 過濾掉導航、版權等無關內容
         filter_keywords = [
@@ -98,7 +117,7 @@ class SmartCrawler(BaseCrawler):
                 if self.is_classical_text(text):
                     content_paragraphs.append(para)
                     
-        print(f"過濾後剩餘 {len(content_paragraphs)} 個內容段落")
+        safe_print(f"過濾後剩餘 {len(content_paragraphs)} 個內容段落")
         
         if content_paragraphs:
             # 合併內容
@@ -124,9 +143,9 @@ class SmartCrawler(BaseCrawler):
         
     def crawl_shidian_smart(self, url, title=None):
         """智能爬取十典古籍"""
-        print(f"🧠 智能爬取開始")
-        print(f"網址: {url}")
-        print("=" * 50)
+        safe_print(f"🧠 智能爬取開始")
+        safe_print(f"網址: {url}")
+        safe_print("=" * 50)
         
         # 1. 提取原始HTML
         html_content = self.extract_raw_html(url)
@@ -141,7 +160,7 @@ class SmartCrawler(BaseCrawler):
         # 3. 提取書籍內容
         content = self.extract_book_content(paragraphs)
         if not content:
-            print("❌ 未能提取到有效的書籍內容")
+            safe_print("❌ 未能提取到有效的書籍內容")
             return False
             
         # 4. 確定標題
@@ -157,9 +176,9 @@ class SmartCrawler(BaseCrawler):
         filename = f"{title}.txt"
         self.save_text(content, filename, "../docs/source_texts")
         
-        print(f"✅ 智能爬取成功: {title}")
-        print(f"內容長度: {len(content)} 字符")
-        print(f"已儲存為: {filename}")
+        safe_print(f"✅ 智能爬取成功: {title}")
+        safe_print(f"內容長度: {len(content)} 字符")
+        safe_print(f"已儲存為: {filename}")
         
         return True
 
@@ -173,10 +192,10 @@ def test_smart_crawler():
     success = crawler.crawl_shidian_smart(url, "DZ0095_智能爬取")
     
     if success:
-        print("\n🎉 智能爬取完成！")
-        print("💡 提示：檢查 debug_page.html 可以看到完整的網頁結構")
+        safe_print("\n🎉 智能爬取完成！")
+        safe_print("💡 提示：檢查 debug_page.html 可以看到完整的網頁結構")
     else:
-        print("\n❌ 智能爬取失敗")
+        safe_print("\n❌ 智能爬取失敗")
 
 if __name__ == "__main__":
     test_smart_crawler()

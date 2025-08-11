@@ -7,6 +7,24 @@
 """
 
 import argparse
+
+def safe_print(*args, **kwargs):
+    """安全的打印函數，自動處理導入問題"""
+    try:
+        from core.unicode_handler import safe_print as _safe_print
+        _safe_print(*args, **kwargs)
+    except ImportError:
+        try:
+            import sys
+            from pathlib import Path
+            sys.path.append(str(Path(__file__).parent.parent))
+            from core.unicode_handler import safe_print as _safe_print
+            _safe_print(*args, **kwargs)
+        except ImportError:
+            print(*args, **kwargs)
+    except Exception:
+        print(*args, **kwargs)
+
 import json
 import sys
 from pathlib import Path
@@ -238,8 +256,19 @@ class EasyCLI:
                     if url:
                         # 自動獲取書名並添加書籍
                         safe_print("🔍 正在獲取書籍資訊...")
-                        book_name = self._get_book_title_from_url(url)
+                        auto_book_name = self._get_book_title_from_url(url)
+                        
+                        # 如果自動獲取的名稱只是ID，讓用戶手動輸入
+                        if auto_book_name.startswith('DZ') or len(auto_book_name) < 4:
+                            safe_print(f"⚠️  自動獲取的書名: {auto_book_name}")
+                            manual_name = input("請輸入正確的書籍名稱 (直接按Enter使用自動獲取的名稱): ").strip()
+                            book_name = manual_name if manual_name else auto_book_name
+                        else:
+                            book_name = auto_book_name
+                        
                         self.add_book(url, book_name)
+                        safe_print(f"✅ 已添加書籍: {book_name}")
+                        safe_print(f"📖 URL: {url}")
                         
                         # 詢問是否建立翻譯模板
                         safe_print(f"\n📝 發現新書籍: {book_name}")
@@ -409,17 +438,92 @@ class EasyCLI:
             
     def _generate_translation_templates(self) -> None:
         """生成翻譯模板"""
-        try:
-            import sys
-            from pathlib import Path
-            sys.path.append(str(Path(__file__).parent))
-            from template_generator import TemplateGenerator
-            generator = TemplateGenerator()
-            generator.interactive_template_generation()
-        except ImportError:
-            safe_print("❌ 無法載入模板生成器")
-        except Exception as e:
-            safe_print(f"❌ 模板生成失敗: {e}")
+        safe_print("📝 翻譯模板生成器")
+        safe_print("=" * 40)
+        
+        from pathlib import Path
+        
+        # 查找所有原文目錄
+        docs_dir = Path("docs/source_texts")
+        if not docs_dir.exists():
+            safe_print("❌ 沒有找到原文目錄")
+            safe_print("💡 請先使用選項 2 或 3 爬取一些書籍")
+            return
+        
+        book_dirs = [d for d in docs_dir.iterdir() if d.is_dir() and (d / "原文").exists()]
+        
+        if not book_dirs:
+            safe_print("❌ 沒有找到包含原文的書籍目錄")
+            safe_print("💡 請先使用選項 2 或 3 爬取一些書籍")
+            return
+        
+        safe_print(f"📚 找到 {len(book_dirs)} 本書籍：")
+        for i, book_dir in enumerate(book_dirs, 1):
+            source_files = list((book_dir / "原文").glob("*.txt"))
+            safe_print(f"{i}. {book_dir.name} ({len(source_files)} 個原文檔案)")
+        
+        safe_print("\n請選擇操作：")
+        safe_print("1. 為所有書籍生成翻譯模板")
+        safe_print("2. 為指定書籍生成翻譯模板")
+        safe_print("3. 返回主選單")
+        
+        choice = input("\n請輸入選項 (1-3): ").strip()
+        
+        if choice == "1":
+            safe_print("🚀 開始為所有書籍生成翻譯模板...")
+            total_generated = 0
+            
+            for book_dir in book_dirs:
+                safe_print(f"\n📖 處理: {book_dir.name}")
+                generated = self._generate_templates_for_book_dir(book_dir)
+                total_generated += generated
+                safe_print(f"✅ 已生成 {generated} 個翻譯模板")
+            
+            safe_print(f"\n🎉 全部完成！總共生成 {total_generated} 個翻譯模板")
+            
+        elif choice == "2":
+            try:
+                book_index = int(input("請選擇書籍編號: ")) - 1
+                if 0 <= book_index < len(book_dirs):
+                    book_dir = book_dirs[book_index]
+                    safe_print(f"🚀 開始為 {book_dir.name} 生成翻譯模板...")
+                    generated = self._generate_templates_for_book_dir(book_dir)
+                    safe_print(f"🎉 完成！生成了 {generated} 個翻譯模板")
+                else:
+                    safe_print("❌ 無效的書籍編號")
+            except ValueError:
+                safe_print("❌ 請輸入有效的數字")
+        
+        elif choice == "3":
+            return
+        else:
+            safe_print("❌ 無效選項")
+    
+    def _generate_templates_for_book_dir(self, book_dir) -> int:
+        """為指定書籍目錄生成翻譯模板"""
+        from pathlib import Path
+        
+        source_dir = book_dir / "原文"
+        translation_dir = Path("docs/translations") / book_dir.name
+        translation_dir.mkdir(parents=True, exist_ok=True)
+        
+        source_files = list(source_dir.glob("*.txt"))
+        generated_count = 0
+        
+        for source_file in source_files:
+            translation_filename = f"{source_file.stem}.md"
+            translation_file_path = translation_dir / translation_filename
+            
+            # 如果翻譯模板已存在，跳過
+            if translation_file_path.exists():
+                safe_print(f"  ⏭️  跳過已存在的模板: {translation_filename}")
+                continue
+            
+            self._create_single_translation_template(source_file, translation_dir)
+            safe_print(f"  ✅ 已生成: {translation_filename}")
+            generated_count += 1
+        
+        return generated_count
             
     def _create_translation_templates_for_book(self, url: str, book_name: str) -> None:
         """為指定書籍建立翻譯模板"""
@@ -429,15 +533,155 @@ class EasyCLI:
             success = self.translate_book(url)
             
             if success:
+                # 翻譯完成後，自動生成翻譯模板
+                safe_print("📝 正在生成翻譯模板...")
+                self._generate_templates_for_existing_sources()
                 safe_print("✅ 翻譯模板建立完成！")
                 safe_print("💡 您現在可以在 docs/translations/ 目錄中找到翻譯模板")
             else:
-                safe_print("❌ 翻譯模板建立失敗")
+                safe_print("❌ 原文下載失敗")
                 safe_print("💡 您可以稍後使用選項 8 手動建立翻譯模板")
                 
         except Exception as e:
             safe_print(f"❌ 建立翻譯模板失敗: {e}")
-            safe_print("💡 您可以稍後使用選項 8 手動建立翻譯模板")
+            # 即使翻譯引擎失敗，也嘗試為現有原文生成模板
+            safe_print("🔄 嘗試為現有原文生成翻譯模板...")
+            try:
+                self._generate_templates_for_existing_sources()
+                safe_print("✅ 翻譯模板生成完成！")
+            except Exception as e2:
+                safe_print(f"❌ 翻譯模板生成也失敗: {e2}")
+                safe_print("💡 您可以稍後使用選項 8 手動建立翻譯模板")
+    
+    def _generate_templates_for_existing_sources(self) -> None:
+        """為現有的原文檔案生成翻譯模板"""
+        from pathlib import Path
+        from datetime import datetime
+        
+        # 查找所有原文目錄
+        docs_dir = Path("docs/source_texts")
+        if not docs_dir.exists():
+            safe_print("❌ 沒有找到原文目錄")
+            return
+        
+        for book_dir in docs_dir.iterdir():
+            if book_dir.is_dir():
+                source_dir = book_dir / "原文"
+                if source_dir.exists():
+                    # 建立對應的翻譯目錄
+                    translation_dir = Path("docs/translations") / book_dir.name
+                    translation_dir.mkdir(parents=True, exist_ok=True)
+                    
+                    # 為每個原文檔案生成翻譯模板
+                    source_files = list(source_dir.glob("*.txt"))
+                    for source_file in source_files:
+                        self._create_single_translation_template(source_file, translation_dir)
+    
+    def _get_book_title_from_url(self, url: str) -> str:
+        """從URL獲取書籍標題"""
+        try:
+            # 嘗試轉換URL格式以獲取更好的結果
+            corrected_url = self._correct_book_url(url)
+            
+            # 使用翻譯引擎獲取書籍資訊
+            book_info = self.engine.get_book_info(corrected_url)
+            title = book_info.get('title', self._extract_book_id_from_url(url))
+            
+            # 如果標題就是ID，嘗試原始URL
+            if title == self._extract_book_id_from_url(url):
+                book_info = self.engine.get_book_info(url)
+                title = book_info.get('title', title)
+            
+            return title
+        except Exception as e:
+            safe_print(f"⚠️  無法獲取書籍標題: {e}")
+            return self._extract_book_id_from_url(url)
+    
+    def _correct_book_url(self, url: str) -> str:
+        """修正書籍URL格式以獲得更好的標題提取效果"""
+        import re
+        
+        # 提取書籍ID
+        book_id_match = re.search(r'/book/([^/?]+)', url)
+        if not book_id_match:
+            return url
+        
+        book_id = book_id_match.group(1)
+        
+        # 如果URL格式是 /chapter/start 或類似格式，嘗試轉換為章節格式
+        if '/chapter/start' in url or 'mode=book' in url:
+            # 轉換為第一章的URL格式
+            base_url = "https://www.shidianguji.com/zh/book"
+            corrected_url = f"{base_url}/{book_id}/chapter/{book_id}_1"
+            return corrected_url
+        
+        return url
+    
+    def _extract_book_id_from_url(self, url: str) -> str:
+        """從URL提取書籍ID作為備用名稱"""
+        import re
+        match = re.search(r'/book/([^/?]+)', url)
+        return match.group(1) if match else "未知書籍"
+
+    def _create_single_translation_template(self, source_file_path, translation_dir):
+        """為單個原文檔案生成翻譯模板"""
+        try:
+            # 讀取原文
+            with open(source_file_path, 'r', encoding='utf-8') as f:
+                content = f.read()
+            
+            # 提取標題
+            lines = content.split('\n')
+            title = lines[0].replace('# ', '').strip() if lines else "未知標題"
+            
+            # 生成翻譯檔案名
+            source_filename = Path(source_file_path).stem
+            translation_filename = f"{source_filename}.md"
+            translation_file_path = translation_dir / translation_filename
+            
+            # 如果翻譯模板已存在，跳過
+            if translation_file_path.exists():
+                return
+            
+            # 生成翻譯模板內容
+            template_content = f"""# {title}
+
+## 原文
+
+{content}
+
+## 翻譯
+
+[此處填入現代中文翻譯]
+
+---
+
+**翻譯說明：**
+- 原文字數：{len(content)} 字
+- 建議使用AI翻譯工具或人工翻譯
+- 保持原文意思，使用現代中文表達
+- 保留重要的古代術語，必要時添加註解
+
+**重要詞彙：**
+- [待補充重要詞彙解釋]
+
+**文化背景：**
+- [待補充相關文化背景]
+
+**翻譯要點：**
+- [待補充翻譯注意事項]
+
+---
+*翻譯模板生成時間：{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}*
+*原文檔案：{source_filename}.txt*
+"""
+            
+            # 保存翻譯模板
+            with open(translation_file_path, 'w', encoding='utf-8') as f:
+                f.write(template_content)
+                
+        except Exception as e:
+            safe_print(f"❌ 生成翻譯模板失敗 {source_file_path}: {e}")
             
     def _ai_translation_interface(self) -> None:
         """AI翻譯介面"""

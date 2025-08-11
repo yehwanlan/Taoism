@@ -11,9 +11,28 @@
 """
 
 import re
+
+def safe_print(*args, **kwargs):
+    """安全的打印函數，自動處理導入問題"""
+    try:
+        from core.unicode_handler import safe_print as _safe_print
+        _safe_print(*args, **kwargs)
+    except ImportError:
+        try:
+            import sys
+            from pathlib import Path
+            sys.path.append(str(Path(__file__).parent.parent))
+            from core.unicode_handler import safe_print as _safe_print
+            _safe_print(*args, **kwargs)
+        except ImportError:
+            print(*args, **kwargs)
+    except Exception:
+        print(*args, **kwargs)
+
 import time
 from urllib.parse import urljoin, urlparse
 from base_crawler import BaseCrawler
+from core.unicode_handler import safe_print
 
 class ShidianCrawler(BaseCrawler):
     """十典古籍網專用爬蟲"""
@@ -28,7 +47,7 @@ class ShidianCrawler(BaseCrawler):
         
         學習重點：如何分析網頁的DOM結構
         """
-        print(f"🔍 分析頁面結構: {url}")
+        safe_print(f"🔍 分析頁面結構: {url}")
         
         response = self.make_request(url)
         if not response:
@@ -86,7 +105,7 @@ class ShidianCrawler(BaseCrawler):
         
         學習重點：針對特定網站的內容提取策略
         """
-        print(f"📖 開始提取內容: {url}")
+        safe_print(f"📖 開始提取內容: {url}")
         
         response = self.make_request(url)
         if not response:
@@ -115,7 +134,7 @@ class ShidianCrawler(BaseCrawler):
                     text = elem.get_text()
                     if len(text) > content.__len__():
                         content = text
-                        print(f"✅ 找到內容 (選擇器: {selector}, 長度: {len(text)})")
+                        safe_print(f"✅ 找到內容 (選擇器: {selector}, 長度: {len(text)})")
                         
         # 如果沒找到特定容器，嘗試提取所有段落
         if len(content) < 100:
@@ -126,7 +145,7 @@ class ShidianCrawler(BaseCrawler):
                 if len(text) > 20 and not any(skip in text.lower() for skip in ['copyright', '版權', '導航', 'nav']):
                     all_text.append(text)
             content = '\n'.join(all_text)
-            print(f"📝 提取段落內容，總長度: {len(content)}")
+            safe_print(f"📝 提取段落內容，總長度: {len(content)}")
             
         return self.clean_text(content) if content else None
         
@@ -167,26 +186,26 @@ class ShidianCrawler(BaseCrawler):
         Returns:
             是否成功爬取
         """
-        print(f"🕷️ 開始爬取十典古籍頁面")
-        print(f"網址: {url}")
-        print("-" * 50)
+        safe_print(f"🕷️ 開始爬取十典古籍頁面")
+        safe_print(f"網址: {url}")
+        safe_print("-" * 50)
         
         # 先分析頁面結構
         analysis = self.analyze_page_structure(url)
         if analysis:
-            print("📊 頁面分析結果:")
-            print(f"標題: {analysis['title']}")
-            print(f"找到 {len(analysis['content_containers'])} 個內容容器")
+            safe_print("📊 頁面分析結果:")
+            safe_print(f"標題: {analysis['title']}")
+            safe_print(f"找到 {len(analysis['content_containers'])} 個內容容器")
             for container in analysis['content_containers'][:3]:  # 只顯示前3個
-                print(f"  - {container['selector']}: {container['text_length']} 字符")
-                print(f"    預覽: {container['text_preview']}")
-            print()
+                safe_print(f"  - {container['selector']}: {container['text_length']} 字符")
+                safe_print(f"    預覽: {container['text_preview']}")
+            safe_print()
         
         # 提取內容
         content = self.extract_shidian_content(url)
         
         if not content or len(content) < 100:
-            print("❌ 未能提取到有效內容")
+            safe_print("❌ 未能提取到有效內容")
             return False
             
         # 確定標題
@@ -202,9 +221,9 @@ class ShidianCrawler(BaseCrawler):
         filename = f"{title}.txt"
         self.save_text(content, filename, "../docs/source_texts")
         
-        print(f"✅ 成功爬取: {title}")
-        print(f"內容長度: {len(content)} 字符")
-        print(f"已儲存為: {filename}")
+        safe_print(f"✅ 成功爬取: {title}")
+        safe_print(f"內容長度: {len(content)} 字符")
+        safe_print(f"已儲存為: {filename}")
         
         return True
 
@@ -218,6 +237,6 @@ if __name__ == "__main__":
     success = crawler.crawl_shidian_page(test_url, "道德經_第一章_十典古籍版")
     
     if success:
-        print("\n🎉 爬取成功！")
+        safe_print("\n🎉 爬取成功！")
     else:
-        print("\n❌ 爬取失敗，可能需要調整策略")
+        safe_print("\n❌ 爬取失敗，可能需要調整策略")

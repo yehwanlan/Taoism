@@ -14,6 +14,7 @@ import json
 import re
 from urllib.parse import urljoin, urlparse, parse_qs
 from base_crawler import BaseCrawler
+from core.unicode_handler import safe_print
 
 class APICrawler(BaseCrawler):
     """API爬蟲"""
@@ -24,7 +25,7 @@ class APICrawler(BaseCrawler):
         
     def analyze_url_structure(self, url):
         """分析URL結構以推測API端點"""
-        print(f"🔍 分析URL結構: {url}")
+        safe_print(f"🔍 分析URL結構: {url}")
         
         parsed = urlparse(url)
         path_parts = parsed.path.split('/')
@@ -45,14 +46,14 @@ class APICrawler(BaseCrawler):
             elif len(part) > 10 and '_' in part:
                 analysis['chapter_id'] = part
                 
-        print(f"書籍ID: {analysis['book_id']}")
-        print(f"章節ID: {analysis['chapter_id']}")
+safe_print(f"書籍ID: {analysis['book_id']}")
+safe_print(f"章節ID: {analysis['chapter_id']}")
         
         return analysis
         
     def try_api_endpoints(self, book_id, chapter_id):
         """嘗試常見的API端點"""
-        print(f"🔌 嘗試API端點...")
+        safe_print(f"🔌 嘗試API端點...")
         
         # 常見的API端點模式
         api_patterns = [
@@ -68,14 +69,14 @@ class APICrawler(BaseCrawler):
         
         for pattern in api_patterns:
             api_url = urljoin(self.base_url, pattern)
-            print(f"嘗試: {api_url}")
+            safe_print(f"嘗試: {api_url}")
             
             response = self.make_request(api_url)
             if response and response.status_code == 200:
                 try:
                     data = response.json()
                     if data and isinstance(data, dict):
-                        print(f"✅ 成功: {api_url}")
+                        safe_print(f"✅ 成功: {api_url}")
                         successful_responses.append({
                             'url': api_url,
                             'data': data
@@ -83,19 +84,19 @@ class APICrawler(BaseCrawler):
                 except:
                     # 可能是HTML或其他格式
                     if len(response.text) > 100:
-                        print(f"✅ 成功 (非JSON): {api_url}")
+                        safe_print(f"✅ 成功 (非JSON): {api_url}")
                         successful_responses.append({
                             'url': api_url,
                             'data': response.text
                         })
             else:
-                print(f"❌ 失敗: {api_url}")
+                safe_print(f"❌ 失敗: {api_url}")
                 
         return successful_responses
         
     def extract_content_from_api_response(self, api_data):
         """從API回應中提取內容"""
-        print("📖 從API回應中提取內容...")
+        safe_print("📖 從API回應中提取內容...")
         
         if isinstance(api_data, dict):
             # 常見的內容字段名
@@ -109,7 +110,7 @@ class APICrawler(BaseCrawler):
                 if field in api_data:
                     content = api_data[field]
                     if isinstance(content, str) and len(content) > 50:
-                        print(f"✅ 找到內容字段: {field}")
+                        safe_print(f"✅ 找到內容字段: {field}")
                         return content
                         
             # 如果沒有直接的內容字段，嘗試遞歸搜尋
@@ -136,29 +137,29 @@ class APICrawler(BaseCrawler):
                 
             recursive_content = find_content_recursive(api_data)
             if recursive_content:
-                print("✅ 通過遞歸搜尋找到內容")
+                safe_print("✅ 通過遞歸搜尋找到內容")
                 return recursive_content
                 
         elif isinstance(api_data, str):
             # 直接是字符串內容
             if len(api_data) > 50 and re.search(r'[\u4e00-\u9fff]', api_data):
-                print("✅ 直接字符串內容")
+                safe_print("✅ 直接字符串內容")
                 return api_data
                 
-        print("❌ 未能從API回應中提取內容")
+        safe_print("❌ 未能從API回應中提取內容")
         return None
         
     def crawl_via_api(self, url, title=None):
         """通過API爬取內容"""
-        print(f"🌐 通過API爬取內容")
-        print(f"網址: {url}")
-        print("=" * 50)
+        safe_print(f"🌐 通過API爬取內容")
+        safe_print(f"網址: {url}")
+        safe_print("=" * 50)
         
         # 1. 分析URL結構
         analysis = self.analyze_url_structure(url)
         
         if not analysis['book_id'] or not analysis['chapter_id']:
-            print("❌ 無法從URL中提取書籍或章節ID")
+            safe_print("❌ 無法從URL中提取書籍或章節ID")
             return False
             
         # 2. 嘗試API端點
@@ -168,7 +169,7 @@ class APICrawler(BaseCrawler):
         )
         
         if not api_responses:
-            print("❌ 沒有找到有效的API端點")
+            safe_print("❌ 沒有找到有效的API端點")
             return False
             
         # 3. 從API回應中提取內容
@@ -176,15 +177,15 @@ class APICrawler(BaseCrawler):
         for response in api_responses:
             content = self.extract_content_from_api_response(response['data'])
             if content:
-                print(f"✅ 從 {response['url']} 獲取到內容")
+                safe_print(f"✅ 從 {response['url']} 獲取到內容")
                 break
                 
         if not content:
-            print("❌ 無法從API回應中提取內容")
+            safe_print("❌ 無法從API回應中提取內容")
             # 儲存API回應以供調試
             with open("api_debug.json", "w", encoding="utf-8") as f:
                 json.dump(api_responses, f, ensure_ascii=False, indent=2)
-            print("💾 API回應已儲存為 api_debug.json")
+            safe_print("💾 API回應已儲存為 api_debug.json")
             return False
             
         # 4. 清理和儲存內容
@@ -204,8 +205,8 @@ class APICrawler(BaseCrawler):
         filename = f"{title}.txt"
         self.save_text(cleaned_content, filename, "../docs/source_texts")
         
-        print(f"✅ API爬取成功: {title}")
-        print(f"內容長度: {len(cleaned_content)} 字符")
+        safe_print(f"✅ API爬取成功: {title}")
+        safe_print(f"內容長度: {len(cleaned_content)} 字符")
         
         return True
 
@@ -219,10 +220,10 @@ def test_api_crawler():
     success = crawler.crawl_via_api(url, "抱朴子_內篇_API爬取")
     
     if success:
-        print("\n🎉 API爬取完成！")
+        safe_print("\n🎉 API爬取完成！")
     else:
-        print("\n❌ API爬取失敗")
-        print("💡 提示：檢查 api_debug.json 可以看到API回應內容")
+        safe_print("\n❌ API爬取失敗")
+        safe_print("💡 提示：檢查 api_debug.json 可以看到API回應內容")
 
 if __name__ == "__main__":
     test_api_crawler()

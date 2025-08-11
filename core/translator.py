@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-from core.unicode_handler import safe_print
 道教經典翻譯系統 - 核心翻譯器
 
 整合原有的 auto_translator.py 功能，提供統一的翻譯介面
@@ -18,7 +17,24 @@ from typing import Dict, List, Optional, Tuple
 
 from .tracker import ClassicTracker
 from .file_monitor import FileMonitor
-from .unicode_handler import safe_print
+
+# 確保safe_print在所有地方都可用
+try:
+    from .unicode_handler import safe_print
+except ImportError:
+    def safe_print(*args, **kwargs):
+        try:
+            print(*args, **kwargs)
+        except UnicodeEncodeError:
+            safe_args = []
+            for arg in args:
+                if isinstance(arg, str):
+                    safe_args.append(arg.encode('utf-8', errors='replace').decode('utf-8'))
+                else:
+                    safe_args.append(str(arg))
+            print(*safe_args, **kwargs)
+        except Exception as e:
+            print(f"打印錯誤: {e}")
 
 
 class TranslationEngine:
@@ -692,6 +708,7 @@ class TranslationEngine:
         
     def crawl_chapter(self, chapter_info: Dict) -> Optional[Dict]:
         """爬取單一章節（支持層級結構和內容去重）"""
+        from .unicode_handler import safe_print
         level_prefix = "  " * (chapter_info.get('level', 1) - 1)
         safe_print(f"📖 {level_prefix}爬取: {chapter_info['title']} (Level {chapter_info.get('level', 1)})")
         
@@ -760,6 +777,7 @@ class TranslationEngine:
             
     def _extract_content_from_html(self, soup: BeautifulSoup, title: str) -> Optional[Dict]:
         """從HTML中提取內容"""
+
         try:
             main_content = soup.find('main', class_='read-layout-main')
             if main_content:

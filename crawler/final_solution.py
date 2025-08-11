@@ -14,6 +14,7 @@ import json
 import re
 from urllib.parse import urljoin
 from base_crawler import BaseCrawler
+from core.unicode_handler import safe_print
 
 class FinalSolution(BaseCrawler):
     """最終解決方案爬蟲"""
@@ -24,7 +25,7 @@ class FinalSolution(BaseCrawler):
         
     def extract_book_info_from_api(self, url):
         """從API中提取書籍資訊"""
-        print(f"📚 從API提取書籍資訊: {url}")
+        safe_print(f"📚 從API提取書籍資訊: {url}")
         
         response = self.make_request(url)
         if not response:
@@ -46,7 +47,7 @@ class FinalSolution(BaseCrawler):
             if matches:
                 try:
                     data = json.loads(matches.group(1))
-                    print(f"✅ 找到數據結構: {pattern}")
+                    safe_print(f"✅ 找到數據結構: {pattern}")
                     return data
                 except json.JSONDecodeError:
                     continue
@@ -55,7 +56,7 @@ class FinalSolution(BaseCrawler):
         
     def find_content_api_from_book_info(self, book_info, chapter_id):
         """從書籍資訊中找到內容API"""
-        print(f"🔍 從書籍資訊中尋找內容API...")
+        safe_print(f"🔍 從書籍資訊中尋找內容API...")
         
         if not book_info:
             return None
@@ -79,7 +80,7 @@ class FinalSolution(BaseCrawler):
         chapter_info = find_chapter_info(book_info, chapter_id)
         
         if chapter_info:
-            print(f"✅ 找到章節資訊: {chapter_info.get('chapterName', 'Unknown')}")
+            safe_print(f"✅ 找到章節資訊: {chapter_info.get('chapterName', 'Unknown')}")
             
             # 嘗試構建內容API URL
             volume_id = chapter_info.get('volumeId')
@@ -91,7 +92,7 @@ class FinalSolution(BaseCrawler):
         
     def get_chapter_content(self, content_api_url):
         """獲取章節內容"""
-        print(f"📖 獲取章節內容: {content_api_url}")
+        safe_print(f"📖 獲取章節內容: {content_api_url}")
         
         full_url = urljoin(self.base_url, content_api_url)
         response = self.make_request(full_url)
@@ -124,25 +125,25 @@ class FinalSolution(BaseCrawler):
             
             if content_parts:
                 final_content = '\n\n'.join(content_parts)
-                print(f"✅ 提取到內容，總長度: {len(final_content)} 字符")
+                safe_print(f"✅ 提取到內容，總長度: {len(final_content)} 字符")
                 return final_content
             else:
-                print("❌ 未能從JSON中提取文本內容")
+                safe_print("❌ 未能從JSON中提取文本內容")
                 # 儲存原始數據以供調試
                 with open("content_debug.json", "w", encoding="utf-8") as f:
                     json.dump(data, f, ensure_ascii=False, indent=2)
-                print("💾 原始數據已儲存為 content_debug.json")
+                safe_print("💾 原始數據已儲存為 content_debug.json")
                 return None
                 
         except json.JSONDecodeError:
-            print("❌ API回應不是有效的JSON")
+            safe_print("❌ API回應不是有效的JSON")
             return None
             
     def crawl_shidian_final(self, url, title=None):
         """最終爬取方案"""
-        print(f"🎯 最終爬取方案")
-        print(f"網址: {url}")
-        print("=" * 60)
+        safe_print(f"🎯 最終爬取方案")
+        safe_print(f"網址: {url}")
+        safe_print("=" * 60)
         
         # 1. 從URL提取ID
         import re
@@ -150,35 +151,35 @@ class FinalSolution(BaseCrawler):
         chapter_match = re.search(r'/chapter/([^/?]+)', url)
         
         if not book_match or not chapter_match:
-            print("❌ 無法從URL中提取書籍或章節ID")
+            safe_print("❌ 無法從URL中提取書籍或章節ID")
             return False
             
         book_id = book_match.group(1)
         chapter_id = chapter_match.group(1)
         
-        print(f"書籍ID: {book_id}")
-        print(f"章節ID: {chapter_id}")
+        safe_print(f"書籍ID: {book_id}")
+        safe_print(f"章節ID: {chapter_id}")
         
         # 2. 獲取書籍資訊
         book_api = f"/api/book/{book_id}/chapter/{chapter_id}"
         book_info = self.extract_book_info_from_api(urljoin(self.base_url, book_api))
         
         if not book_info:
-            print("❌ 無法獲取書籍資訊")
+            safe_print("❌ 無法獲取書籍資訊")
             return False
             
         # 3. 尋找內容API
         content_api = self.find_content_api_from_book_info(book_info, chapter_id)
         
         if not content_api:
-            print("❌ 無法找到內容API")
+            safe_print("❌ 無法找到內容API")
             return False
             
         # 4. 獲取實際內容
         content = self.get_chapter_content(content_api)
         
         if not content:
-            print("❌ 無法獲取章節內容")
+            safe_print("❌ 無法獲取章節內容")
             return False
             
         # 5. 清理和儲存內容
@@ -190,8 +191,8 @@ class FinalSolution(BaseCrawler):
         filename = f"{title}.txt"
         self.save_text(cleaned_content, filename, "../docs/source_texts")
         
-        print(f"✅ 最終爬取成功: {title}")
-        print(f"內容長度: {len(cleaned_content)} 字符")
+        safe_print(f"✅ 最終爬取成功: {title}")
+        safe_print(f"內容長度: {len(cleaned_content)} 字符")
         
         return True
         
@@ -215,15 +216,15 @@ def test_final_solution():
     success = crawler.crawl_shidian_final(url, "抱朴子_內篇_最終版本")
     
     if success:
-        print("\n🎉 最終爬取完成！")
-        print("🔧 現在您已經掌握了完整的爬蟲技術棧：")
-        print("   1. 基礎HTTP爬蟲")
-        print("   2. API逆向工程")
-        print("   3. JSON數據解析")
-        print("   4. 動態內容處理")
+        safe_print("\n🎉 最終爬取完成！")
+        safe_print("🔧 現在您已經掌握了完整的爬蟲技術棧：")
+        safe_print("   1. 基礎HTTP爬蟲")
+        safe_print("   2. API逆向工程")
+        safe_print("   3. JSON數據解析")
+        safe_print("   4. 動態內容處理")
     else:
-        print("\n❌ 最終爬取失敗")
-        print("💡 檢查調試文件以了解更多資訊")
+        safe_print("\n❌ 最終爬取失敗")
+        safe_print("💡 檢查調試文件以了解更多資訊")
 
 if __name__ == "__main__":
     test_final_solution()

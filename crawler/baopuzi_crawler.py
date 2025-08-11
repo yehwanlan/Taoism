@@ -10,6 +10,7 @@ import requests
 import re
 from pathlib import Path
 from bs4 import BeautifulSoup
+from core.unicode_handler import safe_print
 
 class BaopuziCrawler:
     """抱朴子專用爬蟲"""
@@ -34,7 +35,7 @@ class BaopuziCrawler:
         """獲取章節內容"""
         book_id, chapter_id = self.extract_ids_from_url(url)
         if not book_id or not chapter_id:
-            print("❌ 無法從URL提取ID")
+            safe_print("❌ 無法從URL提取ID")
             return None, None
             
         # 使用API端點
@@ -45,7 +46,7 @@ class BaopuziCrawler:
             if response.status_code == 200:
                 return self.extract_text_from_html(response.text), chapter_id
         except Exception as e:
-            print(f"❌ 請求失敗: {e}")
+            safe_print(f"❌ 請求失敗: {e}")
             
         return None, None
         
@@ -76,7 +77,7 @@ class BaopuziCrawler:
                     return result
                     
         except Exception as e:
-            print(f"⚠️  HTML解析錯誤: {e}")
+            safe_print(f"⚠️  HTML解析錯誤: {e}")
             
         return None
         
@@ -105,22 +106,22 @@ class BaopuziCrawler:
         with open(output_path, 'w', encoding='utf-8') as f:
             f.write(full_content)
             
-        print(f"✅ 已儲存: {filename}")
-        print(f"   標題: {content_data['title']}")
-        print(f"   內容長度: {len(full_content)} 字符")
+        safe_print(f"✅ 已儲存: {filename}")
+        safe_print(f"   標題: {content_data['title']}")
+        safe_print(f"   內容長度: {len(full_content)} 字符")
         
         return True
         
     def crawl_chapter(self, url, chapter_number=None):
         """爬取單一章節"""
-        print(f"🕷️ 爬取章節: {url}")
+        safe_print(f"🕷️ 爬取章節: {url}")
         
         content_data, chapter_id = self.get_chapter_content(url)
         
         if content_data:
             return self.save_chapter(content_data, chapter_id, chapter_number)
         else:
-            print("❌ 無法獲取章節內容")
+            safe_print("❌ 無法獲取章節內容")
             return False
 
 def main():
@@ -137,19 +138,19 @@ def main():
         # 可以添加更多章節...
     ]
     
-    print("🏗️ 開始建立抱朴子專案")
-    print("=" * 50)
+    safe_print("🏗️ 開始建立抱朴子專案")
+    safe_print("=" * 50)
     
     success_count = 0
     for chapter in chapters:
-        print(f"\n📖 處理第 {chapter['number']} 章: {chapter['title']}")
+        safe_print(f"\n📖 處理第 {chapter['number']} 章: {chapter['title']}")
         
         if crawler.crawl_chapter(chapter['url'], chapter['number']):
             success_count += 1
         else:
-            print(f"❌ 第 {chapter['number']} 章爬取失敗")
+            safe_print(f"❌ 第 {chapter['number']} 章爬取失敗")
             
-    print(f"\n🎉 完成！成功爬取 {success_count}/{len(chapters)} 章")
+    safe_print(f"\n🎉 完成！成功爬取 {success_count}/{len(chapters)} 章")
 
 if __name__ == "__main__":
     main()

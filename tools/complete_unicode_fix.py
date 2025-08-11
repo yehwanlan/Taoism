@@ -10,6 +10,10 @@ import sys
 from pathlib import Path
 from typing import List, Tuple
 
+# Add project root to path to allow importing core modules
+sys.path.append(str(Path(__file__).parent.parent))
+from core.unicode_handler import safe_print
+
 class UnicodeFixTool:
     """Unicode修復工具"""
     
@@ -22,20 +26,24 @@ class UnicodeFixTool:
         """修復單個文件"""
         try:
             # 讀取文件內容
+            # safe_print(f"  - Reading {file_path}")
             with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
             
             original_content = content
             
             # 1. 添加Unicode處理器導入（如果需要）
+            # safe_print("  - Adding import")
             content = self._add_unicode_import(content, file_path)
             
             # 2. 替換print語句
+            # safe_print("  - Replacing safe_print")
             content = self._replace_print_statements(content)
             
             # 3. 檢查是否有變化
             if content != original_content:
                 # 寫回文件
+                # safe_print("  - Writing changes")
                 with open(file_path, 'w', encoding='utf-8') as f:
                     f.write(content)
                 
@@ -46,6 +54,7 @@ class UnicodeFixTool:
                 return False
                 
         except Exception as e:
+            safe_print(f"  - ERROR fixing file {file_path}: {e}")
             self.error_files.append((file_path, str(e)))
             return False
     
@@ -60,7 +69,7 @@ class UnicodeFixTool:
             return content
         
         # 檢查是否是核心模組文件
-        if 'core/' in str(file_path):
+        if 'core/' in str(file_path) or 'tools/' in str(file_path):
             import_line = 'from .unicode_handler import safe_print'
         else:
             import_line = 'from core.unicode_handler import safe_print'
@@ -121,7 +130,7 @@ class UnicodeFixTool:
             if self._should_skip_file(file_path):
                 continue
             
-            print(f"處理: {file_path}")
+            safe_print(f"處理: {file_path}")
             self.fix_file(file_path)
     
     def _should_skip_file(self, file_path: Path) -> bool:
@@ -141,31 +150,31 @@ class UnicodeFixTool:
     
     def print_summary(self) -> None:
         """打印修復摘要"""
-        print("\n" + "=" * 60)
-        print("Unicode修復摘要")
-        print("=" * 60)
+        safe_print("\n" + "=" * 60)
+        safe_print("Unicode修復摘要")
+        safe_print("=" * 60)
         
-        print(f"✅ 修復的文件: {len(self.fixed_files)}")
+        safe_print(f"✅ 修復的文件: {len(self.fixed_files)}")
         for file_path in self.fixed_files:
-            print(f"   - {file_path}")
+            safe_print(f"   - {file_path}")
         
-        print(f"\n⚠️  跳過的文件: {len(self.skipped_files)}")
+        safe_print(f"\n⚠️  跳過的文件: {len(self.skipped_files)}")
         for file_path in self.skipped_files[:5]:  # 只顯示前5個
-            print(f"   - {file_path}")
+            safe_print(f"   - {file_path}")
         if len(self.skipped_files) > 5:
-            print(f"   ... 還有 {len(self.skipped_files) - 5} 個文件")
+            safe_print(f"   ... 還有 {len(self.skipped_files) - 5} 個文件")
         
         if self.error_files:
-            print(f"\n❌ 錯誤的文件: {len(self.error_files)}")
+            safe_print(f"\n❌ 錯誤的文件: {len(self.error_files)}")
             for file_path, error in self.error_files:
-                print(f"   - {file_path}: {error}")
+                safe_print(f"   - {file_path}: {error}")
         
-        print(f"\n📊 總計: {len(self.fixed_files + self.skipped_files + [f[0] for f in self.error_files])} 個文件處理完成")
+        safe_print(f"\n📊 總計: {len(self.fixed_files + self.skipped_files + [f[0] for f in self.error_files])} 個文件處理完成")
 
 def main():
     """主函數"""
-    print("🔧 完整Unicode修復工具")
-    print("=" * 50)
+    safe_print("🔧 完整Unicode修復工具")
+    safe_print("=" * 50)
     
     fixer = UnicodeFixTool()
     
@@ -173,14 +182,15 @@ def main():
     directories_to_fix = [
         Path("core"),
         Path("tools"),
+        Path("crawler"),
     ]
     
     for directory in directories_to_fix:
         if directory.exists():
-            print(f"\n📁 處理目錄: {directory}")
-            fixer.fix_directory(directory, recursive=False)
+            safe_print(f"\n📁 處理目錄: {directory}")
+            fixer.fix_directory(directory, recursive=True) # Changed to recursive
         else:
-            print(f"⚠️  目錄不存在: {directory}")
+            safe_print(f"⚠️  目錄不存在: {directory}")
     
     # 修復主文件
     main_files = [
@@ -189,18 +199,18 @@ def main():
         Path("update_web_data.py"),
     ]
     
-    print(f"\n📄 處理主要文件:")
+    safe_print(f"\n📄 處理主要文件:")
     for file_path in main_files:
         if file_path.exists():
-            print(f"處理: {file_path}")
+            safe_print(f"處理: {file_path}")
             fixer.fix_file(file_path)
         else:
-            print(f"⚠️  文件不存在: {file_path}")
+            safe_print(f"⚠️  文件不存在: {file_path}")
     
     # 打印摘要
     fixer.print_summary()
     
-    print("\n💡 修復完成！建議運行 python test_unicode_fix.py 測試效果")
+    safe_print("\n💡 修復完成！建議運行 python test_unicode_fix.py 測試效果")
 
 if __name__ == "__main__":
     main()

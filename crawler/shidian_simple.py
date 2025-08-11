@@ -7,9 +7,28 @@
 """
 
 import requests
+
+def safe_print(*args, **kwargs):
+    """安全的打印函數，自動處理導入問題"""
+    try:
+        from core.unicode_handler import safe_print as _safe_print
+        _safe_print(*args, **kwargs)
+    except ImportError:
+        try:
+            import sys
+            from pathlib import Path
+            sys.path.append(str(Path(__file__).parent.parent))
+            from core.unicode_handler import safe_print as _safe_print
+            _safe_print(*args, **kwargs)
+        except ImportError:
+            print(*args, **kwargs)
+    except Exception:
+        print(*args, **kwargs)
+
 import re
 import json
 from pathlib import Path
+from core.unicode_handler import safe_print
 
 class ShidianSimple:
     """十典古籍網簡化爬蟲"""
@@ -45,7 +64,7 @@ class ShidianSimple:
         for endpoint in endpoints:
             try:
                 url = base_url + endpoint
-                print(f"嘗試: {url}")
+                safe_print(f"嘗試: {url}")
                 
                 response = self.session.get(url, timeout=10)
                 if response.status_code == 200:
@@ -55,19 +74,19 @@ class ShidianSimple:
                     chinese_chars = len(re.findall(r'[\u4e00-\u9fff]', content))
                     
                     if chinese_chars > 100:  # 至少100個中文字符
-                        print(f"✅ 成功: {url} (中文字符: {chinese_chars})")
+                        safe_print(f"✅ 成功: {url} (中文字符: {chinese_chars})")
                         results.append({
                             'url': url,
                             'content': content,
                             'chinese_count': chinese_chars
                         })
                     else:
-                        print(f"⚠️  回應太短: {url}")
+                        safe_print(f"⚠️  回應太短: {url}")
                 else:
-                    print(f"❌ 失敗: {url} (狀態碼: {response.status_code})")
+                    safe_print(f"❌ 失敗: {url} (狀態碼: {response.status_code})")
                     
             except Exception as e:
-                print(f"❌ 錯誤: {url} - {e}")
+                safe_print(f"❌ 錯誤: {url} - {e}")
                 
         return results
         
@@ -139,9 +158,9 @@ class ShidianSimple:
                 return '\n\n'.join(meaningful_texts)
                 
         except ImportError:
-            print("⚠️  需要安裝 beautifulsoup4: pip install beautifulsoup4")
+            safe_print("⚠️  需要安裝 beautifulsoup4: pip install beautifulsoup4")
         except Exception as e:
-            print(f"⚠️  HTML解析錯誤: {e}")
+            safe_print(f"⚠️  HTML解析錯誤: {e}")
         
         # 備用方案：使用正規表達式
         patterns = [
@@ -168,39 +187,39 @@ class ShidianSimple:
         
     def crawl(self, url, output_filename=None):
         """爬取指定URL的內容"""
-        print(f"🕷️ 開始爬取: {url}")
-        print("=" * 50)
+        safe_print(f"🕷️ 開始爬取: {url}")
+        safe_print("=" * 50)
         
         # 提取ID
         book_id, chapter_id = self.extract_ids_from_url(url)
         if not book_id or not chapter_id:
-            print("❌ 無法從URL提取ID")
+            safe_print("❌ 無法從URL提取ID")
             return False
             
-        print(f"書籍ID: {book_id}")
-        print(f"章節ID: {chapter_id}")
+        safe_print(f"書籍ID: {book_id}")
+        safe_print(f"章節ID: {chapter_id}")
         
         # 嘗試API端點
         results = self.try_api_endpoints(book_id, chapter_id)
         
         if not results:
-            print("❌ 沒有找到有效的API端點")
+            safe_print("❌ 沒有找到有效的API端點")
             return False
             
         # 選擇最佳結果（中文字符最多的）
         best_result = max(results, key=lambda x: x['chinese_count'])
-        print(f"\n📖 使用最佳結果: {best_result['url']}")
+        safe_print(f"\n📖 使用最佳結果: {best_result['url']}")
         
         # 提取文本內容
         text_content = self.extract_text_content(best_result['content'])
         
         if not text_content:
-            print("❌ 無法提取文本內容")
+            safe_print("❌ 無法提取文本內容")
             # 儲存原始內容以供調試
             debug_file = f"debug_{book_id}_{chapter_id}.txt"
             with open(debug_file, 'w', encoding='utf-8') as f:
                 f.write(best_result['content'])
-            print(f"💾 原始內容已儲存為: {debug_file}")
+            safe_print(f"💾 原始內容已儲存為: {debug_file}")
             return False
             
         # 清理文本
@@ -216,9 +235,9 @@ class ShidianSimple:
         with open(output_path, 'w', encoding='utf-8') as f:
             f.write(cleaned_text)
             
-        print(f"✅ 爬取成功!")
-        print(f"文件: {output_path}")
-        print(f"內容長度: {len(cleaned_text)} 字符")
+        safe_print(f"✅ 爬取成功!")
+        safe_print(f"文件: {output_path}")
+        safe_print(f"內容長度: {len(cleaned_text)} 字符")
         
         return True
         
@@ -246,11 +265,11 @@ def main():
     success = crawler.crawl(url, "抱朴子_第一章_簡化版.txt")
     
     if success:
-        print("\n🎉 爬取完成!")
-        print("💡 提示: 如果內容不完整，可以檢查debug文件")
+        safe_print("\n🎉 爬取完成!")
+        safe_print("💡 提示: 如果內容不完整，可以檢查debug文件")
     else:
-        print("\n❌ 爬取失敗")
-        print("💡 提示: 檢查debug文件了解詳細情況")
+        safe_print("\n❌ 爬取失敗")
+        safe_print("💡 提示: 檢查debug文件了解詳細情況")
 
 if __name__ == "__main__":
     main()
