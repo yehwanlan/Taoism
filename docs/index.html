@@ -8,99 +8,111 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
-    <header>
-        <h1>🏛️ 道教經典翻譯系統 v2.0</h1>
-        <div class="system-info">
-            <span id="system-stats">載入中...</span>
+    <div id="password-overlay">
+        <div class="password-box">
+            <h2>請輸入密語</h2>
+            <p>福生無量天尊</p>
+            <input type="password" id="password-input" placeholder="在此輸入...">
+            <button id="password-submit">進入</button>
+            <p id="password-error" class="error-message"></p>
         </div>
-    </header>
-    
-    <nav class="main-nav">
-        <div class="nav-section">
-            <h3>📚 選擇經典</h3>
-            <select id="book-select">
-                <option value="">請選擇經典...</option>
-            </select>
-        </div>
-        
-        <div class="nav-section">
-            <h3>📖 選擇章節</h3>
-            <select id="chapter-select" disabled>
-                <option value="">請先選擇經典</option>
-            </select>
-        </div>
-        
-        <div class="nav-section legacy-section">
-            <h3>📜 舊版經典</h3>
-            <select id="legacy-select">
-                <option value="">選擇舊版經典...</option>
-            </select>
-        </div>
-        
-        <div class="nav-controls">
-            <button id="prev-chapter" disabled>⬅️ 上一章</button>
-            <button id="next-chapter" disabled>下一章 ➡️</button>
-            <button id="toggle-view">🔄 切換顯示模式</button>
-        </div>
-    </nav>
+    </div>
 
-    <main>
-        <div class="content-header">
-            <h2 id="current-title">道教經典翻譯系統</h2>
-            <div class="content-info">
-                <span id="content-stats"></span>
+    <div id="main-content">
+        <header>
+            <h1>🏛️ 道教經典翻譯系統 v2.0</h1>
+            <div class="system-info">
+                <span id="system-stats">載入中...</span>
             </div>
-        </div>
+        </header>
         
-        <div class="text-container" id="text-container">
-            <div class="translated-text">
-                <h3>📝 現代中文翻譯</h3>
-                <div id="translated-content">
-                    <div class="welcome-message">
-                        <h4>歡迎使用道教經典翻譯系統 v2.0</h4>
-                        <p>🎯 <strong>功能特色：</strong></p>
-                        <ul>
-                            <li>📚 <strong>23部經典</strong> - 包含188個章節，豐富的道教典籍</li>
-                            <li>🔍 <strong>智能選擇</strong> - 書籍和章節雙重選擇系統</li>
-                            <li>📖 <strong>對照閱讀</strong> - 原文與譯文並排顯示</li>
-                            <li>🎛️ <strong>多種模式</strong> - 支援不同的閱讀模式</li>
-                            <li>📜 <strong>向後相容</strong> - 保留舊版經典存取</li>
-                        </ul>
-                        <p>請從上方選擇經典開始閱讀。</p>
+        <nav class="main-nav">
+            <div class="nav-section">
+                <h3>📚 選擇經典</h3>
+                <select id="book-select">
+                    <option value="">請選擇經典...</option>
+                </select>
+            </div>
+            
+            <div class="nav-section">
+                <h3>📖 選擇章節</h3>
+                <select id="chapter-select" disabled>
+                    <option value="">請先選擇經典</option>
+                </select>
+            </div>
+            
+            <div class="nav-section legacy-section">
+                <h3>📜 舊版經典</h3>
+                <select id="legacy-select">
+                    <option value="">選擇舊版經典...</option>
+                </select>
+            </div>
+            
+            <div class="nav-controls">
+                <button id="prev-chapter" disabled>⬅️ 上一章</button>
+                <button id="next-chapter" disabled>下一章 ➡️</button>
+                <button id="toggle-view">🔄 切換顯示模式</button>
+            </div>
+        </nav>
+
+        <main>
+            <div class="content-header">
+                <h2 id="current-title">道教經典翻譯系統</h2>
+                <div class="content-info">
+                    <span id="content-stats"></span>
+                </div>
+            </div>
+            
+            <div class="text-container" id="text-container">
+                <div class="translated-text">
+                    <h3>📝 現代中文翻譯</h3>
+                    <div id="translated-content">
+                        <div class="welcome-message">
+                            <h4>歡迎使用道教經典翻譯系統 v2.0</h4>
+                            <p>🎯 <strong>功能特色：</strong></p>
+                            <ul>
+                                <li>📚 <strong>23部經典</strong> - 包含188個章節，豐富的道教典籍</li>
+                                <li>🔍 <strong>智能選擇</strong> - 書籍和章節雙重選擇系統</li>
+                                <li>📖 <strong>對照閱讀</strong> - 原文與譯文並排顯示</li>
+                                <li>🎛️ <strong>多種模式</strong> - 支援不同的閱讀模式</li>
+                                <li>📜 <strong>向後相容</strong> - 保留舊版經典存取</li>
+                            </ul>
+                            <p>請從上方選擇經典開始閱讀。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="original-text">
+                    <h3>📜 古文原文</h3>
+                    <div id="original-content">
+                        <div class="welcome-message">
+                            <h4>系統說明</h4>
+                            <p>🏛️ <strong>主要收錄經典：</strong></p>
+                            <ul>
+                                <li><strong>南華真經口義</strong> - 71章（莊子註解）</li>
+                                <li><strong>抱朴子（抱朴子內篇）</strong> - 38章（葛洪著作）</li>
+                                <li><strong>太上洞玄靈寶業報因緣經</strong> - 27章</li>
+                                <li><strong>洞玄靈寶自然九天生神章經</strong> - 16章</li>
+                                <li><strong>元始天尊說十一曜大消災神咒經</strong> - 15章</li>
+                                <li><strong>其他經典</strong> - 19部單章經典</li>
+                            </ul>
+                            <p>📊 <strong>統計資訊：</strong> 總計23部經典，188個章節</p>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="original-text">
-                <h3>📜 古文原文</h3>
-                <div id="original-content">
-                    <div class="welcome-message">
-                        <h4>系統說明</h4>
-                        <p>🏛️ <strong>主要收錄經典：</strong></p>
-                        <ul>
-                            <li><strong>南華真經口義</strong> - 71章（莊子註解）</li>
-                            <li><strong>抱朴子（抱朴子內篇）</strong> - 38章（葛洪著作）</li>
-                            <li><strong>太上洞玄靈寶業報因緣經</strong> - 27章</li>
-                            <li><strong>洞玄靈寶自然九天生神章經</strong> - 16章</li>
-                            <li><strong>元始天尊說十一曜大消災神咒經</strong> - 15章</li>
-                            <li><strong>其他經典</strong> - 19部單章經典</li>
-                        </ul>
-                        <p>📊 <strong>統計資訊：</strong> 總計23部經典，188個章節</p>
-                    </div>
+        </main>
+        
+        <footer>
+            <div class="footer-content">
+                <p>&copy; 2025 道教經典翻譯系統 v2.0. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="https://github.com/your-repo/taoism-translation" target="_blank">📂 GitHub</a>
+                    <a href="#" onclick="showSystemInfo()">ℹ️ 系統資訊</a>
+                    <a href="#" onclick="showHelp()">❓ 使用說明</a>
                 </div>
             </div>
-        </div>
-    </main>
-    
-    <footer>
-        <div class="footer-content">
-            <p>&copy; 2025 道教經典翻譯系統 v2.0. All rights reserved.</p>
-            <div class="footer-links">
-                <a href="https://github.com/your-repo/taoism-translation" target="_blank">📂 GitHub</a>
-                <a href="#" onclick="showSystemInfo()">ℹ️ 系統資訊</a>
-                <a href="#" onclick="showHelp()">❓ 使用說明</a>
-            </div>
-        </div>
-    </footer>
+        </footer>
+    </div>
     
     <script src="js/script.js"></script>
 </body>

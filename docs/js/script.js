@@ -1,5 +1,37 @@
 // 道教經典翻譯系統 v2.0 - JavaScript
 document.addEventListener('DOMContentLoaded', () => {
+    // 密碼驗證邏輯
+    const passwordOverlay = document.getElementById('password-overlay');
+    const passwordInput = document.getElementById('password-input');
+    const passwordSubmit = document.getElementById('password-submit');
+    const passwordError = document.getElementById('password-error');
+    const mainContent = document.getElementById('main-content');
+
+    const correctPassword = "福生無量天尊";
+    let passwordEntered = false;
+    let pendingBookId = null;
+
+    function checkPassword() {
+        if (passwordInput.value === correctPassword) {
+            passwordOverlay.style.display = 'none';
+            passwordEntered = true;
+            if (pendingBookId) {
+                loadBook(pendingBookId);
+                pendingBookId = null;
+            }
+        } else {
+            passwordError.textContent = '密語錯誤，請重試';
+            passwordInput.value = '';
+        }
+    }
+
+    passwordSubmit.addEventListener('click', checkPassword);
+    passwordInput.addEventListener('keyup', (event) => {
+        if (event.key === 'Enter') {
+            checkPassword();
+        }
+    });
+
     // DOM 元素
     const bookSelect = document.getElementById('book-select');
     const chapterSelect = document.getElementById('chapter-select');
@@ -14,7 +46,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggleViewButton = document.getElementById('toggle-view');
 
     // 系統資料結構
-                const booksData = {
+    const booksData = {
+        "太上老君説常清靜經注_DZ0756": {
+            title: "太上老君説常清靜經注",
+            chapters: [
+                { number: "01", title: "太上老君説常清靜注" },
+            ]
+        },
         "P.Ch.2471太上升玄护命经一卷_PC2471": {
             title: "P.Ch.2471太上升玄护命经一卷",
             chapters: [
@@ -191,7 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 { number: "01", title: "太上洞玄灵宝法躅经" },
             ]
         },
-        "太上洞玄灵宝灭度五炼生尸妙经_DZ0369": {
+        "太上洞玄灵宝滅度五炼生尸妙经_DZ0369": {
             title: "太上洞玄灵宝灭度五炼生尸妙经",
             chapters: [
                 { number: "01", title: "太上洞玄灵宝灭度五炼生尸妙经" },
@@ -378,6 +416,8 @@ document.addEventListener('DOMContentLoaded', () => {
         populateBookSelect();
         populateLegacySelect();
         setupEventListeners();
+        // 初始載入預設書籍
+        loadBook('太上老君説常清靜經注_DZ0756');
     }
 
     // 載入系統統計
@@ -453,6 +493,18 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        if (bookId !== '太上老君説常清靜經注_DZ0756' && !passwordEntered) {
+            pendingBookId = bookId;
+            passwordOverlay.style.display = 'flex';
+            // Reset the dropdown to the current book to avoid confusion
+            bookSelect.value = currentBook;
+            return;
+        }
+
+        loadBook(bookId);
+    }
+
+    function loadBook(bookId) {
         currentBook = bookId;
         currentChapterIndex = 0;
         populateChapterSelect(bookId);
@@ -465,6 +517,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // 清除舊版選擇
         legacySelect.value = '';
+        bookSelect.value = bookId;
     }
 
     // 處理章節選擇變更
@@ -738,5 +791,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 初始化系統
     initializeSystem();
-    showWelcomeMessage();
 });
