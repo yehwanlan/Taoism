@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggleViewButton = document.getElementById('toggle-view');
 
     // 系統資料結構
-            const booksData = {
+                const booksData = {
         "P.Ch.2471太上升玄护命经一卷_PC2471": {
             title: "P.Ch.2471太上升玄护命经一卷",
             chapters: [
@@ -289,6 +289,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 { number: "38", title: "抱朴子外篇卷十五" },
             ]
         },
+        "文始真經（關尹子）_SBCK440": {
+            title: "文始真經(關尹子)",
+            chapters: [
+                { number: "01", title: "文始真経上卷" },
+                { number: "02", title: "一宇萹" },
+                { number: "03", title: "二柱萹" },
+                { number: "04", title: "三極萹" },
+                { number: "05", title: "文始真經中卷" },
+                { number: "06", title: "文始真経下卷" },
+                { number: "07", title: "校勘記" },
+                { number: "08", title: "一宇萹" },
+                { number: "09", title: "二柱萹" },
+                { number: "10", title: "三極萹" },
+                { number: "11", title: "四符萹" },
+                { number: "12", title: "五鑑萹" },
+                { number: "13", title: "六匕萹" },
+                { number: "14", title: "七釡萹" },
+                { number: "16", title: "九藥萹" },
+            ]
+        },
         "洞玄灵宝无量度人经诀音义_DZ0095": {
             title: "洞玄灵宝无量度人经诀音义",
             chapters: [
@@ -316,6 +336,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 { number: "14", title: "高虚清明天生神章第八" },
                 { number: "15", title: "无想无结无爱天生神章第九" },
                 { number: "16", title: "诵经应验" },
+            ]
+        },
+        "混元陽符經_DZ0032": {
+            title: "混元陽符經",
+            chapters: [
+                { number: "01", title: "混元陽符經" },
+            ]
+        },
+        "玉清無上靈寶自然北斗本生真經_DZ0045": {
+            title: "玉清無上靈寶自然北斗本生真經",
+            chapters: [
+                { number: "01", title: "玉清无上靈寶自然北斗本生真經" },
             ]
         },
     };
