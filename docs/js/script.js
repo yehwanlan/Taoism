@@ -31,6 +31,25 @@ document.addEventListener('DOMContentLoaded', () => {
             checkPassword();
         }
     });
+    
+    // 手機端優化：添加輸入事件監聽
+    passwordInput.addEventListener('input', () => {
+        passwordError.textContent = ''; // 清除錯誤訊息
+    });
+    
+    // 確保密碼輸入框在顯示時獲得焦點
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+                if (passwordOverlay.style.display === 'flex') {
+                    setTimeout(() => {
+                        passwordInput.focus();
+                    }, 100);
+                }
+            }
+        });
+    });
+    observer.observe(passwordOverlay, { attributes: true });
 
     // DOM 元素
     const bookSelect = document.getElementById('book-select');

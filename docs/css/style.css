@@ -346,6 +346,30 @@ footer {
     border-radius: 8px;
     font-size: 1rem;
     margin-bottom: 1rem;
+    font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+#password-input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* 手機端密碼輸入優化 */
+@media (max-width: 768px) {
+    #password-input {
+        width: 90%;
+        font-size: 16px; /* 防止 iOS Safari 縮放 */
+        padding: 1rem;
+    }
+    
+    .password-box {
+        margin: 1rem;
+        width: calc(100% - 2rem);
+        max-width: 400px;
+    }
 }
 
 #password-submit {
