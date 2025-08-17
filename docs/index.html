@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -8,17 +9,14 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
+
 <body>
     <div id="password-overlay">
         <div class="password-box">
             <h2>請輸入密語</h2>
             <p>福生無量天尊</p>
-            <input type="password" id="password-input" placeholder="在此輸入..." 
-                   inputmode="text" 
-                   autocomplete="off" 
-                   autocorrect="off" 
-                   autocapitalize="off" 
-                   spellcheck="false">
+            <input type="text" id="password-input" placeholder="在此輸入..." inputmode="text" autocomplete="off"
+                autocorrect="off" autocapitalize="off" spellcheck="false">
             <button id="password-submit">進入</button>
             <p id="password-error" class="error-message"></p>
         </div>
@@ -31,7 +29,7 @@
                 <span id="system-stats">載入中...</span>
             </div>
         </header>
-        
+
         <nav class="main-nav">
             <div class="nav-section">
                 <h3>📚 選擇經典</h3>
@@ -39,21 +37,21 @@
                     <option value="">請選擇經典...</option>
                 </select>
             </div>
-            
+
             <div class="nav-section">
                 <h3>📖 選擇章節</h3>
                 <select id="chapter-select" disabled>
                     <option value="">請先選擇經典</option>
                 </select>
             </div>
-            
+
             <div class="nav-section legacy-section">
                 <h3>📜 舊版經典</h3>
                 <select id="legacy-select">
                     <option value="">選擇舊版經典...</option>
                 </select>
             </div>
-            
+
             <div class="nav-controls">
                 <button id="prev-chapter" disabled>⬅️ 上一章</button>
                 <button id="next-chapter" disabled>下一章 ➡️</button>
@@ -68,7 +66,7 @@
                     <span id="content-stats"></span>
                 </div>
             </div>
-            
+
             <div class="text-container" id="text-container">
                 <div class="translated-text">
                     <h3>📝 現代中文翻譯</h3>
@@ -107,7 +105,7 @@
                 </div>
             </div>
         </main>
-        
+
         <footer>
             <div class="footer-content">
                 <p>&copy; 2025 道教經典翻譯系統 v2.0. All rights reserved.</p>
@@ -119,7 +117,8 @@
             </div>
         </footer>
     </div>
-    
+
     <script src="js/script.js"></script>
 </body>
+
 </html>

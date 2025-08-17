@@ -120,3 +120,8 @@ check_translation_progress.py
 # 網頁快取
 docs/cache/
 docs/temp/
+
+# 升級規劃文件
+升級規劃_短期.md
+升級規劃_中期.md
+升級規劃_長期.md
