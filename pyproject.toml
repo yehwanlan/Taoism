@@ -1,0 +1,85 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "taoism-translation-system"
+version = "2.0.0"
+description = "道教經典翻譯系統 - 全自動化的古籍翻譯和管理平台"
+readme = "README.md"
+license = {file = "LICENSE"}
+authors = [
+    {name = "Taoism Translation Team", email = "contact@example.com"}
+]
+maintainers = [
+    {name = "Taoism Translation Team", email = "contact@example.com"}
+]
+keywords = ["taoism", "translation", "chinese-classics", "ancient-texts"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Text Processing :: Linguistic",
+    "Topic :: Education",
+    "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+]
+requires-python = ">=3.7"
+dependencies = [
+    "requests>=2.28.0",
+    "aiohttp>=3.8.0",
+    "beautifulsoup4>=4.11.0",
+    "selenium>=4.8.0",
+    "lxml>=4.9.0",
+    "markdown>=3.4.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=22.0.0",
+    "flake8>=5.0.0",
+]
+analysis = [
+    "pandas>=1.5.0",
+    "openpyxl>=3.0.0",
+]
+all = [
+    "taoism-translation-system[dev,analysis]",
+]
+
+[project.urls]
+Homepage = "https://github.com/your-username/taoism-translation-system"
+Documentation = "https://your-username.github.io/taoism-translation-system/"
+Repository = "https://github.com/your-username/taoism-translation-system.git"
+Issues = "https://github.com/your-username/taoism-translation-system/issues"
+
+[project.scripts]
+taoism = "core.translator:main"
+taoism-translate = "tools.easy_cli:main"
+taoism-monitor = "tools.monitor_cli:main"
+
+[tool.setuptools]
+packages = ["core", "tools", "crawler"]
+include-package-data = true
+
+[tool.setuptools.package-data]
+"*" = ["*.json", "*.md", "*.txt", "*.html", "*.css", "*.js"]
+
+[tool.black]
+line-length = 88
+target-version = ['py37']
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]

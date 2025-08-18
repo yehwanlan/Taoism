@@ -1,0 +1,51 @@
+# 道教經典翻譯系統 - 包含檔案清單
+
+# 包含文檔檔案
+include README.md
+include LICENSE
+include INSTALL.md
+include STRUCTURE.md
+include PROJECT_OVERVIEW.md
+include requirements.txt
+include pyproject.toml
+
+# 包含配置檔案
+recursive-include config *.json *.md
+recursive-include config/templates *
+
+# 包含核心模組
+recursive-include core *.py
+recursive-include tools *.py *.md
+recursive-include crawler *.py *.md
+
+# 包含網頁資源
+recursive-include docs *.html *.css *.js *.json *.md
+recursive-include docs/source_texts *
+recursive-include docs/translations *
+recursive-include docs/system *
+
+# 包含資料檔案
+recursive-include data *.json *.md
+include data/logs/.gitkeep
+include data/tracking/.gitkeep
+
+# 包含 Docker 檔案
+include Dockerfile
+include docker-compose.yml
+include deploy.py
+
+# 包含 GitHub 配置
+recursive-include .github *
+
+# 排除不需要的檔案
+global-exclude *.pyc
+global-exclude *.pyo
+global-exclude *.pyd
+global-exclude __pycache__
+global-exclude .git*
+global-exclude *.log
+global-exclude .DS_Store
+global-exclude Thumbs.db
+recursive-exclude tools/temp *
+recursive-exclude backup *
+recursive-exclude archive *

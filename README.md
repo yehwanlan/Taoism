@@ -370,20 +370,33 @@ python -m http.server 8000
 ```
 然後在您的瀏覽器中打開 `http://localhost:8000/docs/`。
 
-### 步驟四：部署到 GitHub Pages
+### 步驟四：一鍵部署
 
-1.  **建立 GitHub 儲存庫：**
-    如果您尚未將專案上傳到 GitHub，請在 GitHub 上建立一個新的儲存庫，並將本地專案推送到該儲存庫。
+現在支援多種部署方式，推薦使用一鍵部署腳本：
 
-2.  **設定 GitHub Pages：**
-    *   前往您的 GitHub 儲存庫頁面。
-    *   點擊頂部的 **Settings** (設定)。
-    *   在左側選單中，點擊 **Pages**。
-    *   在 "Build and deployment" 部分，將 "Source" 設定為 **Deploy from a branch**。
-    *   在 "Branch" 部分，選擇 `main` (或您的主要分支)，並將資料夾設定為 `/docs`。
-    *   點擊 **Save** (儲存)。
+```bash
+# 🚀 一鍵部署到 GitHub Pages
+python deploy.py github
 
-    GitHub Pages 會自動部署您的網站。通常在幾分鐘內，您就可以透過 `https://<您的GitHub使用者名稱>.github.io/<您的儲存庫名稱>/` 訪問您的網站。
+# 🐳 Docker 部署
+python deploy.py docker
+
+# 🏠 本地服務
+python deploy.py local
+
+# 📦 創建發布包
+python deploy.py package
+
+# 🎯 完整部署流程
+python deploy.py all
+```
+
+**GitHub Pages 自動部署：**
+- 系統已配置 GitHub Actions 自動部署
+- 推送到 main 分支會自動觸發部署
+- 訪問地址：`https://<您的GitHub使用者名稱>.github.io/<您的儲存庫名稱>/`
+
+詳細安裝和部署說明請參考：**[安裝指南](INSTALL.md)**
 
 ### 步驟五：管理翻譯進度
 

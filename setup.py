@@ -42,6 +42,22 @@ def setup_config():
     else:
         print("✅ 配置檔案已存在")
 
+def create_directories():
+    """創建必要的目錄"""
+    print("📁 創建必要目錄...")
+    directories = [
+        "data/logs",
+        "data/tracking", 
+        "docs/source_texts",
+        "docs/translations",
+        "tools/temp"
+    ]
+    
+    for dir_path in directories:
+        Path(dir_path).mkdir(parents=True, exist_ok=True)
+        
+    print("✅ 目錄結構創建完成")
+
 def main():
     """主安裝流程"""
     print("🏛️ 道教經典翻譯系統 v2.0 - 安裝程序")
@@ -50,6 +66,9 @@ def main():
     # 檢查 Python 版本
     if not check_python_version():
         return 1
+    
+    # 創建目錄結構
+    create_directories()
     
     # 安裝依賴
     if not install_dependencies():
@@ -62,6 +81,11 @@ def main():
     print("\n💡 下一步:")
     print("   python main.py info          # 查看系統資訊")
     print("   python main.py               # 啟動互動模式")
+    print("   python deploy.py local       # 啟動本地網頁服務")
+    print("   python deploy.py github      # 部署到 GitHub Pages")
+    print("\n📚 詳細說明:")
+    print("   README.md                    # 完整使用指南")
+    print("   INSTALL.md                   # 安裝和部署指南")
     
     return 0
 
