@@ -78,11 +78,8 @@ class FortuneChecker {
         };
     }
 
-    // 計算指定日期的日干支（注意：這是日干支，不是年干支）
+    // 計算指定日期的日干支（使用標準演算法）
     getStemBranch(date, useTraditionalTime = true) {
-        // 使用儒略日數方法進行精確計算
-        // 基準：儒略日數 2414686 = 1900年1月31日 = 庚子日
-        
         let targetDate = new Date(date);
         
         // 傳統子時分界處理：23:00-00:59為下一日
@@ -98,7 +95,7 @@ class FortuneChecker {
         const month = targetDate.getMonth() + 1; // JavaScript月份從0開始
         const day = targetDate.getDate();
         
-        // 計算儒略日數 (Julian Day Number)
+        // 計算儒略日數 (Julian Day Number) - 標準格里高利曆公式
         let a = Math.floor((14 - month) / 12);
         let y = year + 4800 - a;
         let m = month + 12 * a - 3;
@@ -106,24 +103,11 @@ class FortuneChecker {
         let jdn = day + Math.floor((153 * m + 2) / 5) + 365 * y + 
                   Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400) - 32045;
         
-        // 1900年1月31日的儒略日數是2414686，對應庚子日
-        const baseJDN = 2414686;
-        const baseStemBranchIndex = 36; // 庚子在六十甲子中的位置（從0開始）
-        
-        // 計算天數差
-        const daysDiff = jdn - baseJDN;
-        
-        // 計算目標日期的天干地支索引
-        let stemBranchIndex = (baseStemBranchIndex + daysDiff) % 60;
-        
-        // 確保索引為正數
-        if (stemBranchIndex < 0) {
-            stemBranchIndex += 60;
-        }
-        
-        // 計算天干和地支索引
-        const stemIndex = stemBranchIndex % 10;
-        const branchIndex = stemBranchIndex % 12;
+        // 使用標準演算法：直接從儒略日數推日干支
+        // 天干索引（0–9） = (JDN + 9) % 10
+        // 地支索引（0–11） = (JDN + 1) % 12
+        const stemIndex = (jdn + 9) % 10;
+        const branchIndex = (jdn + 1) % 12;
         
         const stem = this.stemBranch.stems[stemIndex];
         const branch = this.stemBranch.branches[branchIndex];
@@ -167,17 +151,15 @@ class FortuneChecker {
     
     // 驗證日干支計算的輔助方法
     validateStemBranch() {
-        console.log('=== 日干支計算驗證 ===');
+        console.log('=== 日干支計算驗證（使用標準演算法）===');
         console.log('⚠️ 重要說明：此處計算的是【日干支】，不是年干支！');
-        console.log('日干支：每日的天干地支，60天一個循環');
-        console.log('年干支：每年的天干地支，60年一個循環\n');
+        console.log('標準演算法：天干索引 = (JDN + 9) % 10，地支索引 = (JDN + 1) % 12\n');
         
-        // 使用可靠的日干支數據進行驗證
+        // 使用正確的日干支數據進行驗證
         const knownDates = [
-            { date: new Date(1900, 0, 31), expected: '庚子', note: '基準日期' },
-            { date: new Date(1900, 1, 1), expected: '辛丑', note: '基準+1天' },
-            { date: new Date(1900, 1, 2), expected: '壬寅', note: '基準+2天' },
-            // 需要更多可靠的日干支數據來驗證
+            { date: new Date(2000, 0, 1), expected: '戊午', note: '基準日期 (JDN=2451545)' },
+            { date: new Date(2025, 0, 9), expected: '戊寅', note: '2025年1月9日' },
+            { date: new Date(2025, 0, 10), expected: '己卯', note: '2025年1月10日' }
         ];
         
         knownDates.forEach(item => {
@@ -188,18 +170,18 @@ class FortuneChecker {
         
         // 測試連續性：檢查連續日期是否按正確順序變化
         console.log('\n=== 連續性驗證（六十甲子順序）===');
-        const testDate = new Date(1900, 0, 31); // 從基準日期開始
-        for (let i = 0; i < 10; i++) {
+        const testDate = new Date(2000, 0, 1); // 從基準日期開始
+        for (let i = 0; i < 5; i++) {
             const currentDate = new Date(testDate);
             currentDate.setDate(testDate.getDate() + i);
             const stemBranch = this.getStemBranch(currentDate);
-            const expectedIndex = (36 + i) % 60; // 庚子是第36個
-            console.log(`${currentDate.toLocaleDateString()}: ${stemBranch} (索引: ${expectedIndex})`);
+            const jdn = this.calculateJDN(currentDate);
+            console.log(`${currentDate.toLocaleDateString()}: ${stemBranch} (JDN=${jdn})`);
         }
         
         // 測試60天循環
         console.log('\n=== 六十甲子循環驗證 ===');
-        const cycleTestDate = new Date(1900, 0, 31);
+        const cycleTestDate = new Date(2000, 0, 1);
         const day0 = this.getStemBranch(cycleTestDate);
         
         const day60 = new Date(cycleTestDate);
@@ -209,6 +191,20 @@ class FortuneChecker {
         console.log(`基準日 (第0天): ${day0}`);
         console.log(`60天後: ${day60Result}`);
         console.log(`循環正確: ${day0 === day60Result ? '✓' : '✗'}`);
+    }
+    
+    // 輔助方法：計算儒略日數
+    calculateJDN(date) {
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+        
+        let a = Math.floor((14 - month) / 12);
+        let y = year + 4800 - a;
+        let m = month + 12 * a - 3;
+        
+        return day + Math.floor((153 * m + 2) / 5) + 365 * y + 
+               Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400) - 32045;
     }
 
     // 獲取今日拜拜資訊
@@ -262,7 +258,7 @@ class FortuneChecker {
         
         return {
             type: '日干支計算',
-            baseDate: '1900年1月31日 (庚子日)',
+            baseDate: '2000年1月1日 (戊午日)',
             baseJDN: baseJDN,
             targetJDN: jdn,
             daysDiff: daysDiff,

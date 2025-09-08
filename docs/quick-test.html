@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>快速測試</title>
+    <style>
+        body { font-family: 'Microsoft JhengHei', sans-serif; padding: 20px; }
+        .result { background: #f8f9fa; padding: 15px; margin: 10px 0; border-radius: 8px; }
+        .highlight { background: #fff3cd; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>快速測試 - 2025年1月9日和10日</h1>
+    <div id="results"></div>
+
+    <script src="js/fortune.js"></script>
+    <script>
+        // 手動計算儒略日數
+        function calculateJDN(year, month, day) {
+            let a = Math.floor((14 - month) / 12);
+            let y = year + 4800 - a;
+            let m = month + 12 * a - 3;
+            
+            return day + Math.floor((153 * m + 2) / 5) + 365 * y + 
+                   Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400) - 32045;
+        }
+        
+        // 手動計算日干支
+        function manualCalculate(year, month, day) {
+            const jdn = calculateJDN(year, month, day);
+            const baseJDN = 2451545; // 2000年1月1日，甲辰日
+            const daysDiff = jdn - baseJDN;
+            
+            // 甲辰是第40個（從0開始）
+            let index = (40 + daysDiff) % 60;
+            if (index < 0) index += 60;
+            
+            const stems = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
+            const branches = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+            
+            return {
+                stemBranch: stems[index % 10] + branches[index % 12],
+                index: index,
+                jdn: jdn,
+                daysDiff: daysDiff
+            };
+        }
+        
+        // 測試日期
+        const testDates = [
+            { year: 2025, month: 1, day: 9, name: '今天 (2025年1月9日)' },
+            { year: 2025, month: 1, day: 10, name: '明天 (2025年1月10日)' },
+            { year: 2000, month: 1, day: 1, name: '基準 (2000年1月1日，應該是甲辰)' }
+        ];
+        
+        let html = '';
+        
+        testDates.forEach(testDate => {
+            const date = new Date(testDate.year, testDate.month - 1, testDate.day);
+            const classResult = fortuneChecker.getStemBranch(date, false);
+            const manualResult = manualCalculate(testDate.year, testDate.month, testDate.day);
+            
+            html += `
+                <div class="result">
+                    <h3>${testDate.name}</h3>
+                    <p><strong>儒略日數:</strong> ${manualResult.jdn}</p>
+                    <p><strong>天數差:</strong> ${manualResult.daysDiff}</p>
+                    <p><strong>索引:</strong> ${manualResult.index}</p>
+                    <p><strong>手動計算:</strong> ${manualResult.stemBranch}</p>
+                    <p><strong>類方法計算:</strong> ${classResult}</p>
+                    <p class="${classResult === manualResult.stemBranch ? 'highlight' : ''}">
+                        <strong>結果一致:</strong> ${classResult === manualResult.stemBranch ? '✅ 是' : '❌ 否'}
+                    </p>
+                </div>
+            `;
+        });
+        
+        document.getElementById('results').innerHTML = html;
+        
+        // 在控制台輸出詳細資訊
+        console.log('=== 詳細計算過程 ===');
+        testDates.forEach(testDate => {
+            const result = manualCalculate(testDate.year, testDate.month, testDate.day);
+            console.log(`${testDate.name}:`);
+            console.log(`  儒略日數: ${result.jdn}`);
+            console.log(`  天數差: ${result.daysDiff}`);
+            console.log(`  計算: (40 + ${result.daysDiff}) % 60 = ${result.index}`);
+            console.log(`  結果: ${result.stemBranch}`);
+            console.log('');
+        });
+    </script>
+</body>
+</html>

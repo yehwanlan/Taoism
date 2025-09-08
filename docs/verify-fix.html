@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>修正驗證</title>
+    <style>
+        body { font-family: 'Microsoft JhengHei', sans-serif; padding: 20px; }
+        .result { background: #f8f9fa; padding: 15px; margin: 10px 0; border-radius: 8px; }
+        .success { background: #d4edda; border-left: 4px solid #28a745; }
+        .error { background: #f8d7da; border-left: 4px solid #dc3545; }
+    </style>
+</head>
+<body>
+    <h1>修正後驗證</h1>
+    <div id="results"></div>
+
+    <script src="js/fortune.js"></script>
+    <script>
+        const testDates = [
+            { date: new Date(2025, 0, 9), expected: '辛巳', name: '2025年1月9日' },
+            { date: new Date(2025, 0, 10), expected: '壬午', name: '2025年1月10日' },
+            { date: new Date(2000, 0, 1), expected: '甲辰', name: '2000年1月1日 (基準)' }
+        ];
+        
+        let html = '';
+        
+        testDates.forEach(test => {
+            const calculated = fortuneChecker.getStemBranch(test.date, false);
+            const isCorrect = calculated === test.expected;
+            
+            html += `
+                <div class="result ${isCorrect ? 'success' : 'error'}">
+                    <h3>${test.name}</h3>
+                    <p><strong>預期:</strong> ${test.expected}</p>
+                    <p><strong>計算:</strong> ${calculated}</p>
+                    <p><strong>結果:</strong> ${isCorrect ? '✅ 正確' : '❌ 錯誤'}</p>
+                </div>
+            `;
+        });
+        
+        document.getElementById('results').innerHTML = html;
+    </script>
+</body>
+</html>

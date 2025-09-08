@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>標準演算法驗證</title>
+    <style>
+        body { 
+            font-family: 'Microsoft JhengHei', sans-serif; 
+            padding: 20px; 
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .result { 
+            background: #f8f9fa; 
+            padding: 15px; 
+            margin: 10px 0; 
+            border-radius: 8px; 
+            border-left: 4px solid #6c757d;
+        }
+        .success { 
+            background: #d4edda; 
+            border-left-color: #28a745; 
+            color: #155724;
+        }
+        .error { 
+            background: #f8d7da; 
+            border-left-color: #dc3545; 
+            color: #721c24;
+        }
+        .info { 
+            background: #d1ecf1; 
+            border-left-color: #17a2b8; 
+            color: #0c5460;
+        }
+        .formula {
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background: #f8f9fa;
+            font-weight: bold;
+        }
+        .highlight {
+            background: #fff3cd;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧮 標準演算法驗證</h1>
+        
+        <div class="info">
+            <h3>📋 標準演算法說明</h3>
+            <div class="formula">
+                <strong>步驟1:</strong> 計算儒略日數 (JDN)<br>
+                <strong>步驟2:</strong> 天干索引 = (JDN + 9) % 10<br>
+                <strong>步驟3:</strong> 地支索引 = (JDN + 1) % 12<br>
+                <strong>步驟4:</strong> 組合成日干支
+            </div>
+            <p><strong>天干表:</strong> [甲, 乙, 丙, 丁, 戊, 己, 庚, 辛, 壬, 癸]</p>
+            <p><strong>地支表:</strong> [子, 丑, 寅, 卯, 辰, 巳, 午, 未, 申, 酉, 戌, 亥]</p>
+        </div>
+
+        <div id="verification-results"></div>
+        
+        <h3>📊 詳細計算過程</h3>
+        <div id="calculation-details"></div>
+    </div>
+
+    <script src="js/fortune.js"></script>
+    <script>
+        // 標準演算法實作
+        function standardAlgorithm(year, month, day) {
+            // 計算儒略日數
+            let a = Math.floor((14 - month) / 12);
+            let y = year + 4800 - a;
+            let m = month + 12 * a - 3;
+            
+            let jdn = day + Math.floor((153 * m + 2) / 5) + 365 * y + 
+                      Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400) - 32045;
+            
+            // 標準公式
+            const stemIndex = (jdn + 9) % 10;
+            const branchIndex = (jdn + 1) % 12;
+            
+            const stems = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
+            const branches = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+            
+            return {
+                jdn: jdn,
+                stemIndex: stemIndex,
+                branchIndex: branchIndex,
+                stem: stems[stemIndex],
+                branch: branches[branchIndex],
+                stemBranch: stems[stemIndex] + branches[branchIndex]
+            };
+        }
+        
+        // 測試數據
+        const testCases = [
+            { year: 2000, month: 1, day: 1, expected: '戊午', note: '基準日期' },
+            { year: 2025, month: 1, day: 9, expected: '戊寅', note: '今天' },
+            { year: 2025, month: 1, day: 10, expected: '己卯', note: '明天' }
+        ];
+        
+        let verificationHtml = '<h3>🎯 關鍵日期驗證</h3>';
+        let detailsHtml = '';
+        
+        testCases.forEach((testCase, index) => {
+            const result = standardAlgorithm(testCase.year, testCase.month, testCase.day);
+            const classResult = fortuneChecker.getStemBranch(new Date(testCase.year, testCase.month - 1, testCase.day), false);
+            
+            const isExpectedCorrect = result.stemBranch === testCase.expected;
+            const isClassCorrect = classResult === testCase.expected;
+            const isConsistent = result.stemBranch === classResult;
+            
+            const statusClass = isExpectedCorrect && isClassCorrect && isConsistent ? 'success' : 'error';
+            
+            verificationHtml += `
+                <div class="${statusClass}">
+                    <h4>${testCase.note} - ${testCase.year}年${testCase.month}月${testCase.day}日</h4>
+                    <p><strong>預期結果:</strong> ${testCase.expected}</p>
+                    <p><strong>標準演算法:</strong> ${result.stemBranch} ${isExpectedCorrect ? '✅' : '❌'}</p>
+                    <p><strong>類方法結果:</strong> ${classResult} ${isClassCorrect ? '✅' : '❌'}</p>
+                    <p><strong>一致性:</strong> ${isConsistent ? '✅ 一致' : '❌ 不一致'}</p>
+                </div>
+            `;
+            
+            detailsHtml += `
+                <div class="result">
+                    <h4>${testCase.year}年${testCase.month}月${testCase.day}日 詳細計算</h4>
+                    <table>
+                        <tr><th>項目</th><th>數值</th><th>說明</th></tr>
+                        <tr><td>儒略日數 (JDN)</td><td class="highlight">${result.jdn}</td><td>格里高利曆轉換結果</td></tr>
+                        <tr><td>天干計算</td><td>(${result.jdn} + 9) % 10 = ${result.stemIndex}</td><td>${result.stem}</td></tr>
+                        <tr><td>地支計算</td><td>(${result.jdn} + 1) % 12 = ${result.branchIndex}</td><td>${result.branch}</td></tr>
+                        <tr><td class="highlight">最終結果</td><td class="highlight">${result.stemBranch}</td><td>日干支</td></tr>
+                    </table>
+                </div>
+            `;
+        });
+        
+        document.getElementById('verification-results').innerHTML = verificationHtml;
+        document.getElementById('calculation-details').innerHTML = detailsHtml;
+        
+        // 在控制台輸出驗證結果
+        console.log('=== 標準演算法驗證結果 ===');
+        testCases.forEach(testCase => {
+            const result = standardAlgorithm(testCase.year, testCase.month, testCase.day);
+            console.log(`${testCase.year}-${testCase.month}-${testCase.day}: ${result.stemBranch} (JDN=${result.jdn})`);
+        });
+        
+        // 驗證類方法
+        console.log('\n=== 類方法驗證 ===');
+        fortuneChecker.validateStemBranch();
+    </script>
+</body>
+</html>

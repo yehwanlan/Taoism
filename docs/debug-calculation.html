@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日干支計算調試</title>
+    <style>
+        body {
+            font-family: 'Microsoft JhengHei', sans-serif;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .debug-section {
+            background: #f8f9fa;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #007bff;
+        }
+        .error {
+            border-left-color: #dc3545;
+            background: #f8d7da;
+        }
+        .success {
+            border-left-color: #28a745;
+            background: #d4edda;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background: #f2f2f2;
+        }
+        .highlight {
+            background: #fff3cd;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 日干支計算調試工具</h1>
+    
+    <div class="debug-section">
+        <h3>📅 測試今天的計算</h3>
+        <div id="today-debug"></div>
+    </div>
+    
+    <div class="debug-section">
+        <h3>🧮 基準日期驗證</h3>
+        <div id="base-debug"></div>
+    </div>
+    
+    <div class="debug-section">
+        <h3>📊 連續日期測試</h3>
+        <div id="sequence-debug"></div>
+    </div>
+    
+    <div class="debug-section">
+        <h3>🔄 手動計算對比</h3>
+        <input type="date" id="manual-date" value="2025-01-09">
+        <button onclick="manualCalculate()">計算</button>
+        <div id="manual-result"></div>
+    </div>
+
+    <script src="js/fortune.js"></script>
+    <script>
+        // 手動實現儒略日數計算（用於對比）
+        function calculateJDN(year, month, day) {
+            let a = Math.floor((14 - month) / 12);
+            let y = year + 4800 - a;
+            let m = month + 12 * a - 3;
+            
+            return day + Math.floor((153 * m + 2) / 5) + 365 * y + 
+                   Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400) - 32045;
+        }
+        
+        // 簡化的日干支計算（不使用類方法）
+        function simpleStemBranch(date) {
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
+            
+            const jdn = calculateJDN(year, month, day);
+            const baseJDN = 2451545; // 2000年1月1日
+            const daysDiff = jdn - baseJDN;
+            
+            // 甲辰是第40個（從0開始）
+            let index = (40 + daysDiff) % 60;
+            if (index < 0) index += 60;
+            
+            const stems = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
+            const branches = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+            
+            return {
+                stemBranch: stems[index % 10] + branches[index % 12],
+                index: index,
+                jdn: jdn,
+                daysDiff: daysDiff
+            };
+        }
+        
+        // 測試今天
+        function debugToday() {
+            const today = new Date();
+            const todayStr = today.toLocaleDateString('zh-TW');
+            
+            // 使用類方法計算
+            const classResult = fortuneChecker.getStemBranch(today, false); // 不使用傳統時間
+            const classInfo = fortuneChecker.getCalculationInfo(today);
+            
+            // 使用簡化方法計算
+            const simpleResult = simpleStemBranch(today);
+            
+            document.getElementById('today-debug').innerHTML = `
+                <h4>今天: ${todayStr}</h4>
+                <table>
+                    <tr><th>方法</th><th>結果</th><th>索引</th><th>儒略日數</th><th>天數差</th></tr>
+                    <tr class="${classResult === simpleResult.stemBranch ? 'success' : 'error'}">
+                        <td>類方法</td>
+                        <td>${classResult}</td>
+                        <td>${classInfo.stemBranchIndex}</td>
+                        <td>${classInfo.targetJDN}</td>
+                        <td>${classInfo.daysDiff}</td>
+                    </tr>
+                    <tr>
+                        <td>簡化方法</td>
+                        <td>${simpleResult.stemBranch}</td>
+                        <td>${simpleResult.index}</td>
+                        <td>${simpleResult.jdn}</td>
+                        <td>${simpleResult.daysDiff}</td>
+                    </tr>
+                </table>
+                <p><strong>結果一致:</strong> ${classResult === simpleResult.stemBranch ? '✅ 是' : '❌ 否'}</p>
+            `;
+        }
+        
+        // 驗證基準日期
+        function debugBase() {
+            const baseDate = new Date(2000, 0, 1); // 2000年1月1日
+            const baseDateStr = baseDate.toLocaleDateString('zh-TW');
+            
+            const classResult = fortuneChecker.getStemBranch(baseDate, false);
+            const simpleResult = simpleStemBranch(baseDate);
+            
+            // 檢查儒略日數
+            const expectedJDN = 2451545;
+            const calculatedJDN = calculateJDN(2000, 1, 1);
+            
+            document.getElementById('base-debug').innerHTML = `
+                <h4>基準日期: ${baseDateStr} (應該是甲辰日)</h4>
+                <table>
+                    <tr><th>項目</th><th>預期值</th><th>計算值</th><th>正確</th></tr>
+                    <tr class="${expectedJDN === calculatedJDN ? 'success' : 'error'}">
+                        <td>儒略日數</td>
+                        <td>${expectedJDN}</td>
+                        <td>${calculatedJDN}</td>
+                        <td>${expectedJDN === calculatedJDN ? '✅' : '❌'}</td>
+                    </tr>
+                    <tr class="${classResult === '甲辰' ? 'success' : 'error'}">
+                        <td>類方法結果</td>
+                        <td>甲辰</td>
+                        <td>${classResult}</td>
+                        <td>${classResult === '甲辰' ? '✅' : '❌'}</td>
+                    </tr>
+                    <tr class="${simpleResult.stemBranch === '甲辰' ? 'success' : 'error'}">
+                        <td>簡化方法結果</td>
+                        <td>甲辰</td>
+                        <td>${simpleResult.stemBranch}</td>
+                        <td>${simpleResult.stemBranch === '甲辰' ? '✅' : '❌'}</td>
+                    </tr>
+                </table>
+            `;
+        }
+        
+        // 測試連續日期
+        function debugSequence() {
+            const baseDate = new Date(2025, 0, 9); // 2025年1月9日
+            let html = '<h4>連續日期測試 (從2025年1月9日開始)</h4><table>';
+            html += '<tr><th>日期</th><th>類方法</th><th>簡化方法</th><th>一致</th></tr>';
+            
+            for (let i = 0; i < 5; i++) {
+                const testDate = new Date(baseDate);
+                testDate.setDate(baseDate.getDate() + i);
+                
+                const classResult = fortuneChecker.getStemBranch(testDate, false);
+                const simpleResult = simpleStemBranch(testDate);
+                const isMatch = classResult === simpleResult.stemBranch;
+                
+                html += `<tr class="${isMatch ? 'success' : 'error'}">
+                    <td>${testDate.toLocaleDateString('zh-TW')}</td>
+                    <td>${classResult}</td>
+                    <td>${simpleResult.stemBranch}</td>
+                    <td>${isMatch ? '✅' : '❌'}</td>
+                </tr>`;
+            }
+            
+            html += '</table>';
+            document.getElementById('sequence-debug').innerHTML = html;
+        }
+        
+        // 手動計算
+        function manualCalculate() {
+            const dateInput = document.getElementById('manual-date').value;
+            if (!dateInput) return;
+            
+            const date = new Date(dateInput);
+            const classResult = fortuneChecker.getStemBranch(date, false);
+            const classInfo = fortuneChecker.getCalculationInfo(date);
+            const simpleResult = simpleStemBranch(date);
+            
+            // 詳細計算步驟
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
+            
+            document.getElementById('manual-result').innerHTML = `
+                <h4>詳細計算: ${dateInput}</h4>
+                <p><strong>步驟1:</strong> 年=${year}, 月=${month}, 日=${day}</p>
+                <p><strong>步驟2:</strong> 儒略日數 = ${simpleResult.jdn}</p>
+                <p><strong>步驟3:</strong> 天數差 = ${simpleResult.jdn} - 2414686 = ${simpleResult.daysDiff}</p>
+                <p><strong>步驟4:</strong> 索引 = (36 + ${simpleResult.daysDiff}) % 60 = ${simpleResult.index}</p>
+                <p><strong>步驟5:</strong> 天干索引 = ${simpleResult.index} % 10 = ${simpleResult.index % 10}</p>
+                <p><strong>步驟6:</strong> 地支索引 = ${simpleResult.index} % 12 = ${simpleResult.index % 12}</p>
+                <p><strong>結果:</strong> ${simpleResult.stemBranch}</p>
+                
+                <table style="margin-top: 15px;">
+                    <tr><th>方法</th><th>結果</th><th>一致</th></tr>
+                    <tr class="${classResult === simpleResult.stemBranch ? 'success' : 'error'}">
+                        <td>類方法</td>
+                        <td>${classResult}</td>
+                        <td rowspan="2">${classResult === simpleResult.stemBranch ? '✅' : '❌'}</td>
+                    </tr>
+                    <tr>
+                        <td>手動計算</td>
+                        <td>${simpleResult.stemBranch}</td>
+                    </tr>
+                </table>
+            `;
+        }
+        
+        // 頁面載入時執行所有測試
+        document.addEventListener('DOMContentLoaded', () => {
+            debugToday();
+            debugBase();
+            debugSequence();
+        });
+    </script>
+</body>
+</html>
