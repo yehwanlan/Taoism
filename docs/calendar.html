@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>道教萬年曆 - 日干支月曆</title>
+    <style>
+        body {
+            font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .controls {
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            background: #f8f9fa;
+        }
+        
+        .controls select, .controls button {
+            padding: 8px 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 14px;
+            background: white;
+        }
+        
+        .controls button {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+            cursor: pointer;
+        }
+        
+        .controls button:hover {
+            background: #5a67d8;
+        }
+        
+        .calendar {
+            padding: 20px;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            background: #e1e5e9;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .calendar-header {
+            background: #667eea;
+            color: white;
+            padding: 15px 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .calendar-day {
+            background: white;
+            padding: 10px 5px;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .calendar-day:hover {
+            background: #f8f9fa;
+        }
+        
+        .calendar-day.other-month {
+            background: #f8f9fa;
+            color: #999;
+        }
+        
+        .calendar-day.today {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+        }
+        
+        .day-number {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .day-stem-branch {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 3px;
+        }
+        
+        .day-status {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .status-good {
+            background: #28a745;
+        }
+        
+        .status-bad {
+            background: #dc3545;
+        }
+        
+        .status-neutral {
+            background: #ffc107;
+            color: #333;
+        }
+        
+        .legend {
+            padding: 20px;
+            background: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 10px;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+        }
+        
+        .modal-close:hover {
+            color: #333;
+        }
+        
+        @media (max-width: 768px) {
+            .calendar-day {
+                min-height: 60px;
+                padding: 5px 2px;
+            }
+            
+            .day-number {
+                font-size: 14px;
+            }
+            
+            .day-stem-branch {
+                font-size: 10px;
+            }
+            
+            .day-status {
+                font-size: 8px;
+                padding: 1px 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🗓️ 道教萬年曆</h1>
+            <p>日干支月曆 - 拜拜擇日參考</p>
+        </div>
+        
+        <div class="controls">
+            <select id="year-select"></select>
+            <select id="month-select"></select>
+            <button onclick="goToday()">回到今日</button>
+            <button onclick="prevMonth()">上個月</button>
+            <button onclick="nextMonth()">下個月</button>
+        </div>
+        
+        <div class="calendar">
+            <div class="calendar-grid" id="calendar-grid">
+                <!-- 日曆內容將由JavaScript生成 -->
+            </div>
+        </div>
+        
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color status-good"></div>
+                <span>大吉 - 宜拜拜祭祀</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color status-bad"></div>
+                <span>大凶 - 不宜拜拜</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color status-neutral"></div>
+                <span>謹慎 - 小拜拜可以</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 詳情模態框 -->
+    <div id="day-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <div id="modal-content">
+                <!-- 詳情內容將由JavaScript生成 -->
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/fortune.js"></script>
+    <script>
+        let currentYear = new Date().getFullYear();
+        let currentMonth = new Date().getMonth() + 1;
+        
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeSelects();
+            generateCalendar();
+        });
+        
+        // 初始化年月選擇器
+        function initializeSelects() {
+            const yearSelect = document.getElementById('year-select');
+            const monthSelect = document.getElementById('month-select');
+            
+            // 年份選擇器（1900-2100）
+            for (let year = 1900; year <= 2100; year++) {
+                const option = document.createElement('option');
+                option.value = year;
+                option.textContent = `${year}年`;
+                if (year === currentYear) option.selected = true;
+                yearSelect.appendChild(option);
+            }
+            
+            // 月份選擇器
+            for (let month = 1; month <= 12; month++) {
+                const option = document.createElement('option');
+                option.value = month;
+                option.textContent = `${month}月`;
+                if (month === currentMonth) option.selected = true;
+                monthSelect.appendChild(option);
+            }
+            
+            // 事件監聽
+            yearSelect.addEventListener('change', () => {
+                currentYear = parseInt(yearSelect.value);
+                generateCalendar();
+            });
+            
+            monthSelect.addEventListener('change', () => {
+                currentMonth = parseInt(monthSelect.value);
+                generateCalendar();
+            });
+        }
+        
+        // 生成日曆
+        function generateCalendar() {
+            const grid = document.getElementById('calendar-grid');
+            grid.innerHTML = '';
+            
+            // 日曆標題
+            const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
+            weekdays.forEach(day => {
+                const header = document.createElement('div');
+                header.className = 'calendar-header';
+                header.textContent = day;
+                grid.appendChild(header);
+            });
+            
+            // 獲取月份資料
+            const monthData = fortuneChecker.getMonthStemBranch(currentYear, currentMonth);
+            
+            // 計算第一天是星期幾
+            const firstDay = new Date(currentYear, currentMonth - 1, 1);
+            const startDay = firstDay.getDay();
+            
+            // 上個月的最後幾天
+            const prevMonth = currentMonth === 1 ? 12 : currentMonth - 1;
+            const prevYear = currentMonth === 1 ? currentYear - 1 : currentYear;
+            const prevMonthDays = new Date(prevYear, prevMonth, 0).getDate();
+            
+            for (let i = startDay - 1; i >= 0; i--) {
+                const day = prevMonthDays - i;
+                const date = new Date(prevYear, prevMonth - 1, day);
+                const stemBranch = fortuneChecker.getStemBranch(date);
+                const fortune = fortuneChecker.fortuneData[stemBranch];
+                
+                const dayElement = createDayElement(day, stemBranch, fortune, true, date);
+                grid.appendChild(dayElement);
+            }
+            
+            // 當月的天數
+            monthData.forEach((dayData, index) => {
+                const day = index + 1;
+                const date = new Date(currentYear, currentMonth - 1, day);
+                const isToday = isDateToday(date);
+                
+                const dayElement = createDayElement(
+                    day, 
+                    dayData.stemBranch, 
+                    fortuneChecker.fortuneData[dayData.stemBranch], 
+                    false, 
+                    date,
+                    isToday
+                );
+                grid.appendChild(dayElement);
+            });
+            
+            // 下個月的前幾天
+            const totalCells = grid.children.length - 7; // 減去標題行
+            const remainingCells = 42 - totalCells; // 6週 * 7天 - 已有的格子
+            
+            const nextMonth = currentMonth === 12 ? 1 : currentMonth + 1;
+            const nextYear = currentMonth === 12 ? currentYear + 1 : currentYear;
+            
+            for (let day = 1; day <= remainingCells; day++) {
+                const date = new Date(nextYear, nextMonth - 1, day);
+                const stemBranch = fortuneChecker.getStemBranch(date);
+                const fortune = fortuneChecker.fortuneData[stemBranch];
+                
+                const dayElement = createDayElement(day, stemBranch, fortune, true, date);
+                grid.appendChild(dayElement);
+            }
+        }
+        
+        // 創建日期元素
+        function createDayElement(day, stemBranch, fortune, isOtherMonth, date, isToday = false) {
+            const dayElement = document.createElement('div');
+            dayElement.className = 'calendar-day';
+            if (isOtherMonth) dayElement.classList.add('other-month');
+            if (isToday) dayElement.classList.add('today');
+            
+            const status = fortune ? fortune.status : 'neutral';
+            
+            dayElement.innerHTML = `
+                <div class="day-number">${day}</div>
+                <div class="day-stem-branch">${stemBranch}</div>
+                <div class="day-status status-${status}">
+                    ${getStatusText(status)}
+                </div>
+            `;
+            
+            dayElement.addEventListener('click', () => {
+                showDayDetails(date, stemBranch, fortune);
+            });
+            
+            return dayElement;
+        }
+        
+        // 獲取狀態文字
+        function getStatusText(status) {
+            switch (status) {
+                case 'good': return '大吉';
+                case 'bad': return '大凶';
+                case 'neutral': return '謹慎';
+                default: return '普通';
+            }
+        }
+        
+        // 檢查是否為今天
+        function isDateToday(date) {
+            const today = new Date();
+            return date.getFullYear() === today.getFullYear() &&
+                   date.getMonth() === today.getMonth() &&
+                   date.getDate() === today.getDate();
+        }
+        
+        // 顯示日期詳情
+        function showDayDetails(date, stemBranch, fortune) {
+            const modal = document.getElementById('day-modal');
+            const content = document.getElementById('modal-content');
+            
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
+            const weekday = weekdays[date.getDay()];
+            
+            const status = fortune ? fortune.status : 'neutral';
+            const description = fortune ? fortune.description : '資料不詳';
+            const calculationInfo = fortuneChecker.getCalculationInfo(date);
+            
+            content.innerHTML = `
+                <h2>📅 ${year}年${month}月${day}日 (週${weekday})</h2>
+                <div style="text-align: center; margin: 20px 0;">
+                    <div style="font-size: 24px; font-weight: bold; color: #667eea;">
+                        ${stemBranch}日
+                    </div>
+                    <div class="day-status status-${status}" style="display: inline-block; margin-top: 10px; font-size: 16px;">
+                        ${getStatusText(status)}
+                    </div>
+                </div>
+                
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                    <h4>📜 拜拜宜忌說明</h4>
+                    <p>${description}</p>
+                </div>
+                
+                <details style="margin-top: 15px;">
+                    <summary style="cursor: pointer; font-weight: bold;">🔍 計算過程詳情</summary>
+                    <div style="margin-top: 10px; font-size: 14px; color: #666;">
+                        基準日期: ${calculationInfo.baseDate}<br>
+                        基準儒略日數: ${calculationInfo.baseJDN}<br>
+                        目標儒略日數: ${calculationInfo.targetJDN}<br>
+                        天數差: ${calculationInfo.daysDiff} 天<br>
+                        計算公式: ${calculationInfo.calculation}<br>
+                        六十甲子索引: ${calculationInfo.stemBranchIndex}<br>
+                        <em style="color: #e53e3e;">${calculationInfo.note}</em>
+                    </div>
+                </details>
+            `;
+            
+            modal.style.display = 'block';
+        }
+        
+        // 關閉模態框
+        function closeModal() {
+            document.getElementById('day-modal').style.display = 'none';
+        }
+        
+        // 點擊模態框外部關閉
+        window.addEventListener('click', (e) => {
+            const modal = document.getElementById('day-modal');
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+        
+        // 導航功能
+        function goToday() {
+            const today = new Date();
+            currentYear = today.getFullYear();
+            currentMonth = today.getMonth() + 1;
+            
+            document.getElementById('year-select').value = currentYear;
+            document.getElementById('month-select').value = currentMonth;
+            
+            generateCalendar();
+        }
+        
+        function prevMonth() {
+            if (currentMonth === 1) {
+                currentMonth = 12;
+                currentYear--;
+            } else {
+                currentMonth--;
+            }
+            
+            document.getElementById('year-select').value = currentYear;
+            document.getElementById('month-select').value = currentMonth;
+            
+            generateCalendar();
+        }
+        
+        function nextMonth() {
+            if (currentMonth === 12) {
+                currentMonth = 1;
+                currentYear++;
+            } else {
+                currentMonth++;
+            }
+            
+            document.getElementById('year-select').value = currentYear;
+            document.getElementById('month-select').value = currentMonth;
+            
+            generateCalendar();
+        }
+    </script>
+</body>
+</html>

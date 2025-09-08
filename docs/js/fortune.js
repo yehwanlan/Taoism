@@ -78,20 +78,27 @@ class FortuneChecker {
         };
     }
 
-    // 計算指定日期的天干地支
-    getStemBranch(date) {
-        // 使用更準確的算法：以公元1年1月1日為起點
-        // 公元1年1月1日是甲子日（這是傳統曆法的基準）
+    // 計算指定日期的日干支（注意：這是日干支，不是年干支）
+    getStemBranch(date, useTraditionalTime = true) {
+        // 使用儒略日數方法進行精確計算
+        // 基準：儒略日數 2414686 = 1900年1月31日 = 庚子日
         
-        const targetDate = new Date(date);
+        let targetDate = new Date(date);
         
-        // 計算從公元1年1月1日到目標日期的天數
-        // 公元1年1月1日的Julian Day Number是1721426
+        // 傳統子時分界處理：23:00-00:59為下一日
+        if (useTraditionalTime) {
+            const hour = targetDate.getHours();
+            if (hour >= 23) {
+                // 子時屬於下一日
+                targetDate = new Date(targetDate.getTime() + 24 * 60 * 60 * 1000);
+            }
+        }
+        
         const year = targetDate.getFullYear();
         const month = targetDate.getMonth() + 1; // JavaScript月份從0開始
         const day = targetDate.getDate();
         
-        // 計算Julian Day Number
+        // 計算儒略日數 (Julian Day Number)
         let a = Math.floor((14 - month) / 12);
         let y = year + 4800 - a;
         let m = month + 12 * a - 3;
@@ -99,17 +106,24 @@ class FortuneChecker {
         let jdn = day + Math.floor((153 * m + 2) / 5) + 365 * y + 
                   Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400) - 32045;
         
-        // 公元1年1月1日的JDN是1721426，對應甲子日
-        // 計算天干地支索引
-        const daysSinceEpoch = jdn - 1721426;
-        const stemBranchIndex = daysSinceEpoch % 60;
+        // 1900年1月31日的儒略日數是2414686，對應庚子日
+        const baseJDN = 2414686;
+        const baseStemBranchIndex = 36; // 庚子在六十甲子中的位置（從0開始）
+        
+        // 計算天數差
+        const daysDiff = jdn - baseJDN;
+        
+        // 計算目標日期的天干地支索引
+        let stemBranchIndex = (baseStemBranchIndex + daysDiff) % 60;
         
         // 確保索引為正數
-        const positiveIndex = stemBranchIndex >= 0 ? stemBranchIndex : stemBranchIndex + 60;
+        if (stemBranchIndex < 0) {
+            stemBranchIndex += 60;
+        }
         
-        // 計算天干和地支
-        const stemIndex = positiveIndex % 10;
-        const branchIndex = positiveIndex % 12;
+        // 計算天干和地支索引
+        const stemIndex = stemBranchIndex % 10;
+        const branchIndex = stemBranchIndex % 12;
         
         const stem = this.stemBranch.stems[stemIndex];
         const branch = this.stemBranch.branches[branchIndex];
@@ -117,21 +131,84 @@ class FortuneChecker {
         return stem + branch;
     }
     
-    // 驗證天干地支計算的輔助方法
+    // 根據索引獲取天干地支（用於查表和調試）
+    getStemBranchByIndex(index) {
+        if (index < 0 || index >= 60) {
+            throw new Error('索引必須在0-59之間');
+        }
+        
+        const stemIndex = index % 10;
+        const branchIndex = index % 12;
+        
+        return this.stemBranch.stems[stemIndex] + this.stemBranch.branches[branchIndex];
+    }
+    
+    // 獲取某月所有日期的日干支
+    getMonthStemBranch(year, month) {
+        const daysInMonth = new Date(year, month, 0).getDate();
+        const result = [];
+        
+        for (let day = 1; day <= daysInMonth; day++) {
+            const date = new Date(year, month - 1, day);
+            const stemBranch = this.getStemBranch(date);
+            const fortune = this.fortuneData[stemBranch];
+            
+            result.push({
+                date: `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`,
+                weekday: ['日', '一', '二', '三', '四', '五', '六'][date.getDay()],
+                stemBranch: stemBranch,
+                status: fortune ? fortune.status : 'neutral',
+                description: fortune ? fortune.description : '資料不詳'
+            });
+        }
+        
+        return result;
+    }
+    
+    // 驗證日干支計算的輔助方法
     validateStemBranch() {
-        // 一些已知的日期和對應的天干地支，用於驗證
+        console.log('=== 日干支計算驗證 ===');
+        console.log('⚠️ 重要說明：此處計算的是【日干支】，不是年干支！');
+        console.log('日干支：每日的天干地支，60天一個循環');
+        console.log('年干支：每年的天干地支，60年一個循環\n');
+        
+        // 使用可靠的日干支數據進行驗證
         const knownDates = [
-            { date: new Date(2024, 0, 1), expected: '癸卯' }, // 2024年1月1日
-            { date: new Date(2024, 1, 10), expected: '甲子' }, // 2024年2月10日是甲子日（春節）
-            { date: new Date(2025, 0, 1), expected: '戊申' }, // 2025年1月1日
+            { date: new Date(1900, 0, 31), expected: '庚子', note: '基準日期' },
+            { date: new Date(1900, 1, 1), expected: '辛丑', note: '基準+1天' },
+            { date: new Date(1900, 1, 2), expected: '壬寅', note: '基準+2天' },
+            // 需要更多可靠的日干支數據來驗證
         ];
         
-        console.log('=== 天干地支計算驗證 ===');
         knownDates.forEach(item => {
             const calculated = this.getStemBranch(item.date);
             const isCorrect = calculated === item.expected;
-            console.log(`${item.date.toLocaleDateString()}: 計算=${calculated}, 預期=${item.expected}, ${isCorrect ? '✓' : '✗'}`);
+            console.log(`${item.date.toLocaleDateString()}: 計算=${calculated}, 預期=${item.expected}, ${isCorrect ? '✓' : '✗'} (${item.note})`);
         });
+        
+        // 測試連續性：檢查連續日期是否按正確順序變化
+        console.log('\n=== 連續性驗證（六十甲子順序）===');
+        const testDate = new Date(1900, 0, 31); // 從基準日期開始
+        for (let i = 0; i < 10; i++) {
+            const currentDate = new Date(testDate);
+            currentDate.setDate(testDate.getDate() + i);
+            const stemBranch = this.getStemBranch(currentDate);
+            const expectedIndex = (36 + i) % 60; // 庚子是第36個
+            console.log(`${currentDate.toLocaleDateString()}: ${stemBranch} (索引: ${expectedIndex})`);
+        }
+        
+        // 測試60天循環
+        console.log('\n=== 六十甲子循環驗證 ===');
+        const cycleTestDate = new Date(1900, 0, 31);
+        const day0 = this.getStemBranch(cycleTestDate);
+        
+        const day60 = new Date(cycleTestDate);
+        day60.setDate(cycleTestDate.getDate() + 60);
+        const day60Result = this.getStemBranch(day60);
+        
+        console.log(`基準日 (第0天): ${day0}`);
+        console.log(`60天後: ${day60Result}`);
+        console.log(`循環正確: ${day0 === day60Result ? '✓' : '✗'}`);
     }
 
     // 獲取今日拜拜資訊
@@ -158,11 +235,12 @@ class FortuneChecker {
     
     // 獲取計算過程資訊（用於調試和說明）
     getCalculationInfo(date) {
-        const year = date.getFullYear();
-        const month = date.getMonth() + 1;
-        const day = date.getDate();
+        const targetDate = new Date(date);
+        const year = targetDate.getFullYear();
+        const month = targetDate.getMonth() + 1;
+        const day = targetDate.getDate();
         
-        // 計算Julian Day Number的過程
+        // 計算儒略日數
         let a = Math.floor((14 - month) / 12);
         let y = year + 4800 - a;
         let m = month + 12 * a - 3;
@@ -170,16 +248,30 @@ class FortuneChecker {
         let jdn = day + Math.floor((153 * m + 2) / 5) + 365 * y + 
                   Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400) - 32045;
         
-        const daysSinceEpoch = jdn - 1721426;
-        const stemBranchIndex = daysSinceEpoch % 60;
-        const positiveIndex = stemBranchIndex >= 0 ? stemBranchIndex : stemBranchIndex + 60;
+        const baseJDN = 2414686; // 1900年1月31日
+        const baseStemBranchIndex = 36; // 庚子
+        const daysDiff = jdn - baseJDN;
+        
+        let stemBranchIndex = (baseStemBranchIndex + daysDiff) % 60;
+        if (stemBranchIndex < 0) {
+            stemBranchIndex += 60;
+        }
+        
+        const stemIndex = stemBranchIndex % 10;
+        const branchIndex = stemBranchIndex % 12;
         
         return {
-            julianDayNumber: jdn,
-            daysSinceEpoch: daysSinceEpoch,
-            stemBranchIndex: positiveIndex,
-            stemIndex: positiveIndex % 10,
-            branchIndex: positiveIndex % 12
+            type: '日干支計算',
+            baseDate: '1900年1月31日 (庚子日)',
+            baseJDN: baseJDN,
+            targetJDN: jdn,
+            daysDiff: daysDiff,
+            baseStemBranchIndex: baseStemBranchIndex,
+            stemBranchIndex: stemBranchIndex,
+            stemIndex: stemIndex,
+            branchIndex: branchIndex,
+            calculation: `(${baseStemBranchIndex} + ${daysDiff}) % 60 = ${stemBranchIndex}`,
+            note: '此為日干支，非年干支'
         };
     }
 

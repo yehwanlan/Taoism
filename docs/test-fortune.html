@@ -25,14 +25,32 @@
 <body>
     <h1>🗓️ 拜拜好日子測試</h1>
     
+    <div style="background: #fff3cd; border: 1px solid #ffeaa7; padding: 15px; margin: 20px 0; border-radius: 8px;">
+        <h3 style="color: #856404; margin-top: 0;">⚠️ 重要說明</h3>
+        <p style="color: #856404; margin-bottom: 0;">
+            <strong>此工具計算的是【日干支】，不是年干支！</strong><br>
+            • 日干支：每日的天干地支，60天一個循環，用於拜拜擇日<br>
+            • 年干支：每年的天干地支，60年一個循環，如2024年甲辰年
+        </p>
+    </div>
+    
     <div id="today-result" class="test-result">
-        <h3>今日資訊</h3>
+        <h3>今日日干支資訊</h3>
         <div id="today-info">載入中...</div>
     </div>
     
     <div class="test-result">
-        <h3>測試幾個已知日期</h3>
+        <h3>基準日期和連續性測試</h3>
+        <p style="color: #666; font-size: 0.9em;">驗證基準日期和六十甲子循環的正確性</p>
         <div id="test-dates">載入中...</div>
+    </div>
+    
+    <div class="test-result">
+        <h3>自定義日期測試</h3>
+        <p style="color: #666; font-size: 0.9em;">輸入任意日期查詢其日干支和拜拜宜忌</p>
+        <input type="date" id="custom-date" value="2024-01-01">
+        <button onclick="testCustomDate()" style="margin-left: 10px; padding: 5px 15px;">查詢日干支</button>
+        <div id="custom-result" style="margin-top: 10px;"></div>
     </div>
 
     <script src="js/fortune.js"></script>
@@ -55,11 +73,16 @@
                 <details>
                     <summary>📊 計算過程詳情</summary>
                     <div style="margin-top: 10px; font-size: 0.9em; color: #666;">
-                        Julian Day Number: ${todayFortune.calculationInfo.julianDayNumber}<br>
-                        距離公元1年天數: ${todayFortune.calculationInfo.daysSinceEpoch}<br>
+                        <strong>${todayFortune.calculationInfo.type}</strong><br>
+                        基準日期: ${todayFortune.calculationInfo.baseDate}<br>
+                        基準儒略日數: ${todayFortune.calculationInfo.baseJDN}<br>
+                        目標儒略日數: ${todayFortune.calculationInfo.targetJDN}<br>
+                        天數差: ${todayFortune.calculationInfo.daysDiff} 天<br>
+                        計算公式: ${todayFortune.calculationInfo.calculation}<br>
                         六十甲子索引: ${todayFortune.calculationInfo.stemBranchIndex}<br>
                         天干索引: ${todayFortune.calculationInfo.stemIndex} (${fortuneChecker.stemBranch.stems[todayFortune.calculationInfo.stemIndex]})<br>
-                        地支索引: ${todayFortune.calculationInfo.branchIndex} (${fortuneChecker.stemBranch.branches[todayFortune.calculationInfo.branchIndex]})
+                        地支索引: ${todayFortune.calculationInfo.branchIndex} (${fortuneChecker.stemBranch.branches[todayFortune.calculationInfo.branchIndex]})<br>
+                        <em style="color: #e53e3e;">${todayFortune.calculationInfo.note}</em>
                     </div>
                 </details>
             `;
@@ -99,6 +122,42 @@
             });
             
             testDatesDiv.innerHTML = html;
+        }
+        
+        // 測試自定義日期
+        function testCustomDate() {
+            const dateInput = document.getElementById('custom-date');
+            const resultDiv = document.getElementById('custom-result');
+            
+            if (!dateInput.value) {
+                resultDiv.innerHTML = '<span style="color: red;">請選擇日期</span>';
+                return;
+            }
+            
+            const selectedDate = new Date(dateInput.value);
+            const stemBranch = fortuneChecker.getStemBranch(selectedDate);
+            const fortune = fortuneChecker.fortuneData[stemBranch];
+            const status = fortune ? fortune.status : 'neutral';
+            const description = fortune ? fortune.description : '資料不詳';
+            const calculationInfo = fortuneChecker.getCalculationInfo(selectedDate);
+            
+            resultDiv.innerHTML = `
+                <div class="test-result ${status}" style="margin: 10px 0; padding: 15px;">
+                    <strong>${selectedDate.toLocaleDateString()}</strong> - <strong>${stemBranch}</strong>日<br>
+                    狀態: ${fortuneChecker.getStatusText(status)}<br>
+                    說明: ${description}<br><br>
+                    
+                    <details>
+                        <summary>計算過程</summary>
+                        <div style="margin-top: 10px; font-size: 0.9em; color: #666;">
+                            基準日期: ${calculationInfo.baseDate}<br>
+                            天數差: ${calculationInfo.daysDiff} 天<br>
+                            計算: ${calculationInfo.calculation}<br>
+                            結果: ${fortuneChecker.stemBranch.stems[calculationInfo.stemIndex]}${fortuneChecker.stemBranch.branches[calculationInfo.branchIndex]}
+                        </div>
+                    </details>
+                </div>
+            `;
         }
         
         // 頁面載入完成後執行測試

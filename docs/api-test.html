@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>道教日干支 API 測試</title>
+    <style>
+        body {
+            font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f7fa;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .api-section {
+            background: white;
+            margin: 20px 0;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .api-header {
+            background: #667eea;
+            color: white;
+            padding: 15px 20px;
+            font-weight: bold;
+        }
+        
+        .api-content {
+            padding: 20px;
+        }
+        
+        .api-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .api-form input, .api-form select, .api-form button {
+            padding: 8px 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        
+        .api-form button {
+            background: #28a745;
+            color: white;
+            border-color: #28a745;
+            cursor: pointer;
+        }
+        
+        .api-form button:hover {
+            background: #218838;
+        }
+        
+        .api-result {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .success {
+            border-left: 4px solid #28a745;
+            background: #d4edda;
+        }
+        
+        .error {
+            border-left: 4px solid #dc3545;
+            background: #f8d7da;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .stat-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border-left: 4px solid #667eea;
+        }
+        
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔌 道教日干支 API 測試</h1>
+            <p>測試各種 API 功能和參數</p>
+        </div>
+
+        <!-- 今日資訊 API -->
+        <div class="api-section">
+            <div class="api-header">GET /api/today - 獲取今日資訊</div>
+            <div class="api-content">
+                <div class="api-form">
+                    <select id="today-timezone">
+                        <option value="Asia/Taipei">台北時間</option>
+                        <option value="Asia/Shanghai">北京時間</option>
+                        <option value="Asia/Tokyo">東京時間</option>
+                        <option value="UTC">UTC時間</option>
+                    </select>
+                    <label>
+                        <input type="checkbox" id="today-traditional" checked> 使用傳統子時分界
+                    </label>
+                    <button onclick="testTodayAPI()">測試</button>
+                </div>
+                <div id="today-result" class="api-result" style="display: none;"></div>
+            </div>
+        </div>
+
+        <!-- 特定日期 API -->
+        <div class="api-section">
+            <div class="api-header">GET /api/date/:date - 查詢特定日期</div>
+            <div class="api-content">
+                <div class="api-form">
+                    <input type="date" id="date-input" value="2024-01-01">
+                    <select id="date-timezone">
+                        <option value="Asia/Taipei">台北時間</option>
+                        <option value="Asia/Shanghai">北京時間</option>
+                        <option value="UTC">UTC時間</option>
+                    </select>
+                    <label>
+                        <input type="checkbox" id="date-traditional" checked> 使用傳統子時分界
+                    </label>
+                    <button onclick="testDateAPI()">測試</button>
+                </div>
+                <div id="date-result" class="api-result" style="display: none;"></div>
+            </div>
+        </div>
+
+        <!-- 月份批量查詢 API -->
+        <div class="api-section">
+            <div class="api-header">GET /api/month/:year/:month - 批量查詢月份</div>
+            <div class="api-content">
+                <div class="api-form">
+                    <input type="number" id="month-year" value="2024" min="1900" max="2100" placeholder="年份">
+                    <input type="number" id="month-month" value="1" min="1" max="12" placeholder="月份">
+                    <select id="month-timezone">
+                        <option value="Asia/Taipei">台北時間</option>
+                        <option value="UTC">UTC時間</option>
+                    </select>
+                    <button onclick="testMonthAPI()">測試</button>
+                </div>
+                <div id="month-result" class="api-result" style="display: none;"></div>
+            </div>
+        </div>
+
+        <!-- 六十甲子表 API -->
+        <div class="api-section">
+            <div class="api-header">GET /api/table - 六十甲子完整表</div>
+            <div class="api-content">
+                <div class="api-form">
+                    <button onclick="testTableAPI()">測試</button>
+                </div>
+                <div id="table-result" class="api-result" style="display: none;"></div>
+            </div>
+        </div>
+
+        <!-- 驗證 API -->
+        <div class="api-section">
+            <div class="api-header">GET /api/validation - 計算驗證</div>
+            <div class="api-content">
+                <div class="api-form">
+                    <button onclick="testValidationAPI()">測試</button>
+                </div>
+                <div id="validation-result" class="api-result" style="display: none;"></div>
+            </div>
+        </div>
+
+        <!-- 快取管理 API -->
+        <div class="api-section">
+            <div class="api-header">快取管理 API</div>
+            <div class="api-content">
+                <div class="api-form">
+                    <button onclick="testCacheStatusAPI()">查看快取狀態</button>
+                    <button onclick="testClearCacheAPI()" style="background: #dc3545; border-color: #dc3545;">清除快取</button>
+                </div>
+                <div id="cache-result" class="api-result" style="display: none;"></div>
+            </div>
+        </div>
+
+        <!-- 統計資訊 -->
+        <div class="api-section">
+            <div class="api-header">📊 系統統計</div>
+            <div class="api-content">
+                <div class="stats-grid" id="stats-grid">
+                    <!-- 統計卡片將由JavaScript生成 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/fortune.js"></script>
+    <script src="js/fortune-api.js"></script>
+    <script>
+        // 測試今日 API
+        function testTodayAPI() {
+            const timezone = document.getElementById('today-timezone').value;
+            const useTraditional = document.getElementById('today-traditional').checked;
+            
+            const result = taoismAPI.getTodayAPI(timezone, useTraditional);
+            displayResult('today-result', result);
+        }
+
+        // 測試日期 API
+        function testDateAPI() {
+            const date = document.getElementById('date-input').value;
+            const timezone = document.getElementById('date-timezone').value;
+            const useTraditional = document.getElementById('date-traditional').checked;
+            
+            if (!date) {
+                displayResult('date-result', { success: false, error: '請選擇日期' });
+                return;
+            }
+            
+            const result = taoismAPI.getDateAPI(date, timezone, useTraditional);
+            displayResult('date-result', result);
+        }
+
+        // 測試月份 API
+        function testMonthAPI() {
+            const year = parseInt(document.getElementById('month-year').value);
+            const month = parseInt(document.getElementById('month-month').value);
+            const timezone = document.getElementById('month-timezone').value;
+            
+            const result = taoismAPI.getMonthAPI(year, month, timezone);
+            displayResult('month-result', result);
+        }
+
+        // 測試表格 API
+        function testTableAPI() {
+            const result = taoismAPI.getStemBranchTableAPI();
+            displayResult('table-result', result);
+        }
+
+        // 測試驗證 API
+        function testValidationAPI() {
+            const result = taoismAPI.getValidationAPI();
+            displayResult('validation-result', result);
+        }
+
+        // 測試快取狀態 API
+        function testCacheStatusAPI() {
+            const result = taoismAPI.getCacheStatus();
+            displayResult('cache-result', result);
+        }
+
+        // 測試清除快取 API
+        function testClearCacheAPI() {
+            const result = taoismAPI.clearCache();
+            displayResult('cache-result', result);
+        }
+
+        // 顯示結果
+        function displayResult(elementId, result) {
+            const element = document.getElementById(elementId);
+            element.style.display = 'block';
+            element.className = `api-result ${result.success ? 'success' : 'error'}`;
+            element.textContent = JSON.stringify(result, null, 2);
+        }
+
+        // 初始化統計資訊
+        function initializeStats() {
+            const tableResult = taoismAPI.getStemBranchTableAPI();
+            const validationResult = taoismAPI.getValidationAPI();
+            const cacheResult = taoismAPI.getCacheStatus();
+            
+            const statsGrid = document.getElementById('stats-grid');
+            
+            if (tableResult.success) {
+                const stats = tableResult.data.statistics;
+                statsGrid.innerHTML = `
+                    <div class="stat-card">
+                        <div class="stat-number">${stats.good.count}</div>
+                        <div class="stat-label">大吉日 (${stats.good.percentage}%)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">${stats.bad.count}</div>
+                        <div class="stat-label">大凶日 (${stats.bad.percentage}%)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">${stats.neutral.count}</div>
+                        <div class="stat-label">謹慎日 (${stats.neutral.percentage}%)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">${validationResult.data.passedTests}</div>
+                        <div class="stat-label">驗證通過</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">${cacheResult.data.cacheSize}</div>
+                        <div class="stat-label">快取項目</div>
+                    </div>
+                `;
+            }
+        }
+
+        // 頁面載入完成後初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeStats();
+            
+            // 自動測試今日 API
+            testTodayAPI();
+        });
+    </script>
+</body>
+</html>
