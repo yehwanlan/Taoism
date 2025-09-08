@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>拜拜好日子測試</title>
+    <style>
+        body {
+            font-family: 'Microsoft JhengHei', sans-serif;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .test-result {
+            background: #f5f5f5;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        .good { border-left-color: #4caf50; background: #e8f5e8; }
+        .bad { border-left-color: #f44336; background: #ffebee; }
+        .neutral { border-left-color: #ff9800; background: #fff8e1; }
+    </style>
+</head>
+<body>
+    <h1>🗓️ 拜拜好日子測試</h1>
+    
+    <div id="today-result" class="test-result">
+        <h3>今日資訊</h3>
+        <div id="today-info">載入中...</div>
+    </div>
+    
+    <div class="test-result">
+        <h3>測試幾個已知日期</h3>
+        <div id="test-dates">載入中...</div>
+    </div>
+
+    <script src="js/fortune.js"></script>
+    <script>
+        // 測試今日
+        function testToday() {
+            const todayFortune = fortuneChecker.getTodayFortune();
+            const todayInfo = document.getElementById('today-info');
+            const todayResult = document.getElementById('today-result');
+            
+            // 執行驗證
+            fortuneChecker.validateStemBranch();
+            
+            todayInfo.innerHTML = `
+                <strong>${todayFortune.date}</strong><br>
+                天干地支: <strong>${todayFortune.stemBranch}</strong><br>
+                狀態: <strong>${fortuneChecker.getStatusText(todayFortune.status)}</strong><br>
+                說明: ${todayFortune.description}<br><br>
+                
+                <details>
+                    <summary>📊 計算過程詳情</summary>
+                    <div style="margin-top: 10px; font-size: 0.9em; color: #666;">
+                        Julian Day Number: ${todayFortune.calculationInfo.julianDayNumber}<br>
+                        距離公元1年天數: ${todayFortune.calculationInfo.daysSinceEpoch}<br>
+                        六十甲子索引: ${todayFortune.calculationInfo.stemBranchIndex}<br>
+                        天干索引: ${todayFortune.calculationInfo.stemIndex} (${fortuneChecker.stemBranch.stems[todayFortune.calculationInfo.stemIndex]})<br>
+                        地支索引: ${todayFortune.calculationInfo.branchIndex} (${fortuneChecker.stemBranch.branches[todayFortune.calculationInfo.branchIndex]})
+                    </div>
+                </details>
+            `;
+            
+            todayResult.classList.add(todayFortune.status);
+        }
+        
+        // 測試幾個特定日期
+        function testSpecificDates() {
+            const testDates = [
+                new Date(2025, 0, 1),  // 2025年1月1日
+                new Date(2025, 0, 15), // 2025年1月15日
+                new Date(2025, 1, 1),  // 2025年2月1日
+                new Date(2025, 1, 14), // 2025年2月14日
+                new Date(2025, 2, 1),  // 2025年3月1日
+            ];
+            
+            const testDatesDiv = document.getElementById('test-dates');
+            let html = '';
+            
+            testDates.forEach(date => {
+                const stemBranch = fortuneChecker.getStemBranch(date);
+                const fortune = fortuneChecker.fortuneData[stemBranch];
+                const status = fortune ? fortune.status : 'neutral';
+                const description = fortune ? fortune.description : '資料不詳';
+                
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                
+                html += `
+                    <div class="test-result ${status}" style="margin: 5px 0; padding: 10px;">
+                        <strong>${year}年${month}月${day}日</strong> - ${stemBranch}日<br>
+                        ${fortuneChecker.getStatusText(status)}: ${description}
+                    </div>
+                `;
+            });
+            
+            testDatesDiv.innerHTML = html;
+        }
+        
+        // 頁面載入完成後執行測試
+        document.addEventListener('DOMContentLoaded', () => {
+            testToday();
+            testSpecificDates();
+        });
+    </script>
+</body>
+</html>
