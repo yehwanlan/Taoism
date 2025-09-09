@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>神明聖誕日功能測試</title>
+    <style>
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .test-section {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 4px solid #007bff;
+        }
+        .result {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #dee2e6;
+        }
+        .success { border-left: 4px solid #28a745; }
+        .info { border-left: 4px solid #17a2b8; }
+        .warning { border-left: 4px solid #ffc107; }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #0056b3; }
+        input {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 神明聖誕日功能測試</h1>
+    
+    <div class="test-section">
+        <h3>📅 今日測試</h3>
+        <button onclick="testTodayDeities()">測試今日神明聖誕</button>
+        <div id="today-test-result" class="result"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>🔍 搜尋測試</h3>
+        <input type="text" id="search-input" placeholder="輸入神明名稱" value="觀音">
+        <button onclick="testSearch()">搜尋神明</button>
+        <div id="search-test-result" class="result"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>📆 近期測試</h3>
+        <button onclick="testUpcoming()">測試近期神明聖誕</button>
+        <div id="upcoming-test-result" class="result"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>📊 統計測試</h3>
+        <button onclick="testStats()">測試統計資訊</button>
+        <div id="stats-test-result" class="result"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>🗓️ 特定日期測試</h3>
+        <input type="date" id="date-input" value="2025-01-09">
+        <button onclick="testSpecificDate()">測試指定日期</button>
+        <div id="date-test-result" class="result"></div>
+    </div>
+
+    <script src="js/deity-birthday.js"></script>
+    <script>
+        function testTodayDeities() {
+            const result = document.getElementById('today-test-result');
+            const todayDeities = deityChecker.getTodayDeities();
+            
+            if (todayDeities) {
+                const deitiesList = todayDeities.deities
+                    .map(deity => deityChecker.formatDeityInfo(deity))
+                    .join('<br>');
+                
+                result.innerHTML = `
+                    <div class="success">
+                        <h4>✅ 今日有神明聖誕 (${todayDeities.count}位)</h4>
+                        <p><strong>日期：</strong>${todayDeities.dateString}</p>
+                        <p><strong>神明：</strong></p>
+                        <div>${deitiesList}</div>
+                    </div>
+                `;
+            } else {
+                result.innerHTML = `
+                    <div class="info">
+                        <h4>ℹ️ 今日無神明聖誕</h4>
+                        <p>今天沒有神明聖誕日</p>
+                    </div>
+                `;
+            }
+        }
+
+        function testSearch() {
+            const searchTerm = document.getElementById('search-input').value;
+            const result = document.getElementById('search-test-result');
+            const searchResults = deityChecker.searchDeity(searchTerm);
+            
+            if (searchResults.length > 0) {
+                let html = `<div class="success"><h4>✅ 找到 ${searchResults.length} 筆結果</h4>`;
+                searchResults.forEach(item => {
+                    html += `<p><strong>${item.dateString}</strong> - ${deityChecker.formatDeityInfo(item.deity)}</p>`;
+                });
+                html += '</div>';
+                result.innerHTML = html;
+            } else {
+                result.innerHTML = `
+                    <div class="warning">
+                        <h4>⚠️ 找不到相關神明</h4>
+                        <p>搜尋詞：${searchTerm}</p>
+                    </div>
+                `;
+            }
+        }
+
+        function testUpcoming() {
+            const result = document.getElementById('upcoming-test-result');
+            const upcoming = deityChecker.getUpcomingBirthdays(7);
+            
+            if (upcoming.length > 0) {
+                let html = `<div class="success"><h4>✅ 近7天內有 ${upcoming.length} 個神明聖誕日</h4>`;
+                upcoming.forEach(item => {
+                    const deitiesList = item.deities
+                        .map(deity => deityChecker.formatDeityInfo(deity))
+                        .join(', ');
+                    
+                    const dayLabel = item.isToday ? '今天' : 
+                                    item.isTomorrow ? '明天' : 
+                                    `${item.daysFromNow}天後`;
+                    
+                    html += `<p><strong>${item.dateString} (${dayLabel})</strong><br>${deitiesList}</p>`;
+                });
+                html += '</div>';
+                result.innerHTML = html;
+            } else {
+                result.innerHTML = `
+                    <div class="info">
+                        <h4>ℹ️ 近期無神明聖誕</h4>
+                        <p>未來7天內沒有神明聖誕日</p>
+                    </div>
+                `;
+            }
+        }
+
+        function testStats() {
+            const result = document.getElementById('stats-test-result');
+            
+            let totalDeities = 0;
+            let buddhaCount = 0;
+            let taoCount = 0;
+            let godCount = 0;
+            let totalDays = 0;
+
+            Object.values(deityChecker.deityBirthdays).forEach(deities => {
+                totalDays++;
+                deities.forEach(deity => {
+                    totalDeities++;
+                    switch(deity.type) {
+                        case '佛': buddhaCount++; break;
+                        case '道': taoCount++; break;
+                        case '神': godCount++; break;
+                    }
+                });
+            });
+
+            result.innerHTML = `
+                <div class="success">
+                    <h4>📊 統計資訊</h4>
+                    <p><strong>總神明數：</strong>${totalDeities} 位</p>
+                    <p><strong>佛教神佛：</strong>${buddhaCount} 位</p>
+                    <p><strong>道教神仙：</strong>${taoCount} 位</p>
+                    <p><strong>民間神明：</strong>${godCount} 位</p>
+                    <p><strong>聖誕日數：</strong>${totalDays} 天</p>
+                    <p><strong>平均每天：</strong>${(totalDeities/totalDays).toFixed(2)} 位神明</p>
+                </div>
+            `;
+        }
+
+        function testSpecificDate() {
+            const dateInput = document.getElementById('date-input').value;
+            const result = document.getElementById('date-test-result');
+            
+            if (!dateInput) {
+                result.innerHTML = '<div class="warning"><h4>⚠️ 請選擇日期</h4></div>';
+                return;
+            }
+            
+            const testDate = new Date(dateInput);
+            const deities = deityChecker.getDeityBirthdays(testDate);
+            
+            if (deities.length > 0) {
+                const deitiesList = deities
+                    .map(deity => deityChecker.formatDeityInfo(deity))
+                    .join('<br>');
+                
+                result.innerHTML = `
+                    <div class="success">
+                        <h4>✅ ${testDate.toLocaleDateString()} 有神明聖誕 (${deities.length}位)</h4>
+                        <div>${deitiesList}</div>
+                    </div>
+                `;
+            } else {
+                result.innerHTML = `
+                    <div class="info">
+                        <h4>ℹ️ ${testDate.toLocaleDateString()} 無神明聖誕</h4>
+                    </div>
+                `;
+            }
+        }
+
+        // 頁面載入後自動執行今日測試
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(testTodayDeities, 500);
+        });
+    </script>
+</body>
+</html>

@@ -316,3 +316,68 @@ function updateFortuneDisplay() {
 
 // 頁面載入完成後執行
 document.addEventListener('DOMContentLoaded', updateFortuneDisplay);
+
+// 簡化版神明聖誕日資料（用於主頁顯示）
+const todayDeityBirthdays = {
+    '01-01': ['彌勒佛'],
+    '01-09': ['玉皇上帝'],
+    '01-15': ['上元天官'],
+    '02-02': ['土地正神'],
+    '02-03': ['文昌梓潼帝君'],
+    '02-15': ['太上老君'],
+    '02-19': ['觀音菩薩'],
+    '03-03': ['玄天上帝'],
+    '03-15': ['玄壇趙元帥'],
+    '03-23': ['天妃娘娘'],
+    '04-08': ['釋迦文佛'],
+    '04-14': ['呂純陽祖師'],
+    '05-13': ['關聖帝君'],
+    '06-19': ['觀音菩薩'],
+    '06-23': ['關聖帝君'],
+    '07-15': ['中元地官'],
+    '07-18': ['王母娘娘'],
+    '07-30': ['地藏王菩薩'],
+    '08-03': ['灶君'],
+    '09-09': ['斗母元君'],
+    '10-15': ['下元水官'],
+    '11-17': ['阿彌陀佛'],
+    '12-24': ['司命灶君']
+};
+
+// 獲取今日神明聖誕
+function getTodayDeityBirthday() {
+    const today = new Date();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    const key = `${month}-${day}`;
+    
+    return todayDeityBirthdays[key] || null;
+}
+
+// 更新拜拜資訊顯示（包含神明聖誕）
+function updateFortuneDisplayWithDeity() {
+    const fortuneInfo = document.getElementById('fortune-info');
+    const dailyFortune = document.getElementById('daily-fortune');
+    
+    if (fortuneInfo && dailyFortune) {
+        const todayFortune = fortuneChecker.getTodayFortune();
+        const todayDeities = getTodayDeityBirthday();
+        
+        let displayText = `${todayFortune.emoji} ${todayFortune.date} ${todayFortune.stemBranch}日 - ${fortuneChecker.getStatusText(todayFortune.status)}`;
+        
+        if (todayDeities) {
+            displayText += `<br>🎂 今日神明聖誕：${todayDeities.join('、')}`;
+        }
+        
+        displayText += `<br><small>${todayFortune.description}</small>`;
+        
+        // 更新內容
+        fortuneInfo.innerHTML = displayText;
+        
+        // 更新樣式
+        dailyFortune.className = `daily-fortune fortune-${todayFortune.status}`;
+    }
+}
+
+// 重新綁定更新函數
+document.addEventListener('DOMContentLoaded', updateFortuneDisplayWithDeity);
