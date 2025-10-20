@@ -1,7 +1,8 @@
-// 神明聖誕日查詢系統
+// 神明聖誕日查詢系統（農曆日期）
 class DeityBirthdayChecker {
     constructor() {
         this.deityBirthdays = this.initDeityBirthdays();
+        this.lunarCalendar = new LunarCalendar();  // 農曆轉換器
     }
 
     // 初始化神明聖誕日資料
@@ -381,13 +382,30 @@ class DeityBirthdayChecker {
         };
     }
 
-    // 獲取指定日期的神明聖誕
+    // 獲取指定日期的神明聖誕（使用農曆）
     getDeityBirthdays(date) {
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
+        // 將陽曆轉換為農曆
+        const lunar = this.lunarCalendar.solarToLunar(
+            date.getFullYear(), 
+            date.getMonth() + 1, 
+            date.getDate()
+        );
+        
+        const month = String(lunar.month).padStart(2, '0');
+        const day = String(lunar.day).padStart(2, '0');
         const key = `${month}-${day}`;
         
         return this.deityBirthdays[key] || [];
+    }
+    
+    // 獲取農曆日期字符串
+    getLunarDateString(date) {
+        const lunar = this.lunarCalendar.solarToLunar(
+            date.getFullYear(), 
+            date.getMonth() + 1, 
+            date.getDate()
+        );
+        return this.lunarCalendar.formatLunarDate(lunar);
     }
 
     // 獲取近期神明聖誕（未來N天內）
@@ -420,26 +438,25 @@ class DeityBirthdayChecker {
         return upcoming;
     }
 
-    // 獲取本月所有神明聖誕
+    // 獲取本月所有神明聖誕（陽曆月份，但查找農曆日期）
     getMonthlyBirthdays(year, month) {
-        const monthStr = String(month).padStart(2, '0');
         const daysInMonth = new Date(year, month, 0).getDate();
         const monthlyBirthdays = [];
         
         for (let day = 1; day <= daysInMonth; day++) {
-            const dayStr = String(day).padStart(2, '0');
-            const key = `${monthStr}-${dayStr}`;
-            const deities = this.deityBirthdays[key];
+            const date = new Date(year, month - 1, day);
+            const deities = this.getDeityBirthdays(date);  // 使用農曆轉換
             
             if (deities && deities.length > 0) {
-                const date = new Date(year, month - 1, day);
                 const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
                 const weekday = weekdays[date.getDay()];
+                const lunarStr = this.getLunarDateString(date);
                 
                 monthlyBirthdays.push({
                     date: date,
                     day: day,
                     weekday: weekday,
+                    lunarDate: lunarStr,
                     deities: deities
                 });
             }
@@ -459,7 +476,7 @@ class DeityBirthdayChecker {
                     results.push({
                         month: parseInt(month),
                         day: parseInt(day),
-                        dateString: `${parseInt(month)}月${parseInt(day)}日`,
+                        dateString: `農曆${parseInt(month)}月${parseInt(day)}日`,
                         deity: deity
                     });
                 }

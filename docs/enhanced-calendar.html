@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>道教萬年曆 - 神明聖誕與拜拜好日子查詢</title>
+    <link rel="stylesheet" href="css/enhanced-calendar.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 頁首 -->
+        <header class="header">
+            <h1>🏮 道教萬年曆</h1>
+            <p class="subtitle">神明聖誕日查詢 · 拜拜好日子擇日 · 六十甲子日曆</p>
+            <nav class="header-nav">
+                <a href="index.html" class="nav-link">📖 經文閱讀</a>
+                <a href="enhanced-calendar.html" class="nav-link active">🗓️ 萬年曆</a>
+                <a href="deity-birthday.html" class="nav-link">🏛️ 神明聖誕</a>
+            </nav>
+        </header>
+
+        <!-- 今日資訊卡片 -->
+        <div class="today-card">
+            <div class="today-header">
+                <h2>📅 今日資訊</h2>
+                <div class="today-date" id="todayDate"></div>
+            </div>
+            <div class="today-content">
+                <div class="today-item">
+                    <span class="label">六十甲子：</span>
+                    <span class="value" id="todayStemBranch"></span>
+                </div>
+                <div class="today-item">
+                    <span class="label">日子吉凶：</span>
+                    <span class="value fortune-status" id="todayFortune"></span>
+                </div>
+                <div class="today-item deity-list" id="todayDeities">
+                    <span class="label">神明聖誕：</span>
+                    <span class="value" id="todayDeitiesValue">無</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 控制面板 -->
+        <div class="control-panel">
+            <div class="view-toggle">
+                <button class="toggle-btn active" data-view="calendar">📅 月曆視圖</button>
+                <button class="toggle-btn" data-view="list">📋 列表視圖</button>
+            </div>
+            
+            <div class="date-controls">
+                <button class="control-btn" id="prevMonth">◀ 上月</button>
+                <div class="current-month" id="currentMonth"></div>
+                <button class="control-btn" id="nextMonth">下月 ▶</button>
+                <button class="control-btn today-btn" id="todayBtn">回到今天</button>
+            </div>
+
+            <div class="filter-controls">
+                <label class="filter-item">
+                    <input type="checkbox" id="filterGoodDays" checked>
+                    <span class="filter-label good">🟢 拜拜好日子</span>
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" id="filterDeityDays" checked>
+                    <span class="filter-label deity">🏮 神明聖誕</span>
+                </label>
+                <label class="filter-item">
+                    <input type="checkbox" id="filterBadDays">
+                    <span class="filter-label bad">🔴 不宜拜拜</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- 月曆視圖 -->
+        <div class="calendar-view" id="calendarView">
+            <div class="calendar-grid">
+                <div class="weekday-header">日</div>
+                <div class="weekday-header">一</div>
+                <div class="weekday-header">二</div>
+                <div class="weekday-header">三</div>
+                <div class="weekday-header">四</div>
+                <div class="weekday-header">五</div>
+                <div class="weekday-header">六</div>
+                <div id="calendarDays"></div>
+            </div>
+        </div>
+
+        <!-- 列表視圖 -->
+        <div class="list-view hidden" id="listView">
+            <div class="list-container" id="listContainer"></div>
+        </div>
+
+        <!-- 日期詳情彈窗 -->
+        <div class="modal hidden" id="dateModal">
+            <div class="modal-content">
+                <button class="modal-close" id="modalClose">✕</button>
+                <h2 class="modal-title" id="modalDate"></h2>
+                <div class="modal-body">
+                    <div class="detail-section">
+                        <h3>🔮 六十甲子</h3>
+                        <div class="stem-branch-display" id="modalStemBranch"></div>
+                    </div>
+                    <div class="detail-section">
+                        <h3>📿 日子吉凶</h3>
+                        <div class="fortune-display" id="modalFortune"></div>
+                    </div>
+                    <div class="detail-section" id="modalDeitiesSection">
+                        <h3>🏮 神明聖誕</h3>
+                        <div class="deities-display" id="modalDeities"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 統計資訊 -->
+        <div class="stats-panel">
+            <h3>📊 本月統計</h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value" id="statGoodDays">0</div>
+                    <div class="stat-label">拜拜好日子</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="statDeityDays">0</div>
+                    <div class="stat-label">神明聖誕</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="statBadDays">0</div>
+                    <div class="stat-label">不宜拜拜</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 說明區域 -->
+        <div class="info-panel">
+            <h3>ℹ️ 使用說明</h3>
+            <div class="info-content">
+                <div class="info-item">
+                    <strong>六十甲子：</strong>傳統干支紀日法，60天為一循環，用於擇日和占卜。
+                </div>
+                <div class="info-item">
+                    <strong>拜拜好日子：</strong>根據《道藏》記載，諸神在地或降臨人間的日子，適合祭祀求福。
+                </div>
+                <div class="info-item">
+                    <strong>神明聖誕：</strong>各路神明的誕辰日，信徒會在這天祭拜慶祝。
+                </div>
+                <div class="info-item">
+                    <strong>顏色標記：</strong>
+                    <span class="color-tag good">綠色</span> = 拜拜好日子 · 
+                    <span class="color-tag deity">金色</span> = 神明聖誕 · 
+                    <span class="color-tag bad">紅色</span> = 不宜拜拜
+                </div>
+            </div>
+        </div>
+
+        <!-- 頁尾 -->
+        <footer class="footer">
+            <p>道教經典翻譯系統 v2.0 | 資料來源：道藏經典、民間信仰傳統</p>
+            <p>※ 本系統僅供參考，實際祭拜請依個人信仰和習俗</p>
+        </footer>
+    </div>
+
+    <!-- 載入 JavaScript -->
+    <script src="js/lunar-calendar.js"></script>
+    <script src="js/fortune.js"></script>
+    <script src="js/deity-birthday.js"></script>
+    <script src="js/enhanced-calendar.js"></script>
+</body>
+</html>
