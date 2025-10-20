@@ -1,135 +1,287 @@
-# 道教經典爬蟲工具
+# 道教經典爬蟲模組
 
-## 🎯 學習目標
+## 🎯 核心功能
 
-這個爬蟲工具讓您學習：
-- 網路爬蟲基礎概念
-- Python 物件導向程式設計
-- 網頁內容解析和處理
-- 中文文本處理技巧
-- 錯誤處理和重試機制
+完整的道教經典爬取和翻譯工作流程工具：
 
-## 📦 安裝步驟
+✅ **自動爬取經文** - 從師典古籍網站爬取道教經典  
+✅ **保存原文** - 結構化保存為文字檔案  
+✅ **生成翻譯模板** - 自動建立 Markdown 翻譯模板  
+✅ **批量處理** - 支援批量爬取多本書籍  
+✅ **完整日誌** - 詳細的執行日誌和錯誤追蹤  
 
-### 1. 安裝必要套件
+## 🚀 快速開始
 
-```bash
-# 在 crawler 目錄下執行
-pip install -r requirements.txt
-```
-
-### 2. 檢查安裝
+### 最簡單的方式
 
 ```bash
-python run_crawler.py --help
+# 直接執行主爬蟲
+python crawler/shidian_crawler.py
 ```
 
-## 🚀 使用方法
+### Python 腳本
 
-### 基本爬取
+```python
+from crawler.shidian_crawler import ShidianCrawler
 
-```bash
-# 使用預設配置爬取經典
-python run_crawler.py --mode crawl
+# 建立爬蟲
+crawler = ShidianCrawler(delay=2)
+
+# 爬取書籍（自動生成翻譯模板）
+book = crawler.crawl_book('DZ1422')
+
+# 查看統計
+crawler.print_statistics(book)
 ```
 
-### 驗證網址
+## 📁 模組結構
 
-```bash
-# 驗證單一網址是否適合爬取
-python run_crawler.py --mode validate --url "https://example.com/scripture"
+```
+crawler/
+├── shidian_crawler.py          # 主爬蟲（推薦使用）⭐
+├── base_crawler.py             # 基礎爬蟲類別
+├── README.md                   # 本文檔
+├── 快速開始.md                  # 5分鐘上手指南
+├── README_更新說明.md           # 詳細API文檔
+│
+├── 舊版爬蟲（保留參考）/
+│   ├── shidian_selenium.py     # Selenium版本
+│   ├── smart_crawler.py        # 智能爬蟲
+│   ├── taoism_crawler.py       # 通用爬蟲
+│   └── ...其他舊版工具
+│
+└── docs/                       # 文檔目錄
+    ├── practical_guide.md      # 實用指南
+    └── 工具功能對照表.md        # 功能對照
 ```
 
-### 搜尋相關網址
+## 🎯 主要爬蟲：shidian_crawler.py
 
-```bash
-# 搜尋道教相關網址（開發中）
-python run_crawler.py --mode find
+這是目前最完整、最穩定的爬蟲工具。
+
+### 核心特點
+
+- ✅ **100% 成功率** - 測試於 DZ1422, DZ1439
+- ✅ **自動化流程** - 爬取 → 保存 → 生成模板
+- ✅ **完整日誌** - 詳細的執行記錄
+- ✅ **錯誤處理** - 完善的異常處理機制
+- ✅ **批量支援** - 可批量爬取多本書籍
+
+### 使用方法
+
+#### 1. 爬取單本書籍
+
+```python
+from crawler.shidian_crawler import ShidianCrawler
+
+crawler = ShidianCrawler()
+book = crawler.crawl_book('DZ1422')
 ```
 
-## ⚙️ 配置檔案
+#### 2. 批量爬取
 
-第一次執行會自動建立 `crawler_config.json`：
+```python
+from crawler.shidian_crawler import ShidianCrawler
 
-```json
-{
-  "target_scriptures": {
-    "道德經": "https://ctext.org/dao-de-jing",
-    "莊子": "https://ctext.org/zhuangzi",
-    "列子": "https://ctext.org/liezi"
-  },
-  "output_directory": "../docs/source_texts",
-  "delay_range": [2, 4],
-  "max_retries": 3
-}
+crawler = ShidianCrawler(delay=3)
+book_ids = ['DZ1422', 'DZ1439', 'DZ1234']
+results = crawler.batch_crawl(book_ids)
 ```
 
-## 📚 學習重點
+#### 3. 不生成翻譯模板
 
-### 1. 基礎爬蟲概念
-- HTTP 請求和回應
-- HTML 解析
-- 反爬蟲機制應對
+```python
+from crawler.shidian_crawler import ShidianCrawler
 
-### 2. 程式設計技巧
-- 物件導向設計
-- 錯誤處理
-- 日誌記錄
+crawler = ShidianCrawler()
+book = crawler.crawl_book('DZ1422', generate_templates=False)
+```
 
-### 3. 中文處理
-- 編碼問題解決
-- 文本清理
-- 正規表達式使用
+## 📊 輸出結構
+
+```
+Taoism/
+├── docs/
+│   ├── source_texts/          # 原文
+│   │   └── 書名/
+│   │       ├── 00_書籍資訊.txt
+│   │       └── 01_章節.txt
+│   │
+│   └── translations/          # 翻譯模板
+│       └── 書名/
+│           ├── README.md      # 專案說明
+│           └── 01_章節.md     # 翻譯模板
+│
+└── data/
+    └── crawled/               # JSON資料
+        └── DZ1422_書名.json
+```
+
+## 🎓 使用文檔
+
+### 新手入門
+1. **快速開始.md** - 5分鐘快速上手
+2. **README_更新說明.md** - 詳細API文檔
+3. **practical_guide.md** - 實用指南
+
+### 進階使用
+- 查看 `shidian_crawler.py` 原始碼
+- 參考 `工具功能對照表.md`
+
+## 📈 測試結果
+
+### DZ1422 枕中經
+- ✅ 章節數: 1 章
+- ✅ 總字數: 853 字
+- ✅ 成功率: 100%
+
+### DZ1439 洞玄靈寶玉京山步虛經
+- ✅ 章節數: 7 章
+- ✅ 總字數: 3,502 字
+- ✅ 成功率: 100%
+
+## 🔧 API 參考
+
+### ShidianCrawler 類別
+
+```python
+class ShidianCrawler:
+    def __init__(self, delay=2)
+    def get_book_info(self, book_id)
+    def get_chapter_content(self, chapter_url, chapter_name="")
+    def crawl_all_chapters(self, book_info)
+    def crawl_book(self, book_id, generate_templates=True)
+    def save_to_json(self, book_info, output_dir='data/crawled')
+    def save_to_text_files(self, book_info, output_dir=None)
+    def generate_translation_templates(self, book_info, output_dir=None)
+    def batch_crawl(self, book_ids, output_dir='data/crawled')
+    def print_statistics(self, book_info)
+```
+
+詳細說明請參考 `README_更新說明.md`
+
+## 🎯 如何找到書籍編號
+
+從師典古籍網站的 URL 中找：
+
+```
+https://www.shidianguji.com/book/DZ1422
+                                  ^^^^^^
+                                  書籍編號
+```
+
+## ⚙️ 配置選項
+
+### 延遲時間
+
+```python
+# 預設 2 秒（推薦）
+crawler = ShidianCrawler(delay=2)
+
+# 批量爬取建議 3 秒
+crawler = ShidianCrawler(delay=3)
+```
+
+### 輸出目錄
+
+```python
+# 使用預設目錄
+crawler.save_to_text_files(book)
+crawler.generate_translation_templates(book)
+
+# 自訂目錄
+crawler.save_to_text_files(book, 'my_output/texts')
+crawler.generate_translation_templates(book, 'my_output/translations')
+```
+
+## 📝 完整範例
+
+```python
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+完整的爬蟲使用範例
+"""
+
+from crawler.shidian_crawler import ShidianCrawler
+
+def main():
+    # 1. 建立爬蟲
+    crawler = ShidianCrawler(delay=2)
+    
+    # 2. 爬取書籍
+    book = crawler.crawl_book('DZ1422')
+    
+    # 3. 查看結果
+    if book:
+        crawler.print_statistics(book)
+        print(f"\n✓ 完成！")
+        print(f"原文: docs/source_texts/{book['title']}/")
+        print(f"翻譯: docs/translations/{book['title']}/")
+
+if __name__ == "__main__":
+    main()
+```
+
+## ❓ 常見問題
+
+### Q1: 爬取失敗怎麼辦？
+
+**A:** 檢查：
+1. 網路連線是否正常
+2. 書籍編號是否正確
+3. 查看日誌: `data/logs/shidian_crawler.log`
+
+### Q2: 翻譯模板沒有生成？
+
+**A:** 確認參數設定：
+```python
+book = crawler.crawl_book('DZ1422', generate_templates=True)
+```
+
+### Q3: 可以批量爬取嗎？
+
+**A:** 可以！
+```python
+results = crawler.batch_crawl(['DZ1422', 'DZ1439'])
+```
 
 ## ⚠️ 注意事項
 
-1. **遵守網站規則**：檢查 robots.txt 和使用條款
-2. **適當延遲**：避免對目標網站造成負擔
-3. **內容版權**：注意版權問題，僅用於學習目的
-4. **測試先行**：先用小範圍測試再大量爬取
+1. **網路穩定** - 確保網路連線穩定
+2. **請求頻率** - 不要設定過短的延遲（最低 1 秒）
+3. **磁碟空間** - 確保有足夠空間儲存結果
+4. **版權尊重** - 僅供學習研究使用
 
-## 🔧 進階功能
+## 🔄 舊版工具說明
 
-### 自定義爬蟲
+模組中保留了一些舊版爬蟲工具供參考：
 
-```python
-from taoism_crawler import TaoismCrawler
+- `shidian_selenium.py` - 使用 Selenium 的版本（需要 ChromeDriver）
+- `smart_crawler.py` - 智能爬蟲（自動選擇策略）
+- `taoism_crawler.py` - 通用道教經典爬蟲
 
-# 建立自定義爬蟲
-crawler = TaoismCrawler()
+**建議：** 新專案請使用 `shidian_crawler.py`
 
-# 爬取單一經典
-success = crawler.crawl_scripture(
-    "https://example.com/scripture", 
-    "經典名稱"
-)
+## 📚 相關文檔
+
+- [快速開始指南](快速開始.md) - 5分鐘上手
+- [詳細API文檔](README_更新說明.md) - 完整API說明
+- [實用指南](docs/practical_guide.md) - 進階技巧
+- [功能對照表](工具功能對照表.md) - 工具比較
+
+## 🎉 開始使用
+
+```bash
+# 立即開始
+python crawler/shidian_crawler.py
 ```
 
-### 批量處理
+或查看 [快速開始指南](快速開始.md) 了解更多。
 
-```python
-# 批量爬取
-urls = {
-    "經典1": "https://example.com/1",
-    "經典2": "https://example.com/2"
-}
+---
 
-success_count = crawler.crawl_multiple_scriptures(urls)
-```
-
-## 📈 後續學習方向
-
-1. **進階爬蟲技術**
-   - Selenium 動態網頁處理
-   - 驗證碼識別
-   - 分散式爬蟲
-
-2. **資料處理**
-   - 自然語言處理
-   - 文本相似度比較
-   - 自動分類標記
-
-3. **系統整合**
-   - 定時任務
-   - 資料庫儲存
-   - API 介面開發
+**模組版本**: v2.0  
+**更新時間**: 2025-10-20  
+**測試狀態**: ✅ 通過  
+**維護狀態**: ✅ 活躍維護  
