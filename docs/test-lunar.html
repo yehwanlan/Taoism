@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>農曆功能測試</title>
+    <style>
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .success {
+            color: #52C41A;
+            font-weight: bold;
+        }
+        .error {
+            color: #F5222D;
+            font-weight: bold;
+        }
+        h2 {
+            color: #C8102E;
+        }
+    </style>
+</head>
+<body>
+    <h1>🗓️ 農曆功能測試</h1>
+    
+    <div class="test-section">
+        <h2>測試 1: LunarCalendar 類別載入</h2>
+        <div id="test1"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>測試 2: 陽曆轉農曆</h2>
+        <div id="test2"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>測試 3: DeityBirthdayChecker 載入</h2>
+        <div id="test3"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>測試 4: 查詢今日神明聖誕</h2>
+        <div id="test4"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>測試 5: 查詢特定日期（2025年2月7日 = 農曆正月初九 = 玉皇上帝聖誕）</h2>
+        <div id="test5"></div>
+    </div>
+
+    <!-- 載入 JavaScript 模組 -->
+    <script src="js/lunar-calendar.js"></script>
+    <script src="js/deity-birthday.js"></script>
+    <script>
+        // 測試 1: LunarCalendar 類別載入
+        try {
+            const lunarCalendar = new LunarCalendar();
+            document.getElementById('test1').innerHTML = '<span class="success">✓ LunarCalendar 類別載入成功</span>';
+        } catch (e) {
+            document.getElementById('test1').innerHTML = `<span class="error">✗ 錯誤: ${e.message}</span>`;
+        }
+
+        // 測試 2: 陽曆轉農曆
+        try {
+            const lunarCalendar = new LunarCalendar();
+            const today = new Date();
+            const lunar = lunarCalendar.solarToLunar(today.getFullYear(), today.getMonth() + 1, today.getDate());
+            const lunarStr = lunarCalendar.formatLunarDate(lunar);
+            
+            document.getElementById('test2').innerHTML = `
+                <span class="success">✓ 轉換成功</span><br>
+                今天：${today.getFullYear()}年${today.getMonth() + 1}月${today.getDate()}日<br>
+                農曆：${lunarStr}<br>
+                詳細：農曆${lunar.year}年${lunar.month}月${lunar.day}日 ${lunar.isLeap ? '(閏月)' : ''}
+            `;
+        } catch (e) {
+            document.getElementById('test2').innerHTML = `<span class="error">✗ 錯誤: ${e.message}</span>`;
+        }
+
+        // 測試 3: DeityBirthdayChecker 載入
+        try {
+            const deityChecker = new DeityBirthdayChecker();
+            document.getElementById('test3').innerHTML = '<span class="success">✓ DeityBirthdayChecker 類別載入成功</span>';
+        } catch (e) {
+            document.getElementById('test3').innerHTML = `<span class="error">✗ 錯誤: ${e.message}</span>`;
+        }
+
+        // 測試 4: 查詢今日神明聖誕
+        try {
+            const deityChecker = new DeityBirthdayChecker();
+            const today = new Date();
+            const deities = deityChecker.getDeityBirthdays(today);
+            
+            if (deities.length > 0) {
+                const deitiesList = deities.map(d => `${d.name}（${d.type}）${d.note ? ' - ' + d.note : ''}`).join('<br>');
+                document.getElementById('test4').innerHTML = `
+                    <span class="success">✓ 查詢成功</span><br>
+                    今日神明聖誕（${deities.length}位）：<br>
+                    ${deitiesList}
+                `;
+            } else {
+                document.getElementById('test4').innerHTML = '<span class="success">✓ 查詢成功</span><br>今日無神明聖誕';
+            }
+        } catch (e) {
+            document.getElementById('test4').innerHTML = `<span class="error">✗ 錯誤: ${e.message}</span>`;
+        }
+
+        // 測試 5: 查詢特定日期
+        try {
+            const deityChecker = new DeityBirthdayChecker();
+            const lunarCalendar = new LunarCalendar();
+            
+            // 2025年2月7日應該是農曆正月初九（玉皇上帝聖誕）
+            const testDate = new Date(2025, 1, 7); // 月份從0開始
+            const lunar = lunarCalendar.solarToLunar(2025, 2, 7);
+            const lunarStr = lunarCalendar.formatLunarDate(lunar);
+            const deities = deityChecker.getDeityBirthdays(testDate);
+            
+            let result = `
+                <span class="success">✓ 查詢成功</span><br>
+                陽曆：2025年2月7日<br>
+                農曆：${lunarStr}<br>
+            `;
+            
+            if (deities.length > 0) {
+                const deitiesList = deities.map(d => `${d.name}（${d.type}）${d.note ? ' - ' + d.note : ''}`).join('<br>');
+                result += `神明聖誕（${deities.length}位）：<br>${deitiesList}`;
+            } else {
+                result += '無神明聖誕';
+            }
+            
+            document.getElementById('test5').innerHTML = result;
+        } catch (e) {
+            document.getElementById('test5').innerHTML = `<span class="error">✗ 錯誤: ${e.message}</span>`;
+        }
+    </script>
+</body>
+</html>
