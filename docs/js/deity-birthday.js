@@ -419,14 +419,17 @@ class DeityBirthdayChecker {
             
             const deities = this.getDeityBirthdays(checkDate);
             if (deities.length > 0) {
+                const year = checkDate.getFullYear();
                 const month = checkDate.getMonth() + 1;
                 const day = checkDate.getDate();
                 const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
                 const weekday = weekdays[checkDate.getDay()];
+                const lunarStr = this.getLunarDateString(checkDate);
                 
                 upcoming.push({
                     date: checkDate,
-                    dateString: `${month}月${day}日 (週${weekday})`,
+                    dateString: `${year}/${month}/${day} (週${weekday})`,
+                    lunarDate: lunarStr,
                     daysFromNow: i,
                     deities: deities,
                     isToday: i === 0,
@@ -525,13 +528,16 @@ class DeityBirthdayChecker {
             return null;
         }
         
+        const year = today.getFullYear();
         const month = today.getMonth() + 1;
         const day = today.getDate();
         const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
         const weekday = weekdays[today.getDay()];
+        const lunarStr = this.getLunarDateString(today);
         
         return {
-            dateString: `${month}月${day}日 (週${weekday})`,
+            dateString: `${year}/${month}/${day} (週${weekday})`,
+            lunarDate: lunarStr,
             deities: deities,
             count: deities.length
         };
@@ -555,6 +561,10 @@ function updateDeityDisplay() {
             
             todayDeitiesElement.innerHTML = `
                 <h4>🎂 今日神明聖誕 (${todayDeities.count}位)</h4>
+                <div style="margin-bottom: 10px; padding: 10px; background: #FFF9E6; border-radius: 5px;">
+                    <strong>📅 國曆：</strong>${todayDeities.dateString}<br>
+                    <strong>🗓️ 農曆：</strong>${todayDeities.lunarDate}
+                </div>
                 <div class="deity-list">${deitiesList}</div>
             `;
             todayDeitiesElement.style.display = 'block';
@@ -583,7 +593,8 @@ function updateDeityDisplay() {
                 
                 upcomingHtml += `
                     <div class="upcoming-item">
-                        <strong>${item.dateString} (${dayLabel})</strong><br>
+                        <strong>📅 ${item.dateString} (${dayLabel})</strong><br>
+                        <strong>🗓️ ${item.lunarDate}</strong><br>
                         <span class="deity-list">${deitiesList}</span>
                     </div>
                 `;
@@ -655,7 +666,8 @@ function showMonthlyDeities() {
         
         monthlyHtml += `
             <div class="monthly-item">
-                <strong>${month}月${item.day}日 (週${item.weekday})</strong><br>
+                <strong>📅 ${month}月${item.day}日 (週${item.weekday})</strong><br>
+                <strong>🗓️ ${item.lunarDate}</strong><br>
                 <div class="deity-list">${deitiesList}</div>
             </div>
         `;
