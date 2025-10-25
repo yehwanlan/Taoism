@@ -135,6 +135,76 @@
     <script src="js/lunar-calendar.js"></script>
     <script src="js/fortune.js"></script>
     <script src="js/script.js"></script>
+    
+    <!-- 初始化農曆和拜拜資訊 -->
+    <script>
+        // 確保 DOM 載入完成後初始化
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeFortune);
+        } else {
+            initializeFortune();
+        }
+        
+        function initializeFortune() {
+            try {
+                // 初始化農曆系統
+                const lunarCalendar = new LunarCalendar();
+                
+                // 初始化拜拜好日子系統
+                const fortuneChecker = new FortuneChecker();
+                
+                // 更新今日拜拜資訊
+                updateTodayFortune(lunarCalendar, fortuneChecker);
+            } catch (error) {
+                console.error('初始化農曆功能失敗:', error);
+                // 顯示錯誤訊息
+                const fortuneInfo = document.getElementById('fortune-info');
+                if (fortuneInfo) {
+                    fortuneInfo.innerHTML = '⚠️ 農曆功能載入失敗';
+                }
+            }
+        }
+        
+        function updateTodayFortune(lunarCalendar, fortuneChecker) {
+            const fortuneInfo = document.getElementById('fortune-info');
+            const dailyFortune = document.getElementById('daily-fortune');
+            
+            if (!fortuneInfo || !dailyFortune) return;
+            
+            try {
+                const today = new Date();
+                
+                // 獲取農曆日期
+                const lunar = lunarCalendar.solarToLunar(
+                    today.getFullYear(),
+                    today.getMonth() + 1,
+                    today.getDate()
+                );
+                
+                // 獲取日干支和拜拜資訊
+                const todayFortune = fortuneChecker.getTodayFortune();
+                
+                // 格式化農曆日期
+                const lunarDateStr = lunarCalendar.formatLunarDate(lunar);
+                
+                // 組合顯示內容
+                let displayText = `${todayFortune.emoji} ${todayFortune.date} ${todayFortune.stemBranch}日<br>`;
+                displayText += `🌙 農曆：${lunarDateStr}<br>`;
+                displayText += `${fortuneChecker.getStatusText(todayFortune.status)}<br>`;
+                displayText += `<small>${todayFortune.description}</small>`;
+                
+                // 更新內容
+                fortuneInfo.innerHTML = displayText;
+                
+                // 更新樣式
+                dailyFortune.className = `daily-fortune fortune-${todayFortune.status}`;
+                
+            } catch (error) {
+                console.error('更新拜拜資訊失敗:', error);
+                fortuneInfo.innerHTML = '⚠️ 無法載入今日資訊';
+            }
+        }
+    </script>
 </body>
 
 </html>
