@@ -1,30 +1,45 @@
-/* CSS 變數定義 - 道教傳統色彩 */
+/* CSS 變數定義 - 土元素為主，金元素為輔 */
 :root {
-    --primary-red: #C8102E;      /* 朱紅 */
-    --primary-gold: #D4AF37;     /* 金黃 */
-    --primary-green: #2C5F2D;    /* 墨綠 */
-    --primary-blue: #003F87;     /* 靛藍 */
-    --bg-light: #FFF8DC;         /* 米黃 */
-    --bg-paper: #F5F5DC;         /* 紙張色 */
-    --text-primary: #2C2416;     /* 深褐 */
-    --text-secondary: #5C5C5C;   /* 灰色 */
-    --shadow-soft: 0 4px 20px rgba(200, 16, 46, 0.08);
-    --shadow-medium: 0 8px 30px rgba(200, 16, 46, 0.12);
+    /* 土元素色系 - 主色調 */
+    --earth-dark: #5D4E37;       /* 深土褐 */
+    --earth-medium: #8B7355;     /* 中土褐 */
+    --earth-light: #C4A57B;      /* 淺土褐 */
+    --earth-pale: #E8DCC4;       /* 淡土色 */
+    
+    /* 金元素色系 - 點綴色 */
+    --gold-bright: #D4AF37;      /* 亮金 */
+    --gold-deep: #B8860B;        /* 深金 */
+    --gold-pale: #F0E68C;        /* 淡金 */
+    
+    /* 背景色 */
+    --bg-main: #F5F0E8;          /* 主背景（淡土色） */
+    --bg-card: #FDFBF7;          /* 卡片背景（米白） */
+    --bg-paper: #FAF6EF;         /* 紙張色 */
+    
+    /* 文字色 */
+    --text-primary: #3E3226;     /* 深褐色文字 */
+    --text-secondary: #6B5D4F;   /* 次要文字 */
+    --text-light: #8B7D6B;       /* 淺色文字 */
+    
+    /* 陰影 */
+    --shadow-soft: 0 4px 20px rgba(93, 78, 55, 0.1);
+    --shadow-medium: 0 8px 30px rgba(93, 78, 55, 0.15);
+    --shadow-gold: 0 4px 15px rgba(212, 175, 55, 0.2);
 }
 
-/* 基本樣式 */
+/* 基本樣式 - 土元素背景 */
 body {
     font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
     line-height: 1.8;
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, var(--bg-light) 0%, #FFF 50%, var(--bg-paper) 100%);
+    background: linear-gradient(135deg, var(--earth-pale) 0%, var(--bg-main) 50%, var(--bg-paper) 100%);
     color: var(--text-primary);
     min-height: 100vh;
     position: relative;
 }
 
-/* 背景裝飾 - 淡淡的雲紋 */
+/* 背景裝飾 - 土元素紋理 */
 body::before {
     content: '';
     position: fixed;
@@ -33,16 +48,23 @@ body::before {
     width: 100%;
     height: 100%;
     background-image: 
-        radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.03) 0%, transparent 50%),
-        radial-gradient(circle at 80% 70%, rgba(200, 16, 46, 0.03) 0%, transparent 50%);
+        radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(139, 115, 85, 0.03) 0%, transparent 50%),
+        repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 100px,
+            rgba(212, 175, 55, 0.01) 100px,
+            rgba(212, 175, 55, 0.01) 200px
+        );
     pointer-events: none;
     z-index: -1;
 }
 
-/* 頁首樣式 - 道教傳統風格 */
+/* 頁首樣式 - 土元素為主 */
 header {
-    background: linear-gradient(135deg, var(--primary-red) 0%, #A00D24 100%);
-    color: white;
+    background: linear-gradient(135deg, var(--earth-dark) 0%, var(--earth-medium) 100%);
+    color: var(--gold-pale);
     padding: 2rem 0;
     text-align: center;
     box-shadow: var(--shadow-medium);
@@ -60,9 +82,10 @@ header::before {
     height: 4px;
     background: linear-gradient(90deg, 
         transparent 0%, 
-        var(--primary-gold) 20%, 
-        var(--primary-gold) 80%, 
+        var(--gold-bright) 20%, 
+        var(--gold-bright) 80%, 
         transparent 100%);
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.4);
 }
 
 header::after {
@@ -71,10 +94,10 @@ header::after {
     bottom: 0;
     left: 0;
     right: 0;
-    height: 2px;
+    height: 3px;
     background: linear-gradient(90deg, 
         transparent 0%, 
-        rgba(212, 175, 55, 0.5) 50%, 
+        var(--gold-deep) 50%, 
         transparent 100%);
 }
 
@@ -82,7 +105,10 @@ header h1 {
     margin: 0;
     font-size: 2.5rem;
     font-weight: 500;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    color: var(--gold-bright);
+    text-shadow: 
+        2px 2px 4px rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(212, 175, 55, 0.3);
     letter-spacing: 0.1em;
 }
 
@@ -97,15 +123,16 @@ header h1 {
 }
 
 .daily-fortune {
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(196, 165, 123, 0.3);
     padding: 0.75rem 1.5rem;
     border-radius: 25px;
     backdrop-filter: blur(15px);
-    border: 2px solid rgba(212, 175, 55, 0.4);
+    border: 2px solid var(--gold-bright);
     font-size: 0.9rem;
     max-width: 650px;
     text-align: center;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--shadow-gold);
+    color: var(--gold-pale);
 }
 
 .fortune-good {
@@ -126,15 +153,16 @@ header h1 {
     color: #fff8e1;
 }
 
-/* 導航樣式 - 現代卡片設計 */
+/* 導航樣式 - 土元素卡片 */
 .main-nav {
-    background: white;
+    background: var(--bg-card);
     padding: 2.5rem;
     margin: 2rem auto;
     max-width: 1400px;
     border-radius: 16px;
     box-shadow: var(--shadow-soft);
-    border: 1px solid rgba(212, 175, 55, 0.2);
+    border: 2px solid var(--earth-light);
+    border-top: 3px solid var(--gold-bright);
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 2rem;
@@ -148,9 +176,10 @@ header h1 {
     position: absolute;
     top: 1rem;
     left: 1rem;
-    color: var(--primary-gold);
+    color: var(--gold-bright);
     font-size: 1.2rem;
-    opacity: 0.6;
+    opacity: 0.8;
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
 }
 
 .main-nav::after {
@@ -158,9 +187,10 @@ header h1 {
     position: absolute;
     top: 1rem;
     right: 1rem;
-    color: var(--primary-gold);
+    color: var(--gold-bright);
     font-size: 1.2rem;
-    opacity: 0.6;
+    opacity: 0.8;
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
 }
 
 /* 讓按鈕區域佔滿整行 */
@@ -179,33 +209,35 @@ header h1 {
 
 .nav-section h3 {
     margin: 0 0 0.75rem 0;
-    color: var(--primary-red);
+    color: var(--earth-dark);
     font-size: 1.1rem;
     font-weight: 600;
-    border-bottom: 2px solid var(--primary-gold);
+    border-bottom: 2px solid var(--gold-bright);
     padding-bottom: 0.5rem;
     display: inline-block;
 }
 
 .nav-section select {
     padding: 0.85rem 1rem;
-    border: 2px solid rgba(200, 16, 46, 0.2);
+    border: 2px solid var(--earth-light);
     border-radius: 10px;
     font-size: 1rem;
-    background: white;
+    background: var(--bg-card);
+    color: var(--text-primary);
     transition: all 0.3s ease;
     cursor: pointer;
 }
 
 .nav-section select:hover:not(:disabled) {
-    border-color: var(--primary-gold);
-    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.2);
+    border-color: var(--gold-bright);
+    box-shadow: var(--shadow-gold);
+    background: white;
 }
 
 .nav-section select:focus {
     outline: none;
-    border-color: var(--primary-red);
-    box-shadow: 0 0 0 3px rgba(200, 16, 46, 0.1);
+    border-color: var(--gold-deep);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
 }
 
 .nav-section select:disabled {
@@ -228,10 +260,10 @@ header h1 {
 
 .nav-controls button {
     padding: 0.85rem 1.5rem;
-    border: 2px solid var(--primary-red);
+    border: 2px solid var(--earth-medium);
     border-radius: 10px;
-    background: white;
-    color: var(--primary-red);
+    background: var(--bg-card);
+    color: var(--earth-dark);
     cursor: pointer;
     font-size: 0.95rem;
     font-weight: 500;
@@ -240,10 +272,11 @@ header h1 {
 }
 
 .nav-controls button:hover:not(:disabled) {
-    background: var(--primary-red);
-    color: white;
+    background: var(--earth-dark);
+    color: var(--gold-bright);
+    border-color: var(--gold-bright);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(200, 16, 46, 0.3);
+    box-shadow: var(--shadow-gold);
 }
 
 .nav-controls button:disabled {
@@ -258,11 +291,11 @@ header h1 {
     margin: 2rem auto;
     max-width: 1400px;
     padding: 2rem;
-    background: linear-gradient(135deg, white 0%, var(--bg-paper) 100%);
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--earth-pale) 100%);
     border-radius: 16px;
     box-shadow: var(--shadow-soft);
-    border-left: 4px solid var(--primary-gold);
-    border-right: 4px solid var(--primary-gold);
+    border-left: 4px solid var(--gold-bright);
+    border-right: 4px solid var(--gold-bright);
     position: relative;
 }
 
@@ -276,13 +309,14 @@ header h1 {
     height: 3px;
     background: linear-gradient(90deg, 
         transparent 0%, 
-        var(--primary-gold) 50%, 
+        var(--gold-bright) 50%, 
         transparent 100%);
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
 }
 
 .content-header h2 {
     margin: 0;
-    color: var(--primary-red);
+    color: var(--earth-dark);
     font-size: 2.2rem;
     font-weight: 500;
     letter-spacing: 0.08em;
@@ -306,13 +340,13 @@ header h1 {
 
 .original-text, .translated-text {
     flex: 1;
-    background: white;
+    background: var(--bg-card);
     padding: 2rem;
     border-radius: 16px;
     box-shadow: var(--shadow-soft);
     overflow-y: auto;
     max-height: 70vh;
-    border: 1px solid rgba(212, 175, 55, 0.2);
+    border: 2px solid var(--earth-light);
     position: relative;
 }
 
@@ -327,13 +361,14 @@ header h1 {
     height: 3px;
     background: linear-gradient(90deg, 
         transparent 0%, 
-        var(--primary-gold) 50%, 
+        var(--gold-bright) 50%, 
         transparent 100%);
+    box-shadow: 0 2px 6px rgba(212, 175, 55, 0.3);
 }
 
 .original-text h3, .translated-text h3 {
-    color: var(--primary-red);
-    border-bottom: 3px solid var(--primary-gold);
+    color: var(--earth-dark);
+    border-bottom: 3px solid var(--gold-bright);
     padding-bottom: 0.75rem;
     margin-top: 0;
     margin-bottom: 2rem;
@@ -342,24 +377,24 @@ header h1 {
     letter-spacing: 0.05em;
 }
 
-/* 歡迎訊息樣式 - 優化排版 */
+/* 歡迎訊息樣式 - 土元素風格 */
 .welcome-message {
     color: var(--text-secondary);
     line-height: 2;
     padding: 1.5rem;
-    background: linear-gradient(135deg, #ffffff 0%, var(--bg-light) 100%);
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--earth-pale) 100%);
     border-radius: 12px;
-    border: 2px solid rgba(212, 175, 55, 0.15);
+    border: 2px solid var(--earth-light);
 }
 
 .welcome-message h4 {
-    color: var(--primary-red);
+    color: var(--earth-dark);
     margin: 0 0 1.5rem 0;
     font-size: 1.5rem;
     font-weight: 600;
     text-align: center;
     padding-bottom: 1rem;
-    border-bottom: 2px solid var(--primary-gold);
+    border-bottom: 2px solid var(--gold-bright);
 }
 
 .welcome-message p {
@@ -368,7 +403,7 @@ header h1 {
 }
 
 .welcome-message strong {
-    color: var(--primary-red);
+    color: var(--earth-dark);
     font-weight: 600;
 }
 
@@ -389,9 +424,10 @@ header h1 {
     content: '◆';
     position: absolute;
     left: 0;
-    color: var(--primary-gold);
+    color: var(--gold-bright);
     font-size: 0.8rem;
     top: 0.3rem;
+    text-shadow: 0 0 8px rgba(212, 175, 55, 0.5);
 }
 
 .welcome-message li strong {
@@ -417,21 +453,21 @@ header h1 {
 }
 
 #translated-content h1, #translated-content h2, #translated-content h3 {
-    color: var(--primary-red);
+    color: var(--earth-dark);
     margin-top: 2rem;
     margin-bottom: 1rem;
-    border-left: 4px solid var(--primary-gold);
+    border-left: 4px solid var(--gold-bright);
     padding-left: 1rem;
 }
 
 #translated-content blockquote {
-    border-left: 4px solid var(--primary-gold);
+    border-left: 4px solid var(--gold-bright);
     padding-left: 1.5rem;
     margin: 1.5rem 0;
-    background: var(--bg-paper);
+    background: var(--earth-pale);
     padding: 1.5rem;
     border-radius: 0 12px 12px 0;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 8px rgba(93, 78, 55, 0.1);
 }
 
 /* 頁尾樣式 - 道教風格 */
