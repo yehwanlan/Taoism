@@ -1,27 +1,89 @@
+/* CSS 變數定義 - 道教傳統色彩 */
+:root {
+    --primary-red: #C8102E;      /* 朱紅 */
+    --primary-gold: #D4AF37;     /* 金黃 */
+    --primary-green: #2C5F2D;    /* 墨綠 */
+    --primary-blue: #003F87;     /* 靛藍 */
+    --bg-light: #FFF8DC;         /* 米黃 */
+    --bg-paper: #F5F5DC;         /* 紙張色 */
+    --text-primary: #2C2416;     /* 深褐 */
+    --text-secondary: #5C5C5C;   /* 灰色 */
+    --shadow-soft: 0 4px 20px rgba(200, 16, 46, 0.08);
+    --shadow-medium: 0 8px 30px rgba(200, 16, 46, 0.12);
+}
+
 /* 基本樣式 */
 body {
     font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
-    line-height: 1.6;
+    line-height: 1.8;
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    color: #333;
+    background: linear-gradient(135deg, var(--bg-light) 0%, #FFF 50%, var(--bg-paper) 100%);
+    color: var(--text-primary);
     min-height: 100vh;
+    position: relative;
 }
 
-/* 頁首樣式 */
+/* 背景裝飾 - 淡淡的雲紋 */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(200, 16, 46, 0.03) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* 頁首樣式 - 道教傳統風格 */
 header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, var(--primary-red) 0%, #A00D24 100%);
     color: white;
-    padding: 1.5rem 0;
+    padding: 2rem 0;
     text-align: center;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: var(--shadow-medium);
+    position: relative;
+    overflow: hidden;
+}
+
+/* 頁首裝飾 - 金色邊框 */
+header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        var(--primary-gold) 20%, 
+        var(--primary-gold) 80%, 
+        transparent 100%);
+}
+
+header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(212, 175, 55, 0.5) 50%, 
+        transparent 100%);
 }
 
 header h1 {
     margin: 0;
-    font-size: 2.2rem;
-    font-weight: 300;
+    font-size: 2.5rem;
+    font-weight: 500;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    letter-spacing: 0.1em;
 }
 
 .system-info {
@@ -35,14 +97,15 @@ header h1 {
 }
 
 .daily-fortune {
-    background: rgba(255, 255, 255, 0.2);
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    font-size: 0.85rem;
-    max-width: 600px;
+    background: rgba(255, 255, 255, 0.25);
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    backdrop-filter: blur(15px);
+    border: 2px solid rgba(212, 175, 55, 0.4);
+    font-size: 0.9rem;
+    max-width: 650px;
     text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
 
 .fortune-good {
@@ -63,17 +126,50 @@ header h1 {
     color: #fff8e1;
 }
 
-/* 導航樣式 */
+/* 導航樣式 - 現代卡片設計 */
 .main-nav {
     background: white;
-    padding: 1.5rem;
-    margin: 1rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    padding: 2.5rem;
+    margin: 2rem auto;
+    max-width: 1400px;
+    border-radius: 16px;
+    box-shadow: var(--shadow-soft);
+    border: 1px solid rgba(212, 175, 55, 0.2);
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2rem;
     align-items: start;
+    position: relative;
+}
+
+/* 導航裝飾 - 四角金色點綴 */
+.main-nav::before {
+    content: '◆';
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    color: var(--primary-gold);
+    font-size: 1.2rem;
+    opacity: 0.6;
+}
+
+.main-nav::after {
+    content: '◆';
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    color: var(--primary-gold);
+    font-size: 1.2rem;
+    opacity: 0.6;
+}
+
+/* 讓按鈕區域佔滿整行 */
+.nav-controls {
+    grid-column: 1 / -1;
+    justify-content: center;
+    margin-top: 1rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid rgba(212, 175, 55, 0.2);
 }
 
 .nav-section {
@@ -82,25 +178,34 @@ header h1 {
 }
 
 .nav-section h3 {
-    margin: 0 0 0.5rem 0;
-    color: #667eea;
-    font-size: 1rem;
+    margin: 0 0 0.75rem 0;
+    color: var(--primary-red);
+    font-size: 1.1rem;
     font-weight: 600;
+    border-bottom: 2px solid var(--primary-gold);
+    padding-bottom: 0.5rem;
+    display: inline-block;
 }
 
 .nav-section select {
-    padding: 0.75rem;
-    border: 2px solid #e1e5e9;
-    border-radius: 8px;
-    font-size: 0.95rem;
+    padding: 0.85rem 1rem;
+    border: 2px solid rgba(200, 16, 46, 0.2);
+    border-radius: 10px;
+    font-size: 1rem;
     background: white;
     transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.nav-section select:hover:not(:disabled) {
+    border-color: var(--primary-gold);
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.2);
 }
 
 .nav-section select:focus {
     outline: none;
-    border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    border-color: var(--primary-red);
+    box-shadow: 0 0 0 3px rgba(200, 16, 46, 0.1);
 }
 
 .nav-section select:disabled {
@@ -115,26 +220,30 @@ header h1 {
 
 .nav-controls {
     display: flex;
-    gap: 0.5rem;
+    gap: 1rem;
     flex-wrap: wrap;
     align-items: center;
+    justify-content: center;
 }
 
 .nav-controls button {
-    padding: 0.75rem 1rem;
-    border: none;
-    border-radius: 8px;
-    background: #667eea;
-    color: white;
+    padding: 0.85rem 1.5rem;
+    border: 2px solid var(--primary-red);
+    border-radius: 10px;
+    background: white;
+    color: var(--primary-red);
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    font-weight: 500;
     transition: all 0.3s ease;
     white-space: nowrap;
 }
 
 .nav-controls button:hover:not(:disabled) {
-    background: #5a67d8;
-    transform: translateY(-1px);
+    background: var(--primary-red);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(200, 16, 46, 0.3);
 }
 
 .nav-controls button:disabled {
@@ -146,72 +255,148 @@ header h1 {
 /* 內容區域 */
 .content-header {
     text-align: center;
-    margin: 1rem;
-    padding: 1rem;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    margin: 2rem auto;
+    max-width: 1400px;
+    padding: 2rem;
+    background: linear-gradient(135deg, white 0%, var(--bg-paper) 100%);
+    border-radius: 16px;
+    box-shadow: var(--shadow-soft);
+    border-left: 4px solid var(--primary-gold);
+    border-right: 4px solid var(--primary-gold);
+    position: relative;
+}
+
+.content-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 3px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        var(--primary-gold) 50%, 
+        transparent 100%);
 }
 
 .content-header h2 {
     margin: 0;
-    color: #2d3748;
-    font-size: 1.8rem;
-    font-weight: 400;
+    color: var(--primary-red);
+    font-size: 2.2rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
 }
 
 .content-info {
-    margin-top: 0.5rem;
-    color: #718096;
-    font-size: 0.9rem;
+    margin-top: 0.75rem;
+    color: var(--text-secondary);
+    font-size: 1rem;
 }
 
 .text-container {
     display: flex;
     justify-content: space-between;
-    padding: 0 1rem 1rem 1rem;
-    gap: 1rem;
+    padding: 0 2rem 2rem 2rem;
+    gap: 2rem;
     min-height: 60vh;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 .original-text, .translated-text {
     flex: 1;
     background: white;
-    padding: 1.5rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: var(--shadow-soft);
     overflow-y: auto;
     max-height: 70vh;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    position: relative;
+}
+
+/* 經文區域裝飾 */
+.original-text::before,
+.translated-text::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        var(--primary-gold) 50%, 
+        transparent 100%);
 }
 
 .original-text h3, .translated-text h3 {
-    color: #667eea;
-    border-bottom: 2px solid #e2e8f0;
+    color: var(--primary-red);
+    border-bottom: 3px solid var(--primary-gold);
     padding-bottom: 0.75rem;
     margin-top: 0;
-    margin-bottom: 1.5rem;
-    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    font-size: 1.3rem;
     font-weight: 600;
+    letter-spacing: 0.05em;
 }
 
-/* 歡迎訊息樣式 */
+/* 歡迎訊息樣式 - 優化排版 */
 .welcome-message {
-    color: #4a5568;
-    line-height: 1.8;
+    color: var(--text-secondary);
+    line-height: 2;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #ffffff 0%, var(--bg-light) 100%);
+    border-radius: 12px;
+    border: 2px solid rgba(212, 175, 55, 0.15);
 }
 
 .welcome-message h4 {
-    color: #2d3748;
-    margin-bottom: 1rem;
-    font-size: 1.3rem;
+    color: var(--primary-red);
+    margin: 0 0 1.5rem 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-align: center;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--primary-gold);
+}
+
+.welcome-message p {
+    margin: 1rem 0;
+    font-size: 1.05rem;
+}
+
+.welcome-message strong {
+    color: var(--primary-red);
+    font-weight: 600;
 }
 
 .welcome-message ul {
-    padding-left: 1.5rem;
+    padding-left: 0;
+    list-style: none;
+    margin: 1.5rem 0;
 }
 
 .welcome-message li {
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    padding-left: 2rem;
+    position: relative;
+    font-size: 1.05rem;
+}
+
+.welcome-message li::before {
+    content: '◆';
+    position: absolute;
+    left: 0;
+    color: var(--primary-gold);
+    font-size: 0.8rem;
+    top: 0.3rem;
+}
+
+.welcome-message li strong {
+    display: inline-block;
+    min-width: 120px;
 }
 
 /* 內容樣式 */
@@ -221,8 +406,10 @@ header h1 {
 }
 
 #original-content {
-    font-family: 'Noto Serif TC', serif;
-    color: #2d3748;
+    font-family: 'Noto Serif TC', 'STSong', serif;
+    color: var(--text-primary);
+    font-size: 1.05rem;
+    line-height: 2;
 }
 
 #translated-content {
@@ -230,26 +417,44 @@ header h1 {
 }
 
 #translated-content h1, #translated-content h2, #translated-content h3 {
-    color: #667eea;
-    margin-top: 1.5rem;
+    color: var(--primary-red);
+    margin-top: 2rem;
     margin-bottom: 1rem;
+    border-left: 4px solid var(--primary-gold);
+    padding-left: 1rem;
 }
 
 #translated-content blockquote {
-    border-left: 4px solid #667eea;
-    padding-left: 1rem;
-    margin: 1rem 0;
-    background: #f7fafc;
-    padding: 1rem;
-    border-radius: 0 8px 8px 0;
+    border-left: 4px solid var(--primary-gold);
+    padding-left: 1.5rem;
+    margin: 1.5rem 0;
+    background: var(--bg-paper);
+    padding: 1.5rem;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-/* 頁尾樣式 */
+/* 頁尾樣式 - 道教風格 */
 footer {
-    background: #2d3748;
+    background: linear-gradient(135deg, var(--text-primary) 0%, #1a1410 100%);
     color: white;
-    padding: 2rem 0;
-    margin-top: 2rem;
+    padding: 2.5rem 0;
+    margin-top: 3rem;
+    border-top: 3px solid var(--primary-gold);
+    position: relative;
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        var(--primary-red) 50%, 
+        transparent 100%);
 }
 
 .footer-content {
@@ -268,21 +473,44 @@ footer {
 }
 
 .footer-links a {
-    color: #a0aec0;
+    color: rgba(212, 175, 55, 0.8);
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
 }
 
 .footer-links a:hover {
-    color: white;
+    color: var(--primary-gold);
+    background: rgba(212, 175, 55, 0.1);
 }
 
 /* 響應式設計 */
+@media (max-width: 1024px) {
+    .main-nav {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .nav-section:nth-child(3) {
+        grid-column: 1 / -1;
+    }
+}
+
 @media (max-width: 768px) {
     .main-nav {
         grid-template-columns: 1fr;
-        margin: 0.5rem;
-        padding: 1rem;
+        margin: 1rem 0.5rem;
+        padding: 1.5rem;
+    }
+    
+    .main-nav::after {
+        display: none;
+    }
+    
+    .nav-controls {
+        grid-column: 1;
+        margin-top: 0.5rem;
+        padding-top: 1rem;
     }
     
     .text-container {
@@ -290,33 +518,59 @@ footer {
         padding: 0 0.5rem 0.5rem 0.5rem;
     }
     
-    .nav-controls {
-        justify-content: center;
-    }
-    
     .nav-controls button {
         flex: 1;
-        min-width: 120px;
+        min-width: 100px;
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
     }
     
     header h1 {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
+        letter-spacing: 0.05em;
+    }
+    
+    .content-header {
+        margin: 1rem 0.5rem;
+        padding: 1rem;
+    }
+    
+    .content-header h2 {
+        font-size: 1.5rem;
     }
     
     .footer-links {
-        gap: 1rem;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+    }
+    
+    .footer-links a {
+        padding: 0.4rem 0.8rem;
     }
     
     .daily-fortune {
         font-size: 0.8rem;
-        padding: 0.4rem 0.8rem;
+        padding: 0.5rem 1rem;
         margin: 0 0.5rem;
-        line-height: 1.4;
+        line-height: 1.5;
     }
     
     .system-info {
         flex-direction: column;
-        gap: 0.3rem;
+        gap: 0.5rem;
+    }
+    
+    .welcome-message {
+        padding: 1rem;
+    }
+    
+    .welcome-message h4 {
+        font-size: 1.2rem;
+    }
+    
+    .welcome-message li {
+        font-size: 0.95rem;
+        padding-left: 1.5rem;
     }
 }
 
