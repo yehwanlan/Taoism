@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>農曆測試 - 2025/10/27</title>
+    <style>
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .result {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            font-size: 18px;
+            line-height: 2;
+        }
+        .success {
+            color: #52C41A;
+            font-weight: bold;
+            font-size: 24px;
+        }
+        .error {
+            color: #F5222D;
+            font-weight: bold;
+        }
+        .label {
+            color: #666;
+            display: inline-block;
+            width: 120px;
+        }
+        .value {
+            color: #C8102E;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>🗓️ 農曆功能測試</h1>
+    <div class="result" id="result">載入中...</div>
+
+    <script src="js/lunar-calendar.js"></script>
+    <script>
+        try {
+            const lunarCalendar = new LunarCalendar();
+            
+            // 測試今天 2025/10/27
+            const testDate = new Date(2025, 9, 27); // 月份從0開始，所以10月是9
+            const lunar = lunarCalendar.solarToLunar(2025, 10, 27);
+            const lunarStr = lunarCalendar.formatLunarDate(lunar);
+            
+            // 顯示結果
+            const result = `
+                <div class="success">✓ 農曆計算成功！</div>
+                <br>
+                <div><span class="label">陽曆日期：</span><span class="value">2025年10月27日</span></div>
+                <div><span class="label">農曆日期：</span><span class="value">${lunarStr}</span></div>
+                <div><span class="label">詳細資訊：</span><span class="value">農曆${lunar.year}年${lunar.month}月${lunar.day}日</span></div>
+                <div><span class="label">是否閏月：</span><span class="value">${lunar.isLeap ? '是' : '否'}</span></div>
+                <br>
+                <div style="color: #666; font-size: 14px;">
+                    預期結果：農曆九月初七（9月7日）<br>
+                    ${lunar.month === 9 && lunar.day === 7 ? 
+                        '<span style="color: #52C41A;">✓ 計算正確！</span>' : 
+                        '<span style="color: #F5222D;">✗ 計算有誤</span>'}
+                </div>
+            `;
+            
+            document.getElementById('result').innerHTML = result;
+            
+        } catch (e) {
+            document.getElementById('result').innerHTML = `
+                <div class="error">✗ 錯誤：${e.message}</div>
+                <div style="color: #666; margin-top: 10px;">${e.stack}</div>
+            `;
+        }
+    </script>
+</body>
+</html>
