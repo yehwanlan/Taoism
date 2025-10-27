@@ -1,8 +1,12 @@
-// 農曆轉換模組 - 基於完整數據表的陰陽合曆
-// 數據來源：中國科學院紫金山天文台
+// 農曆轉換模組 - 使用香港天文台數據
+// 數據來源：中國科學院紫金山天文台 + 香港天文台
 class LunarCalendar {
     constructor() {
         // 農曆數據表（1900-2100）
+        // 格式說明：
+        // 前4位：閏月月份（0=無閏月）
+        // 後16位：12個月的大小月（1=30天，0=29天）
+        // 最高位：閏月大小（1=30天，0=29天）
         this.lunarInfo = [
             0x04bd8, 0x04ae0, 0x0a570, 0x054d5, 0x0d260, 0x0d950, 0x16554, 0x056a0, 0x09ad0, 0x055d2, // 1900-1909
             0x04ae0, 0x0a5b6, 0x0a4d0, 0x0d250, 0x1d255, 0x0b540, 0x0d6a0, 0x0ada2, 0x095b0, 0x14977, // 1910-1919
@@ -28,7 +32,7 @@ class LunarCalendar {
         ];
     }
 
-    // 陽曆轉農曆（主要功能）
+    // 陽曆轉農曆
     solarToLunar(year, month, day) {
         // 基準日期：1900年1月31日 = 農曆1900年正月初一
         const baseDate = new Date(1900, 0, 31);
@@ -37,53 +41,59 @@ class LunarCalendar {
         // 計算天數差
         let offset = Math.floor((targetDate - baseDate) / 86400000);
         
-        // 計算農曆年份
-        let lunarYear = 1900;
-        let temp = 0;
+        let i, temp = 0;
+        let lunarYear;
         
-        while (lunarYear < 2101 && offset > 0) {
-            temp = this.getLunarYearDays(lunarYear);
-            if (offset < temp) break;
+        // 確定農曆年份
+        for (i = 1900; i < 2101 && offset > 0; i++) {
+            temp = this.lYearDays(i);
             offset -= temp;
-            lunarYear++;
         }
         
-        // 計算農曆月份
-        let lunarMonth = 1;
-        let isLeap = false;
-        const leapMonth = this.getLeapMonth(lunarYear);
+        if (offset < 0) {
+            offset += temp;
+            i--;
+        }
         
-        // 遍歷每個月
-        for (let i = 1; i < 13 && offset > 0; i++) {
+        lunarYear = i;
+        
+        const leap = this.leapMonth(lunarYear); // 閏哪個月
+        let isLeap = false;
+        
+        // 確定農曆月份
+        for (i = 1; i < 13 && offset > 0; i++) {
             // 閏月
-            if (leapMonth > 0 && i === (leapMonth + 1) && !isLeap) {
-                i--;
+            if (leap > 0 && i === (leap + 1) && isLeap === false) {
+                --i;
                 isLeap = true;
-                temp = this.getLeapMonthDays(lunarYear);
+                temp = this.leapDays(lunarYear); // 計算閏月天數
             } else {
-                temp = this.getLunarMonthDays(lunarYear, i);
+                temp = this.monthDays(lunarYear, i); // 計算非閏月天數
             }
             
             // 解除閏月
-            if (isLeap && i === (leapMonth + 1)) {
+            if (isLeap === true && i === (leap + 1)) {
                 isLeap = false;
             }
             
             offset -= temp;
-            if (offset < 0) {
-                offset += temp;
-                break;
-            }
-            
-            lunarMonth++;
         }
         
-        // 如果offset為負數，說明上個月還沒結束
+        if (offset === 0 && leap > 0 && i === leap + 1) {
+            if (isLeap) {
+                isLeap = false;
+            } else {
+                isLeap = true;
+                --i;
+            }
+        }
+        
         if (offset < 0) {
             offset += temp;
-            lunarMonth--;
+            --i;
         }
         
+        const lunarMonth = i;
         const lunarDay = offset + 1;
         
         return {
@@ -101,18 +111,18 @@ class LunarCalendar {
         
         // 累加年份的天數
         for (let y = 1900; y < lunarYear; y++) {
-            offset += this.getLunarYearDays(y);
+            offset += this.lYearDays(y);
         }
         
         // 累加月份的天數
-        const leapMonth = this.getLeapMonth(lunarYear);
+        const leap = this.leapMonth(lunarYear);
         for (let m = 1; m < lunarMonth; m++) {
-            offset += this.getLunarMonthDays(lunarYear, m);
+            offset += this.monthDays(lunarYear, m);
         }
         
         // 如果是閏月
-        if (isLeap && leapMonth === lunarMonth) {
-            offset += this.getLunarMonthDays(lunarYear, lunarMonth);
+        if (isLeap && leap === lunarMonth) {
+            offset += this.monthDays(lunarYear, lunarMonth);
         }
         
         // 加上日期
@@ -126,54 +136,34 @@ class LunarCalendar {
         };
     }
 
-    // 獲取農曆年份的總天數
-    getLunarYearDays(year) {
-        const yearIndex = year - 1900;
-        if (yearIndex < 0 || yearIndex >= this.lunarInfo.length) {
-            return 354;
+    // 返回農曆年份的總天數
+    lYearDays(y) {
+        let i, sum = 348;
+        for (i = 0x8000; i > 0x8; i >>= 1) {
+            sum += (this.lunarInfo[y - 1900] & i) ? 1 : 0;
         }
-        
-        let sum = 348;  // 12個小月的基礎天數
-        
-        // 計算12個月的大小月
-        for (let i = 0x8000; i > 0x8; i >>= 1) {
-            sum += (this.lunarInfo[yearIndex] & i) ? 1 : 0;
-        }
-        
-        // 加上閏月天數
-        sum += this.getLeapMonthDays(year);
-        
-        return sum;
+        return sum + this.leapDays(y);
     }
 
-    // 獲取農曆月份的天數
-    getLunarMonthDays(year, month) {
-        const yearIndex = year - 1900;
-        if (yearIndex < 0 || yearIndex >= this.lunarInfo.length) {
-            return 29;
+    // 返回農曆年份的閏月天數
+    leapDays(y) {
+        if (this.leapMonth(y)) {
+            return (this.lunarInfo[y - 1900] & 0x10000) ? 30 : 29;
         }
-        
-        // 檢查該月是大月還是小月
-        return (this.lunarInfo[yearIndex] & (0x10000 >> month)) ? 30 : 29;
+        return 0;
     }
 
-    // 獲取閏月月份（0表示無閏月）
-    getLeapMonth(year) {
-        const yearIndex = year - 1900;
-        if (yearIndex < 0 || yearIndex >= this.lunarInfo.length) {
-            return 0;
-        }
-        return this.lunarInfo[yearIndex] & 0xf;
+    // 返回農曆年份的閏月是哪個月（1-12，沒有閏月返回0）
+    leapMonth(y) {
+        return this.lunarInfo[y - 1900] & 0xf;
     }
 
-    // 獲取閏月天數
-    getLeapMonthDays(year) {
-        const leapMonth = this.getLeapMonth(year);
-        if (leapMonth === 0) return 0;
-        
-        const yearIndex = year - 1900;
-        // 最高位表示閏月是大月還是小月
-        return (this.lunarInfo[yearIndex] & 0x10000) ? 30 : 29;
+    // 返回農曆年份某月的天數
+    monthDays(y, m) {
+        if (m > 12 || m < 1) {
+            return -1;
+        }
+        return (this.lunarInfo[y - 1900] & (0x10000 >> m)) ? 30 : 29;
     }
 
     // 格式化農曆日期
