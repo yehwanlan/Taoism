@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>測試 2025/10/27 農曆轉換</title>
+    <style>
+        body {
+            font-family: 'Microsoft JhengHei', sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .result {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            font-size: 20px;
+            line-height: 2;
+        }
+        .success { color: #52C41A; font-weight: bold; }
+        .error { color: #F5222D; font-weight: bold; }
+        .info { color: #1890FF; }
+        .label { color: #666; }
+        .value { color: #C8102E; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>🗓️ 測試 2025年10月27日</h1>
+    <div class="result" id="result">計算中...</div>
+
+    <script src="js/lunar-calendar.js"></script>
+    <script>
+        const lunarCalendar = new LunarCalendar();
+        
+        // 測試 2025年10月27日
+        const testYear = 2025;
+        const testMonth = 10;
+        const testDay = 27;
+        
+        console.log('測試日期:', testYear, testMonth, testDay);
+        
+        const lunar = lunarCalendar.solarToLunar(testYear, testMonth, testDay);
+        console.log('農曆結果:', lunar);
+        
+        const lunarStr = lunarCalendar.formatLunarDate(lunar);
+        console.log('格式化:', lunarStr);
+        
+        // 檢查2025年的閏月
+        const leapMonth2025 = lunarCalendar.getLeapMonth(2025);
+        console.log('2025年閏月:', leapMonth2025);
+        
+        // 預期結果：農曆九月初七
+        const isCorrect = (lunar.month === 9 && lunar.day === 7);
+        
+        document.getElementById('result').innerHTML = `
+            <div class="${isCorrect ? 'success' : 'error'}">
+                ${isCorrect ? '✓ 計算正確！' : '✗ 計算錯誤'}
+            </div>
+            <br>
+            <div><span class="label">陽曆：</span><span class="value">${testYear}年${testMonth}月${testDay}日</span></div>
+            <div><span class="label">農曆：</span><span class="value">${lunarStr}</span></div>
+            <div><span class="label">詳細：</span><span class="value">農曆${lunar.year}年${lunar.month}月${lunar.day}日</span></div>
+            <div><span class="label">是否閏月：</span><span class="value">${lunar.isLeap ? '是' : '否'}</span></div>
+            <br>
+            <div class="info">2025年閏月：${leapMonth2025 === 0 ? '無' : '閏' + leapMonth2025 + '月'}</div>
+            <br>
+            <div class="label">預期結果：農曆九月初七</div>
+            <div class="label">實際結果：農曆${lunar.month}月${lunar.day}日</div>
+        `;
+    </script>
+</body>
+</html>

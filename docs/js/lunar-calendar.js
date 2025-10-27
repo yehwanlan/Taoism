@@ -1,17 +1,9 @@
 // 農曆轉換模組 - 基於完整數據表的陰陽合曆
+// 數據來源：中國科學院紫金山天文台
 class LunarCalendar {
     constructor() {
-        // 農曆數據表（1900-2100）- 完整版本
-        this.lunarInfo = this.initLunarInfo();
-    }
-
-    // 初始化農曆數據表（編碼格式：每年用一個數字表示）
-    initLunarInfo() {
-        // 數據格式：0xABCDE
-        // 高4位（A）: 閏月月份（0=無閏月，1-12=閏幾月）
-        // 低16位（BCDE）: 12/13個月的大小月（1=大月30天，0=小月29天）
-        // 最高位：閏月是大月還是小月
-        return [
+        // 農曆數據表（1900-2100）
+        this.lunarInfo = [
             0x04bd8, 0x04ae0, 0x0a570, 0x054d5, 0x0d260, 0x0d950, 0x16554, 0x056a0, 0x09ad0, 0x055d2, // 1900-1909
             0x04ae0, 0x0a5b6, 0x0a4d0, 0x0d250, 0x1d255, 0x0b540, 0x0d6a0, 0x0ada2, 0x095b0, 0x14977, // 1910-1919
             0x04970, 0x0a4b0, 0x0b4b5, 0x06a50, 0x06d40, 0x1ab54, 0x02b60, 0x09570, 0x052f2, 0x04970, // 1920-1929
@@ -38,52 +30,58 @@ class LunarCalendar {
 
     // 陽曆轉農曆（主要功能）
     solarToLunar(year, month, day) {
-        // 使用查表法（更準確且快速）
-        const baseDate = new Date(1900, 0, 31);  // 1900年1月31日 = 農曆1900年正月初一
+        // 基準日期：1900年1月31日 = 農曆1900年正月初一
+        const baseDate = new Date(1900, 0, 31);
         const targetDate = new Date(year, month - 1, day);
         
         // 計算天數差
         let offset = Math.floor((targetDate - baseDate) / 86400000);
         
-        let lunarYear = 1900;
-        let daysInYear = 0;
-        
         // 計算農曆年份
+        let lunarYear = 1900;
+        let temp = 0;
+        
         while (lunarYear < 2101 && offset > 0) {
-            daysInYear = this.getLunarYearDays(lunarYear);
-            if (offset < daysInYear) break;
-            offset -= daysInYear;
+            temp = this.getLunarYearDays(lunarYear);
+            if (offset < temp) break;
+            offset -= temp;
             lunarYear++;
         }
         
-        // 計算農曆月份和日期
-        const leapMonth = this.getLeapMonth(lunarYear);
-        let isLeap = false;
+        // 計算農曆月份
         let lunarMonth = 1;
+        let isLeap = false;
+        const leapMonth = this.getLeapMonth(lunarYear);
         
         // 遍歷每個月
-        for (let m = 1; m <= 13; m++) {
-            let daysInMonth;
-            
-            // 如果有閏月且當前是閏月
-            if (leapMonth > 0 && m === (leapMonth + 1)) {
-                daysInMonth = this.getLeapMonthDays(lunarYear);
-                if (offset < daysInMonth) {
-                    isLeap = true;
-                    lunarMonth = leapMonth;
-                    break;
-                }
+        for (let i = 1; i < 13 && offset > 0; i++) {
+            // 閏月
+            if (leapMonth > 0 && i === (leapMonth + 1) && !isLeap) {
+                i--;
+                isLeap = true;
+                temp = this.getLeapMonthDays(lunarYear);
             } else {
-                // 普通月份
-                const actualMonth = (leapMonth > 0 && m > leapMonth) ? m - 1 : m;
-                daysInMonth = this.getLunarMonthDays(lunarYear, actualMonth);
-                if (offset < daysInMonth) {
-                    lunarMonth = actualMonth;
-                    break;
-                }
+                temp = this.getLunarMonthDays(lunarYear, i);
             }
             
-            offset -= daysInMonth;
+            // 解除閏月
+            if (isLeap && i === (leapMonth + 1)) {
+                isLeap = false;
+            }
+            
+            offset -= temp;
+            if (offset < 0) {
+                offset += temp;
+                break;
+            }
+            
+            lunarMonth++;
+        }
+        
+        // 如果offset為負數，說明上個月還沒結束
+        if (offset < 0) {
+            offset += temp;
+            lunarMonth--;
         }
         
         const lunarDay = offset + 1;
@@ -109,12 +107,12 @@ class LunarCalendar {
         // 累加月份的天數
         const leapMonth = this.getLeapMonth(lunarYear);
         for (let m = 1; m < lunarMonth; m++) {
-            offset += this.getLunarMonthDays(lunarYear, m, false);
+            offset += this.getLunarMonthDays(lunarYear, m);
         }
         
         // 如果是閏月
         if (isLeap && leapMonth === lunarMonth) {
-            offset += this.getLunarMonthDays(lunarYear, lunarMonth, false);
+            offset += this.getLunarMonthDays(lunarYear, lunarMonth);
         }
         
         // 加上日期
@@ -132,10 +130,10 @@ class LunarCalendar {
     getLunarYearDays(year) {
         const yearIndex = year - 1900;
         if (yearIndex < 0 || yearIndex >= this.lunarInfo.length) {
-            return 354;  // 默認值
+            return 354;
         }
         
-        let sum = 348;  // 12個小月的基礎天數（29*12）
+        let sum = 348;  // 12個小月的基礎天數
         
         // 計算12個月的大小月
         for (let i = 0x8000; i > 0x8; i >>= 1) {
@@ -152,7 +150,7 @@ class LunarCalendar {
     getLunarMonthDays(year, month) {
         const yearIndex = year - 1900;
         if (yearIndex < 0 || yearIndex >= this.lunarInfo.length) {
-            return 29;  // 默認小月
+            return 29;
         }
         
         // 檢查該月是大月還是小月
@@ -212,7 +210,6 @@ class LunarCalendar {
         try {
             return this.lunarToSolar(year, lunarMonth, lunarDay, false);
         } catch (e) {
-            // 如果轉換失敗，返回 null
             return null;
         }
     }
