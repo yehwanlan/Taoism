@@ -50,6 +50,7 @@ class TranslationEngine:
         
         # 初始化狀態
         self.current_book = None
+        self._chapter_titles = set()  # 本書所有章節標題，用來判斷內容邊界
         self.project_root = None
         self.source_dir = None
         self.translation_dir = None
@@ -225,6 +226,8 @@ class TranslationEngine:
         """從目錄元素中提取章節"""
         chapters = []
         chapter_number = 1
+        # 上層章節在目錄中會出現兩次（展開節點 + 自身連結），依章節ID去重
+        seen_ids = set()
         
         # 尋找所有章節項目
         items = catalog_element.find_all(['div', 'li'], class_=re.compile(r'tree-option|chapter-item'))
@@ -250,9 +253,10 @@ class TranslationEngine:
                 
                 if href and title and len(title) > 2:
                     chapter_id = self._extract_chapter_id(href)
-                    if chapter_id:
+                    if chapter_id and chapter_id not in seen_ids:
+                        seen_ids.add(chapter_id)
                         full_url = self.config["base_url"] + href if href.startswith('/') else href
-                        
+
                         # 更智能的章節類型判斷
                         is_volume = self._is_volume_title(title, level)
                         is_chapter = self._is_chapter_title(title, level)
@@ -760,7 +764,12 @@ class TranslationEngine:
             return None
             
     def _extract_content_from_html(self, soup: BeautifulSoup, title: str) -> Optional[Dict]:
-        """從HTML中提取內容"""
+        """從HTML中提取內容
+
+        上層章節的頁面會連同底下的子章節一起顯示，遇到其他章節的標題就停止，
+        避免子章節內容被重複存進上層章節。
+        """
+        other_titles = self._chapter_titles - {title}
 
         try:
             main_content = soup.find('main', class_='read-layout-main')
@@ -768,9 +777,11 @@ class TranslationEngine:
                 article = main_content.find('article', class_='chapter-reader')
                 if article:
                     content_parts = []
-                    
+
                     for element in article.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p']):
                         text = element.get_text().strip()
+                        if element.name != 'p' and content_parts and text in other_titles:
+                            break
                         if text and len(text) > 3:
                             content_parts.append(text)
                     
@@ -1309,9 +1320,13 @@ class TranslationEngine:
                         if response.status_code == 200:
                             soup = BeautifulSoup(response.text, 'html.parser')
                             
-                            # 智能發現子章節
-                            sub_chapters = self._smart_discover_sub_chapters(soup, chapter)
-                            
+                            # 智能發現子章節（目錄中已經有的章節不重複加入）
+                            known_ids = {c['chapter_id'] for c in all_chapters}
+                            sub_chapters = [
+                                sub for sub in self._smart_discover_sub_chapters(soup, chapter)
+                                if sub['chapter_id'] not in known_ids
+                            ]
+
                             if sub_chapters:
                                 safe_print(f"{level_prefix}   ✅ 發現 {len(sub_chapters)} 個子章節")
                                 
@@ -1355,6 +1370,7 @@ class TranslationEngine:
             safe_print(f"\n📋 最終章節總數: {len(chapters)}")
             
             # 7. 批量爬取和翻譯
+            self._chapter_titles = {chapter['title'] for chapter in chapters}
             # 記錄實際存檔用的編號與標題（標題可能已被改成內容中的品名），供追蹤系統找檔案
             processed_chapters = []
             for chapter in chapters:
