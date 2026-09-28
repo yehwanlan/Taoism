@@ -1,8 +1,8 @@
 {
   "stats": {
-    "books": 27,
-    "chapters": 207,
-    "translated": 46
+    "books": 31,
+    "chapters": 179,
+    "translated": 45
   },
   "books": [
     {
@@ -180,17 +180,17 @@
       "chapters": [
         {
           "number": "01",
-          "title": "下一篇",
-          "translated": false
-        },
-        {
-          "number": "02",
           "title": "洞玄灵宝无量度人经诀音义秋七",
           "translated": false
         },
         {
-          "number": "03",
+          "number": "02",
           "title": "诵诸天内音存念法",
+          "translated": false
+        },
+        {
+          "number": "03",
+          "title": "音义",
           "translated": false
         }
       ]
@@ -199,11 +199,6 @@
       "id": "洞玄灵宝自然九天生神章经_DZ0318",
       "title": "洞玄灵宝自然九天生神章经",
       "chapters": [
-        {
-          "number": "01",
-          "title": "下一篇",
-          "translated": true
-        },
         {
           "number": "02",
           "title": "洞玄灵宝自然九天生神章经",
@@ -547,369 +542,283 @@
           "translated": false
         },
         {
-          "number": "02",
-          "title": "庄子口义发题",
-          "translated": false
-        },
-        {
           "number": "03",
-          "title": "南华真经口义卷之一",
-          "translated": false
-        },
-        {
-          "number": "04",
-          "title": "南华真经口义卷之二",
-          "translated": false
-        },
-        {
-          "number": "05",
-          "title": "南华真经口义卷之三",
-          "translated": false
-        },
-        {
-          "number": "06",
-          "title": "南华真经口义卷之四",
-          "translated": false
-        },
-        {
-          "number": "07",
-          "title": "南华真经口义卷之五",
-          "translated": false
-        },
-        {
-          "number": "08",
-          "title": "南华真经口义卷之六",
-          "translated": false
-        },
-        {
-          "number": "09",
-          "title": "南华真经口义卷之七",
-          "translated": false
-        },
-        {
-          "number": "10",
-          "title": "南华真经口义卷之八",
-          "translated": false
-        },
-        {
-          "number": "11",
-          "title": "南华真经口义卷之九",
-          "translated": false
-        },
-        {
-          "number": "12",
-          "title": "南华真经口义卷之十",
-          "translated": false
-        },
-        {
-          "number": "13",
-          "title": "南华真经口义卷之十一",
-          "translated": false
-        },
-        {
-          "number": "14",
-          "title": "南华真经口义卷之十二",
-          "translated": false
-        },
-        {
-          "number": "15",
-          "title": "南华真经口义卷之十三",
-          "translated": false
-        },
-        {
-          "number": "16",
-          "title": "南华真经口义卷之十四",
-          "translated": false
-        },
-        {
-          "number": "17",
-          "title": "南华真经口义卷之十五",
-          "translated": false
-        },
-        {
-          "number": "18",
-          "title": "南华真经口义卷之十六",
-          "translated": false
-        },
-        {
-          "number": "19",
-          "title": "南华真经口义卷之十七",
-          "translated": false
-        },
-        {
-          "number": "20",
-          "title": "南华真经口义卷之十八",
-          "translated": false
-        },
-        {
-          "number": "21",
-          "title": "南华真经口义卷之十九",
-          "translated": false
-        },
-        {
-          "number": "22",
-          "title": "南华真经口义卷之二十",
-          "translated": false
-        },
-        {
-          "number": "23",
-          "title": "南华真经口义卷之二十一",
-          "translated": false
-        },
-        {
-          "number": "24",
-          "title": "南华真经口义卷之二十二",
-          "translated": false
-        },
-        {
-          "number": "25",
-          "title": "南华真经口义卷之二十三",
-          "translated": false
-        },
-        {
-          "number": "26",
-          "title": "南华真经口义卷之二十四",
-          "translated": false
-        },
-        {
-          "number": "27",
-          "title": "南华真经口义卷之二十五",
-          "translated": false
-        },
-        {
-          "number": "28",
-          "title": "南华真经口义卷之二十六",
-          "translated": false
-        },
-        {
-          "number": "29",
-          "title": "南华真经口义卷之二十七",
-          "translated": false
-        },
-        {
-          "number": "30",
-          "title": "南华真经口义卷之二十八",
-          "translated": false
-        },
-        {
-          "number": "31",
-          "title": "南华真经口义卷之二十九",
-          "translated": false
-        },
-        {
-          "number": "32",
-          "title": "南华真经口义卷之三十",
-          "translated": false
-        },
-        {
-          "number": "33",
-          "title": "南华真经口义卷之三十一",
-          "translated": false
-        },
-        {
-          "number": "34",
-          "title": "南华真经口义卷之三十二",
-          "translated": false
-        },
-        {
-          "number": "35",
           "title": "内篇逍遥游",
           "translated": false
         },
         {
-          "number": "36",
+          "number": "05",
           "title": "内篇齐物论上",
           "translated": false
         },
         {
-          "number": "37",
+          "number": "07",
           "title": "内篇齐物论下",
           "translated": false
         },
         {
-          "number": "38",
+          "number": "09",
           "title": "内篇养生主",
           "translated": false
         },
         {
-          "number": "39",
+          "number": "11",
           "title": "内篇人间世上",
           "translated": false
         },
         {
-          "number": "40",
+          "number": "13",
           "title": "内篇人间世下",
           "translated": false
         },
         {
-          "number": "41",
+          "number": "15",
           "title": "内篇德充符",
           "translated": false
         },
         {
-          "number": "42",
+          "number": "17",
           "title": "内篇大宗师上",
           "translated": false
         },
         {
-          "number": "43",
+          "number": "19",
           "title": "内篇大宗师下",
           "translated": false
         },
         {
-          "number": "44",
+          "number": "21",
           "title": "内篇应帝王",
           "translated": false
         },
         {
-          "number": "45",
+          "number": "23",
           "title": "外篇骈拇",
           "translated": false
         },
         {
-          "number": "46",
+          "number": "24",
           "title": "外篇马蹄",
           "translated": false
         },
         {
-          "number": "47",
+          "number": "26",
           "title": "外篇胠箧",
           "translated": false
         },
         {
-          "number": "48",
+          "number": "28",
           "title": "外篇在宥",
           "translated": false
         },
         {
-          "number": "49",
+          "number": "30",
           "title": "外篇天地",
           "translated": false
         },
         {
-          "number": "50",
+          "number": "32",
           "title": "外篇天道",
           "translated": false
         },
         {
-          "number": "51",
+          "number": "34",
           "title": "外篇天运",
           "translated": false
         },
         {
-          "number": "52",
+          "number": "36",
           "title": "外篇刻意",
           "translated": false
         },
         {
-          "number": "53",
+          "number": "37",
           "title": "外篇缮性",
           "translated": false
         },
         {
-          "number": "54",
+          "number": "39",
           "title": "外篇秋水",
           "translated": false
         },
         {
-          "number": "55",
+          "number": "41",
           "title": "外篇至乐",
           "translated": false
         },
         {
-          "number": "56",
+          "number": "43",
           "title": "外篇达生",
           "translated": false
         },
         {
-          "number": "57",
+          "number": "45",
           "title": "外篇山木",
           "translated": false
         },
         {
-          "number": "58",
+          "number": "47",
           "title": "外篇田子方",
           "translated": false
         },
         {
-          "number": "59",
+          "number": "49",
           "title": "外篇知北游",
           "translated": false
         },
         {
-          "number": "60",
+          "number": "50",
           "title": "杂篇庚桑楚",
           "translated": false
         },
         {
-          "number": "61",
+          "number": "52",
           "title": "杂篇徐无鬼",
           "translated": false
         },
         {
-          "number": "62",
+          "number": "54",
           "title": "杂篇则阳",
           "translated": false
         },
         {
-          "number": "63",
+          "number": "56",
           "title": "杂篇外物",
           "translated": false
         },
         {
-          "number": "64",
+          "number": "58",
           "title": "杂篇寓言",
           "translated": false
         },
         {
-          "number": "65",
+          "number": "60",
           "title": "杂篇让王",
           "translated": false
         },
         {
-          "number": "66",
+          "number": "62",
           "title": "杂篇盗跖",
           "translated": false
         },
         {
-          "number": "67",
+          "number": "63",
           "title": "杂篇说剑",
           "translated": false
         },
         {
-          "number": "68",
+          "number": "65",
           "title": "杂篇渔父",
           "translated": false
         },
         {
-          "number": "69",
+          "number": "66",
           "title": "杂篇列御寇",
           "translated": false
         },
         {
-          "number": "70",
+          "number": "67",
           "title": "杂篇天下",
-          "translated": false
-        },
-        {
-          "number": "71",
-          "title": "南华真经口义后序",
           "translated": false
         }
       ]
     },
     {
-      "id": "太上老君説常清靜經注_DZ0756",
-      "title": "太上老君説常清靜經注",
+      "id": "太上老君说常清静经注_DZ0756",
+      "title": "太上老君说常清静经注",
       "chapters": [
         {
           "number": "01",
-          "title": "太上老君説常清靜注",
+          "title": "太上老君说常清静注",
+          "translated": false
+        }
+      ]
+    },
+    {
+      "id": "正一法文天师教戒科经_DZ0789",
+      "title": "正一法文天师教戒科经",
+      "chapters": [
+        {
+          "number": "01",
+          "title": "正一法文天师教戒科经",
           "translated": false
         },
         {
           "number": "02",
-          "title": "太上老君説常清靜注",
+          "title": "大道家令戒",
+          "translated": false
+        },
+        {
+          "number": "03",
+          "title": "天师教",
+          "translated": false
+        },
+        {
+          "number": "04",
+          "title": "阳平治",
+          "translated": false
+        },
+        {
+          "number": "05",
+          "title": "天师五言牵三诗",
+          "translated": false
+        }
+      ]
+    },
+    {
+      "id": "丹阳真人直言_DZ1234",
+      "title": "丹阳真人直言",
+      "chapters": [
+        {
+          "number": "02",
+          "title": "示门人",
+          "translated": false
+        }
+      ]
+    },
+    {
+      "id": "枕中经_DZ1422",
+      "title": "枕中经",
+      "chapters": [
+        {
+          "number": "01",
+          "title": "枕中经",
+          "translated": false
+        }
+      ]
+    },
+    {
+      "id": "洞玄灵宝玉京山步虚经_DZ1439",
+      "title": "洞玄灵宝玉京山步虚经",
+      "chapters": [
+        {
+          "number": "01",
+          "title": "洞玄灵宝玉京山步虚经",
+          "translated": false
+        },
+        {
+          "number": "03",
+          "title": "洞玄步虚吟十首",
+          "translated": false
+        },
+        {
+          "number": "04",
+          "title": "太上智慧经赞八首",
+          "translated": false
+        },
+        {
+          "number": "05",
+          "title": "玄师太元真人临授许常侍、掾《太洞玄经玉京山诀》，作颂三首",
+          "translated": false
+        },
+        {
+          "number": "06",
+          "title": "太上太极五真人于会稽山、虞山授葛仙公《洞玄灵宝经》，各吟一颂",
+          "translated": false
+        },
+        {
+          "number": "07",
+          "title": "礼经三首咒",
           "translated": false
         }
       ]
@@ -1122,14 +1031,9 @@
       ]
     },
     {
-      "id": "文始真經（關尹子）_SBCK440",
-      "title": "文始真經（關尹子）",
+      "id": "文始真经（关尹子）_SBCK440",
+      "title": "文始真经（关尹子）",
       "chapters": [
-        {
-          "number": "01",
-          "title": "文始真経上卷",
-          "translated": false
-        },
         {
           "number": "02",
           "title": "一宇萹",
@@ -1142,62 +1046,42 @@
         },
         {
           "number": "04",
-          "title": "三極萹",
-          "translated": false
-        },
-        {
-          "number": "05",
-          "title": "文始真經中卷",
+          "title": "三极萹",
           "translated": false
         },
         {
           "number": "06",
-          "title": "文始真経下卷",
-          "translated": false
-        },
-        {
-          "number": "07",
-          "title": "校勘記",
-          "translated": false
-        },
-        {
-          "number": "08",
-          "title": "一宇萹",
-          "translated": false
-        },
-        {
-          "number": "09",
-          "title": "二柱萹",
-          "translated": false
-        },
-        {
-          "number": "10",
-          "title": "三極萹",
-          "translated": false
-        },
-        {
-          "number": "11",
           "title": "四符萹",
           "translated": false
         },
         {
-          "number": "12",
-          "title": "五鑑萹",
+          "number": "07",
+          "title": "五鉴萹",
           "translated": false
         },
         {
-          "number": "13",
+          "number": "08",
           "title": "六匕萹",
           "translated": false
         },
         {
-          "number": "14",
-          "title": "七釡萹",
+          "number": "10",
+          "title": "七釜萹",
           "translated": false
         },
         {
-          "number": "16",
-          "title": "九藥萹",
+          "number": "11",
+          "title": "八筹萹",
+          "translated": false
+        },
+        {
+          "number": "12",
+          "title": "九药萹",
+          "translated": false
+        },
+        {
+          "number": "13",
+          "title": "校勘记",
           "translated": false
         }
       ]

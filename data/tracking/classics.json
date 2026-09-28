@@ -1,26 +1,611 @@
 {
   "metadata": {
-    "created": "2025-08-09T03:11:05.302509",
-    "last_updated": "2025-08-10T03:11:19.418245",
-    "total_classics": 6,
-    "total_chapters": 45,
-    "total_characters": 102050,
-    "migrated_at": "2025-08-09T03:32:58.329384",
-    "version": "2.0"
+    "created": "2026-09-28T20:59:38.677056",
+    "last_updated": "2026-09-28T20:59:38.852890",
+    "version": "2.0",
+    "total_classics": 31,
+    "total_chapters": 179,
+    "total_characters": 427514
   },
   "classics": {
+    "PC2471": {
+      "book_info": {
+        "id": "PC2471",
+        "title": "P.Ch.2471太上升玄护命经一卷",
+        "author": "[唐] 佚名 撰",
+        "url": "https://www.shidianguji.com/book/PC2471?page_from=bookshelf&mode=book"
+      },
+      "folder_name": "P.Ch.2471太上升玄护命经一卷_PC2471",
+      "source_dir": "docs\\source_texts\\P.Ch.2471太上升玄护命经一卷_PC2471",
+      "translation_dir": "docs\\translations\\P.Ch.2471太上升玄护命经一卷_PC2471",
+      "added_time": "2026-09-28T20:59:38.678783",
+      "last_modified": "2026-09-28T20:59:38.678784",
+      "chapter_count": 1,
+      "total_characters": 290,
+      "chapters": [
+        {
+          "number": 1,
+          "title": "太上升玄护命经一卷",
+          "file_size": 1083,
+          "char_count": 290,
+          "file_hash": "e95d9dd0ea1d445707059faa11579b5f",
+          "added_time": "2026-09-28T20:59:38.678757"
+        }
+      ],
+      "translation_status": {
+        "completed_chapters": 1,
+        "total_chapters": 1,
+        "completion_percentage": 100.0,
+        "last_translation_update": "2026-09-28T20:59:38.834543"
+      },
+      "tags": [
+        "道教經典",
+        "佚名",
+        "太上",
+        "唐代"
+      ],
+      "category": "道教經文",
+      "status": "新增"
+    },
+    "DZ1234": {
+      "book_info": {
+        "id": "DZ1234",
+        "title": "丹阳真人直言",
+        "author": "[金] 马钰 述",
+        "url": "https://www.shidianguji.com/book/DZ1234/chapter/DZ1234_1"
+      },
+      "folder_name": "丹阳真人直言_DZ1234",
+      "source_dir": "docs\\source_texts\\丹阳真人直言_DZ1234",
+      "translation_dir": "docs\\translations\\丹阳真人直言_DZ1234",
+      "added_time": "2026-09-28T20:59:38.682324",
+      "last_modified": "2026-09-28T20:59:38.682325",
+      "chapter_count": 1,
+      "total_characters": 863,
+      "chapters": [
+        {
+          "number": 2,
+          "title": "示门人",
+          "file_size": 3127,
+          "char_count": 863,
+          "file_hash": "440c09dcb80b2d4e885acad207158b7b",
+          "added_time": "2026-09-28T20:59:38.682311"
+        }
+      ],
+      "translation_status": {
+        "completed_chapters": 0,
+        "total_chapters": 1,
+        "completion_percentage": 0.0,
+        "last_translation_update": "2026-09-28T20:59:38.834686"
+      },
+      "tags": [],
+      "category": "其他道教文獻",
+      "status": "新增"
+    },
+    "DZ0043": {
+      "book_info": {
+        "id": "DZ0043",
+        "title": "元始天尊说十一曜大消灾神咒经",
+        "author": "[唐] 佚名 著",
+        "url": "https://www.shidianguji.com/book/DZ0043?page_from=bookshelf&mode=book"
+      },
+      "folder_name": "元始天尊说十一曜大消灾神咒经_DZ0043",
+      "source_dir": "docs\\source_texts\\元始天尊说十一曜大消灾神咒经_DZ0043",
+      "translation_dir": "docs\\translations\\元始天尊说十一曜大消灾神咒经_DZ0043",
+      "added_time": "2026-09-28T20:59:38.687854",
+      "last_modified": "2026-09-28T20:59:38.687855",
+      "chapter_count": 15,
+      "total_characters": 1490,
+      "chapters": [
+        {
+          "number": 1,
+          "title": "元始天尊说十一曜大消灾神咒经",
+          "file_size": 2184,
+          "char_count": 598,
+          "file_hash": "3309062c00707dce75979e53dd9475b4",
+          "added_time": "2026-09-28T20:59:38.683840"
+        },
+        {
+          "number": 2,
+          "title": "九星都咒",
+          "file_size": 234,
+          "char_count": 56,
+          "file_hash": "5b04e20bfc15075f7c8e4ac850dd8639",
+          "added_time": "2026-09-28T20:59:38.684134"
+        },
+        {
+          "number": 3,
+          "title": "五星神咒",
+          "file_size": 336,
+          "char_count": 80,
+          "file_hash": "68430c511ac3bfb49c601f52867c80fe",
+          "added_time": "2026-09-28T20:59:38.684380"
+        },
+        {
+          "number": 4,
+          "title": "太阳真君神咒",
+          "file_size": 202,
+          "char_count": 52,
+          "file_hash": "4456b4a8482e57fa1751ecf86172e333",
+          "added_time": "2026-09-28T20:59:38.684634"
+        },
+        {
+          "number": 5,
+          "title": "太阴真君神咒",
+          "file_size": 202,
+          "char_count": 52,
+          "file_hash": "371beb46dda20f361f9c027d661a04e7",
+          "added_time": "2026-09-28T20:59:38.684969"
+        },
+        {
+          "number": 6,
+          "title": "木星真君神咒",
+          "file_size": 202,
+          "char_count": 52,
+          "file_hash": "b4b6884481b20b46a5526d8c7d6a809c",
+          "added_time": "2026-09-28T20:59:38.685187"
+        },
+        {
+          "number": 7,
+          "title": "火星真君神咒",
+          "file_size": 202,
+          "char_count": 52,
+          "file_hash": "2ca581195117d38a3be251be5d2f244e",
+          "added_time": "2026-09-28T20:59:38.685450"
+        },
+        {
+          "number": 8,
+          "title": "金星真君神咒",
+          "file_size": 202,
+          "char_count": 52,
+          "file_hash": "964b9b6364775b5c4bd263301e714721",
+          "added_time": "2026-09-28T20:59:38.685692"
+        },
+        {
+          "number": 9,
+          "title": "水星真君神咒",
+          "file_size": 202,
+          "char_count": 52,
+          "file_hash": "2bece2d8da0d78a09b8760735dbe0ec0",
+          "added_time": "2026-09-28T20:59:38.686029"
+        },
+        {
+          "number": 10,
+          "title": "土星真君神咒",
+          "file_size": 202,
+          "char_count": 52,
+          "file_hash": "04f2b3e7891619e18583d008860dfe7c",
+          "added_time": "2026-09-28T20:59:38.686303"
+        },
+        {
+          "number": 11,
+          "title": "罗睺真君神咒",
+          "file_size": 202,
+          "char_count": 52,
+          "file_hash": "4977d8109d978d99cc064caa0bfdaa24",
+          "added_time": "2026-09-28T20:59:38.686559"
+        },
+        {
+          "number": 12,
+          "title": "计都真君神咒",
+          "file_size": 202,
+          "char_count": 52,
+          "file_hash": "81a42c6ab4b34314b4f5d8f444345355",
+          "added_time": "2026-09-28T20:59:38.686872"
+        },
+        {
+          "number": 13,
+          "title": "紫气真君神咒",
+          "file_size": 203,
+          "char_count": 51,
+          "file_hash": "b6f7684084d8da2e7e2cdcd62bfe83b1",
+          "added_time": "2026-09-28T20:59:38.687125"
+        },
+        {
+          "number": 14,
+          "title": "月孛真君神咒",
+          "file_size": 202,
+          "char_count": 52,
+          "file_hash": "6a09f805a5086fcc7c88d3f76f062a9e",
+          "added_time": "2026-09-28T20:59:38.687331"
+        },
+        {
+          "number": 15,
+          "title": "三启颂",
+          "file_size": 703,
+          "char_count": 185,
+          "file_hash": "fe05c29987dd45451c3d59cd329f6a95",
+          "added_time": "2026-09-28T20:59:38.687837"
+        }
+      ],
+      "translation_status": {
+        "completed_chapters": 0,
+        "total_chapters": 15,
+        "completion_percentage": 0.0,
+        "last_translation_update": "2026-09-28T20:59:38.835896"
+      },
+      "tags": [
+        "道教神話",
+        "元始天尊",
+        "佚名",
+        "唐代"
+      ],
+      "category": "道教經文",
+      "status": "新增"
+    },
+    "DZ0735": {
+      "book_info": {
+        "id": "DZ0735",
+        "title": "南华真经口义",
+        "author": "[南宋] 林希逸 撰",
+        "url": "https://www.shidianguji.com/book/DZ0735/chapter/1k1r7oqmxh8uz"
+      },
+      "folder_name": "南华真经口义_DZ0735",
+      "source_dir": "docs\\source_texts\\南华真经口义_DZ0735",
+      "translation_dir": "docs\\translations\\南华真经口义_DZ0735",
+      "added_time": "2026-09-28T20:59:38.706119",
+      "last_modified": "2026-09-28T20:59:38.706120",
+      "chapter_count": 37,
+      "total_characters": 185212,
+      "chapters": [
+        {
+          "number": 1,
+          "title": "庄子口义发题",
+          "file_size": 2398,
+          "char_count": 682,
+          "file_hash": "c44cd8f974d5530728e9f2847a3b235e",
+          "added_time": "2026-09-28T20:59:38.689075"
+        },
+        {
+          "number": 3,
+          "title": "内篇逍遥游",
+          "file_size": 16934,
+          "char_count": 4705,
+          "file_hash": "19a632bf1ba1668c83f442813a4c684d",
+          "added_time": "2026-09-28T20:59:38.689615"
+        },
+        {
+          "number": 5,
+          "title": "内篇齐物论上",
+          "file_size": 13868,
+          "char_count": 3853,
+          "file_hash": "3a632c3033b3706e77b1c7ccb2267090",
+          "added_time": "2026-09-28T20:59:38.690029"
+        },
+        {
+          "number": 7,
+          "title": "内篇齐物论下",
+          "file_size": 31864,
+          "char_count": 8912,
+          "file_hash": "34b8cff059dd74b8875e0e6ea80a5c94",
+          "added_time": "2026-09-28T20:59:38.690790"
+        },
+        {
+          "number": 9,
+          "title": "内篇养生主",
+          "file_size": 10758,
+          "char_count": 2947,
+          "file_hash": "e5c70dd1d03970dfea5d4a101c223224",
+          "added_time": "2026-09-28T20:59:38.691149"
+        },
+        {
+          "number": 11,
+          "title": "内篇人间世上",
+          "file_size": 20934,
+          "char_count": 5770,
+          "file_hash": "ad728452428e39c439dd6f2b39f3ef84",
+          "added_time": "2026-09-28T20:59:38.691688"
+        },
+        {
+          "number": 13,
+          "title": "内篇人间世下",
+          "file_size": 14440,
+          "char_count": 3977,
+          "file_hash": "5bdf27f16d6834a33b8913971c910ce6",
+          "added_time": "2026-09-28T20:59:38.692124"
+        },
+        {
+          "number": 15,
+          "title": "内篇德充符",
+          "file_size": 20178,
+          "char_count": 5522,
+          "file_hash": "cdc10a2d2913b7b6cef2d66efb4198ae",
+          "added_time": "2026-09-28T20:59:38.692734"
+        },
+        {
+          "number": 17,
+          "title": "内篇大宗师上",
+          "file_size": 17427,
+          "char_count": 4777,
+          "file_hash": "e9a4f5a7321ae6b9a07d0380374e4f68",
+          "added_time": "2026-09-28T20:59:38.693221"
+        },
+        {
+          "number": 19,
+          "title": "内篇大宗师下",
+          "file_size": 16246,
+          "char_count": 4503,
+          "file_hash": "2d152a0763ac803984b9b72321b32cf3",
+          "added_time": "2026-09-28T20:59:38.693654"
+        },
+        {
+          "number": 21,
+          "title": "内篇应帝王",
+          "file_size": 15927,
+          "char_count": 4433,
+          "file_hash": "24a821e8c40510afb074b584102b84e0",
+          "added_time": "2026-09-28T20:59:38.694108"
+        },
+        {
+          "number": 23,
+          "title": "外篇骈拇",
+          "file_size": 12029,
+          "char_count": 3368,
+          "file_hash": "869ed52e3bf7a3fa08cb127f7028865f",
+          "added_time": "2026-09-28T20:59:38.694453"
+        },
+        {
+          "number": 24,
+          "title": "外篇马蹄",
+          "file_size": 6952,
+          "char_count": 1890,
+          "file_hash": "77ae7b88edf07706bf37804f6f7b5e47",
+          "added_time": "2026-09-28T20:59:38.694691"
+        },
+        {
+          "number": 26,
+          "title": "外篇胠箧",
+          "file_size": 11102,
+          "char_count": 3098,
+          "file_hash": "514afef7c3b4a48fbc2f85c95bda3794",
+          "added_time": "2026-09-28T20:59:38.694995"
+        },
+        {
+          "number": 28,
+          "title": "外篇在宥",
+          "file_size": 28785,
+          "char_count": 7967,
+          "file_hash": "c147888ee961cc427b3f392929d7c574",
+          "added_time": "2026-09-28T20:59:38.695609"
+        },
+        {
+          "number": 30,
+          "title": "外篇天地",
+          "file_size": 34071,
+          "char_count": 9386,
+          "file_hash": "164f9dd94f836d615f639804170714bd",
+          "added_time": "2026-09-28T20:59:38.696332"
+        },
+        {
+          "number": 32,
+          "title": "外篇天道",
+          "file_size": 21021,
+          "char_count": 5793,
+          "file_hash": "da2aed15925d866f806902f31fb57161",
+          "added_time": "2026-09-28T20:59:38.696821"
+        },
+        {
+          "number": 34,
+          "title": "外篇天运",
+          "file_size": 23194,
+          "char_count": 6376,
+          "file_hash": "85c3e3ace0548f31dd1a77ae89c2afae",
+          "added_time": "2026-09-28T20:59:38.697339"
+        },
+        {
+          "number": 36,
+          "title": "外篇刻意",
+          "file_size": 6246,
+          "char_count": 1706,
+          "file_hash": "ba5960c2d8dea8dad36c125caaeab742",
+          "added_time": "2026-09-28T20:59:38.697570"
+        },
+        {
+          "number": 37,
+          "title": "外篇缮性",
+          "file_size": 7650,
+          "char_count": 2115,
+          "file_hash": "13b658a9c15eadd7a744ac896024f5a5",
+          "added_time": "2026-09-28T20:59:38.697815"
+        },
+        {
+          "number": 39,
+          "title": "外篇秋水",
+          "file_size": 22529,
+          "char_count": 6242,
+          "file_hash": "8bf5b8a36451a37c6f67bb829dea9064",
+          "added_time": "2026-09-28T20:59:38.698329"
+        },
+        {
+          "number": 41,
+          "title": "外篇至乐",
+          "file_size": 11711,
+          "char_count": 3268,
+          "file_hash": "d92b4b9c8daa663ee7a1112b5e8116c5",
+          "added_time": "2026-09-28T20:59:38.698733"
+        },
+        {
+          "number": 43,
+          "title": "外篇达生",
+          "file_size": 19223,
+          "char_count": 5325,
+          "file_hash": "c7dd9015debd00a6ba547753c73e6a98",
+          "added_time": "2026-09-28T20:59:38.699305"
+        },
+        {
+          "number": 45,
+          "title": "外篇山木",
+          "file_size": 19115,
+          "char_count": 5295,
+          "file_hash": "907c0c2df6003ef7187fefb6b8e2c63c",
+          "added_time": "2026-09-28T20:59:38.699818"
+        },
+        {
+          "number": 47,
+          "title": "外篇田子方",
+          "file_size": 18393,
+          "char_count": 5106,
+          "file_hash": "33d6636feb8b74bc24894dcce5149e9a",
+          "added_time": "2026-09-28T20:59:38.700258"
+        },
+        {
+          "number": 49,
+          "title": "外篇知北游",
+          "file_size": 28310,
+          "char_count": 7818,
+          "file_hash": "3143929a824dab840fca4af68e93d936",
+          "added_time": "2026-09-28T20:59:38.700865"
+        },
+        {
+          "number": 50,
+          "title": "杂篇庚桑楚",
+          "file_size": 29036,
+          "char_count": 7996,
+          "file_hash": "0f55314ece3fc6b2fd2511808910afc9",
+          "added_time": "2026-09-28T20:59:38.701485"
+        },
+        {
+          "number": 52,
+          "title": "杂篇徐无鬼",
+          "file_size": 31254,
+          "char_count": 8629,
+          "file_hash": "c11ad6d2039335c815faac9f62ed5f7b",
+          "added_time": "2026-09-28T20:59:38.702169"
+        },
+        {
+          "number": 54,
+          "title": "杂篇则阳",
+          "file_size": 27081,
+          "char_count": 7499,
+          "file_hash": "4eb81dbe315524be3094cd3360776f0c",
+          "added_time": "2026-09-28T20:59:38.702824"
+        },
+        {
+          "number": 56,
+          "title": "杂篇外物",
+          "file_size": 17338,
+          "char_count": 4800,
+          "file_hash": "a35762e280cff89cb1fab3e0bbf86906",
+          "added_time": "2026-09-28T20:59:38.703269"
+        },
+        {
+          "number": 58,
+          "title": "杂篇寓言",
+          "file_size": 10944,
+          "char_count": 3039,
+          "file_hash": "d01295e448fda87e51fdf9f997080b67",
+          "added_time": "2026-09-28T20:59:38.703581"
+        },
+        {
+          "number": 60,
+          "title": "杂篇让王",
+          "file_size": 16697,
+          "char_count": 4654,
+          "file_hash": "415518b17df1f1ec85e9f455bfe73d0d",
+          "added_time": "2026-09-28T20:59:38.703985"
+        },
+        {
+          "number": 62,
+          "title": "杂篇盗跖",
+          "file_size": 19487,
+          "char_count": 5430,
+          "file_hash": "d66ea0cd79ca31e6115849e1f74f8140",
+          "added_time": "2026-09-28T20:59:38.704441"
+        },
+        {
+          "number": 63,
+          "title": "杂篇说剑",
+          "file_size": 4461,
+          "char_count": 1213,
+          "file_hash": "64623c4a21723c642533bd2a416ff580",
+          "added_time": "2026-09-28T20:59:38.704633"
+        },
+        {
+          "number": 65,
+          "title": "杂篇渔父",
+          "file_size": 10257,
+          "char_count": 2831,
+          "file_hash": "d52f707fc01339889b937f1f2ac1401d",
+          "added_time": "2026-09-28T20:59:38.704927"
+        },
+        {
+          "number": 66,
+          "title": "杂篇列御寇",
+          "file_size": 18554,
+          "char_count": 5130,
+          "file_hash": "5217f97770bc0265fc5903a78e4a64fe",
+          "added_time": "2026-09-28T20:59:38.705376"
+        },
+        {
+          "number": 67,
+          "title": "杂篇天下",
+          "file_size": 32716,
+          "char_count": 9157,
+          "file_hash": "b02b48351f294edd7356612d6229e3e0",
+          "added_time": "2026-09-28T20:59:38.706106"
+        }
+      ],
+      "translation_status": {
+        "completed_chapters": 0,
+        "total_chapters": 37,
+        "completion_percentage": 0.0,
+        "last_translation_update": "2026-09-28T20:59:38.839981"
+      },
+      "tags": [
+        "宋代"
+      ],
+      "category": "其他道教文獻",
+      "status": "新增"
+    },
+    "DZ0383": {
+      "book_info": {
+        "id": "DZ0383",
+        "title": "太上七星神咒经",
+        "author": "[元] 佚名 著",
+        "url": "https://www.shidianguji.com/book/DZ0383?page_from=bookshelf&mode=book"
+      },
+      "folder_name": "太上七星神咒经_DZ0383",
+      "source_dir": "docs\\source_texts\\太上七星神咒经_DZ0383",
+      "translation_dir": "docs\\translations\\太上七星神咒经_DZ0383",
+      "added_time": "2026-09-28T20:59:38.707905",
+      "last_modified": "2026-09-28T20:59:38.707906",
+      "chapter_count": 1,
+      "total_characters": 328,
+      "chapters": [
+        {
+          "number": 1,
+          "title": "太上七星神咒经",
+          "file_size": 1251,
+          "char_count": 328,
+          "file_hash": "b67d8ae12cceecaca37e54101adaa45f",
+          "added_time": "2026-09-28T20:59:38.707888"
+        }
+      ],
+      "translation_status": {
+        "completed_chapters": 0,
+        "total_chapters": 1,
+        "completion_percentage": 0.0,
+        "last_translation_update": "2026-09-28T20:59:38.840092"
+      },
+      "tags": [
+        "道教經典",
+        "佚名",
+        "太上"
+      ],
+      "category": "道教經文",
+      "status": "新增"
+    },
     "DZ0047": {
       "book_info": {
         "id": "DZ0047",
         "title": "太上元始天尊证果真经",
         "author": "[唐] 佚名 著",
-        "url": "https://www.shidianguji.com/book/DZ0047"
+        "url": "https://www.shidianguji.com/book/DZ0047?page_from=bookshelf&mode=book"
       },
       "folder_name": "太上元始天尊证果真经_DZ0047",
-      "source_dir": "docs/source_texts/太上元始天尊证果真经_DZ0047",
-      "translation_dir": "docs/translations/太上元始天尊证果真经_DZ0047",
-      "added_time": "2025-08-09T03:11:05.303097",
-      "last_modified": "2025-08-09T03:11:05.303099",
+      "source_dir": "docs\\source_texts\\太上元始天尊证果真经_DZ0047",
+      "translation_dir": "docs\\translations\\太上元始天尊证果真经_DZ0047",
+      "added_time": "2026-09-28T20:59:38.709481",
+      "last_modified": "2026-09-28T20:59:38.709482",
       "chapter_count": 1,
       "total_characters": 250,
       "chapters": [
@@ -30,20 +615,20 @@
           "file_size": 940,
           "char_count": 250,
           "file_hash": "6e0adfc2ebf321fe15b7dee194794df5",
-          "added_time": "2025-08-09T03:11:05.303078"
+          "added_time": "2026-09-28T20:59:38.709467"
         }
       ],
       "translation_status": {
-        "completed_chapters": 0,
+        "completed_chapters": 1,
         "total_chapters": 1,
-        "completion_percentage": 0.0,
-        "last_translation_update": "2025-08-10T03:11:19.409855"
+        "completion_percentage": 100.0,
+        "last_translation_update": "2026-09-28T20:59:38.840192"
       },
       "tags": [
-        "太上",
+        "道教經典",
         "佚名",
-        "唐代",
-        "道教經典"
+        "太上",
+        "唐代"
       ],
       "category": "道教經文",
       "status": "新增"
@@ -53,13 +638,13 @@
         "id": "DZ0067",
         "title": "太上元始天尊说消殄虫蝗经",
         "author": "[唐] 佚名 著",
-        "url": "https://www.shidianguji.com/book/DZ0067"
+        "url": "https://www.shidianguji.com/book/DZ0067?page_from=bookshelf&mode=book"
       },
       "folder_name": "太上元始天尊说消殄虫蝗经_DZ0067",
-      "source_dir": "docs/source_texts/太上元始天尊说消殄虫蝗经_DZ0067",
-      "translation_dir": "docs/translations/太上元始天尊说消殄虫蝗经_DZ0067",
-      "added_time": "2025-08-09T03:11:05.305727",
-      "last_modified": "2025-08-09T03:11:05.305728",
+      "source_dir": "docs\\source_texts\\太上元始天尊说消殄虫蝗经_DZ0067",
+      "translation_dir": "docs\\translations\\太上元始天尊说消殄虫蝗经_DZ0067",
+      "added_time": "2026-09-28T20:59:38.711079",
+      "last_modified": "2026-09-28T20:59:38.711080",
       "chapter_count": 1,
       "total_characters": 499,
       "chapters": [
@@ -69,20 +654,621 @@
           "file_size": 1810,
           "char_count": 499,
           "file_hash": "a9540297e8d04efa4ce486b3bf76dce1",
-          "added_time": "2025-08-09T03:11:05.305709"
+          "added_time": "2026-09-28T20:59:38.711063"
         }
       ],
       "translation_status": {
         "completed_chapters": 1,
         "total_chapters": 1,
         "completion_percentage": 100.0,
-        "last_translation_update": "2025-08-10T03:11:19.410134"
+        "last_translation_update": "2026-09-28T20:59:38.840298"
       },
       "tags": [
-        "太上",
+        "道教經典",
         "佚名",
-        "唐代",
-        "道教經典"
+        "太上",
+        "唐代"
+      ],
+      "category": "道教經文",
+      "status": "新增"
+    },
+    "DZ0070": {
+      "book_info": {
+        "id": "DZ0070",
+        "title": "太上元始天尊说金光明经",
+        "author": "[唐] 佚名 著",
+        "url": "https://www.shidianguji.com/book/DZ0070?page_from=bookshelf&mode=book"
+      },
+      "folder_name": "太上元始天尊说金光明经_DZ0070",
+      "source_dir": "docs\\source_texts\\太上元始天尊说金光明经_DZ0070",
+      "translation_dir": "docs\\translations\\太上元始天尊说金光明经_DZ0070",
+      "added_time": "2026-09-28T20:59:38.712702",
+      "last_modified": "2026-09-28T20:59:38.712704",
+      "chapter_count": 1,
+      "total_characters": 346,
+      "chapters": [
+        {
+          "number": 1,
+          "title": "太上元始天尊说金光明经",
+          "file_size": 1254,
+          "char_count": 346,
+          "file_hash": "a2d2ee08c9a8a302f0e505ea232df581",
+          "added_time": "2026-09-28T20:59:38.712679"
+        }
+      ],
+      "translation_status": {
+        "completed_chapters": 1,
+        "total_chapters": 1,
+        "completion_percentage": 100.0,
+        "last_translation_update": "2026-09-28T20:59:38.840395"
+      },
+      "tags": [
+        "道教經典",
+        "佚名",
+        "太上",
+        "唐代"
+      ],
+      "category": "道教經文",
+      "status": "新增"
+    },
+    "DZ0368": {
+      "book_info": {
+        "id": "DZ0368",
+        "title": "太上洞玄宝元上经",
+        "author": "[南北朝] 佚名 著",
+        "url": "https://www.shidianguji.com/book/DZ0368?page_from=bookshelf&mode=book"
+      },
+      "folder_name": "太上洞玄宝元上经_DZ0368",
+      "source_dir": "docs\\source_texts\\太上洞玄宝元上经_DZ0368",
+      "translation_dir": "docs\\translations\\太上洞玄宝元上经_DZ0368",
+      "added_time": "2026-09-28T20:59:38.715292",
+      "last_modified": "2026-09-28T20:59:38.715293",
+      "chapter_count": 1,
+      "total_characters": 6831,
+      "chapters": [
+        {
+          "number": 1,
+          "title": "太上洞玄宝元上经",
+          "file_size": 25002,
+          "char_count": 6831,
+          "file_hash": "6cf1b2962a1d390d989ad9d9e4118f34",
+          "added_time": "2026-09-28T20:59:38.715272"
+        }
+      ],
+      "translation_status": {
+        "completed_chapters": 0,
+        "total_chapters": 1,
+        "completion_percentage": 0.0,
+        "last_translation_update": "2026-09-28T20:59:38.840516"
+      },
+      "tags": [
+        "道教經典",
+        "佚名",
+        "太上"
+      ],
+      "category": "道教經文",
+      "status": "新增"
+    },
+    "DZ0336": {
+      "book_info": {
+        "id": "DZ0336",
+        "title": "太上洞玄灵宝业报因缘经",
+        "author": "[唐] 佚名 著",
+        "url": "https://www.shidianguji.com/book/DZ0336"
+      },
+      "folder_name": "太上洞玄灵宝业报因缘经_DZ0336",
+      "source_dir": "docs\\source_texts\\太上洞玄灵宝业报因缘经_DZ0336",
+      "translation_dir": "docs\\translations\\太上洞玄灵宝业报因缘经_DZ0336",
+      "added_time": "2026-09-28T20:59:38.734274",
+      "last_modified": "2026-09-28T20:59:38.734275",
+      "chapter_count": 27,
+      "total_characters": 46157,
+      "chapters": [
+        {
+          "number": 3,
+          "title": "开度品第一",
+          "file_size": 15737,
+          "char_count": 4384,
+          "file_hash": "b2e270eb901d6bc9f3223e9d6fcf12b5",
+          "added_time": "2026-09-28T20:59:38.717095"
+        },
+        {
+          "number": 5,
+          "title": "善对品第二",
+          "file_size": 3937,
+          "char_count": 1095,
+          "file_hash": "c11640e0ffd4ab8677e864e2ea5f7177",
+          "added_time": "2026-09-28T20:59:38.717753"
+        },
+        {
+          "number": 6,
+          "title": "恶报品第三",
+          "file_size": 11701,
+          "char_count": 3225,
+          "file_hash": "a1626ef3a775c054af55e842e3e61b5e",
+          "added_time": "2026-09-28T20:59:38.718557"
+        },
+        {
+          "number": 7,
+          "title": "受罪品第四",
+          "file_size": 9946,
+          "char_count": 2757,
+          "file_hash": "eae71f69b6bc4355ded5b81c3887f596",
+          "added_time": "2026-09-28T20:59:38.719447"
+        },
+        {
+          "number": 9,
+          "title": "忏悔品第五",
+          "file_size": 17297,
+          "char_count": 4820,
+          "file_hash": "ce0e4eefb72af7cca1a2ae118c0b8f09",
+          "added_time": "2026-09-28T20:59:38.720990"
+        },
+        {
+          "number": 11,
+          "title": "奉戒品第六",
+          "file_size": 5738,
+          "char_count": 1548,
+          "file_hash": "c8e3a827f7b9cf2898e09002c89a336e",
+          "added_time": "2026-09-28T20:59:38.721916"
+        },
+        {
+          "number": 12,
+          "title": "持斋品第七",
+          "file_size": 10314,
+          "char_count": 2836,
+          "file_hash": "ac093870f82a9826606c075f029029db",
+          "added_time": "2026-09-28T20:59:38.722778"
+        },
+        {
+          "number": 14,
+          "title": "诵念品第八",
+          "file_size": 2493,
+          "char_count": 687,
+          "file_hash": "45c1c1ab6c1e58b4fbb2b61f2184e380",
+          "added_time": "2026-09-28T20:59:38.723294"
+        },
+        {
+          "number": 15,
+          "title": "行道品第九",
+          "file_size": 3085,
+          "char_count": 827,
+          "file_hash": "0b133c7fbca6ef9617bbfcd25e7ba30d",
+          "added_time": "2026-09-28T20:59:38.723936"
+        },
+        {
+          "number": 16,
+          "title": "弘誓品第十",
+          "file_size": 2600,
+          "char_count": 708,
+          "file_hash": "177f6a30d6ab1e9e1fb263c06190db03",
+          "added_time": "2026-09-28T20:59:38.724521"
+        },
+        {
+          "number": 17,
+          "title": "发愿品第十一",
+          "file_size": 2774,
+          "char_count": 752,
+          "file_hash": "4765f2ef0bc8ed9e747c3ae0500a2bf7",
+          "added_time": "2026-09-28T20:59:38.725013"
+        },
+        {
+          "number": 18,
+          "title": "赞叹品第十二",
+          "file_size": 1700,
+          "char_count": 466,
+          "file_hash": "c37a37ccf4044f661993d62c0f9cff88",
+          "added_time": "2026-09-28T20:59:38.725427"
+        },
+        {
+          "number": 19,
+          "title": "布施品第十三",
+          "file_size": 5660,
+          "char_count": 1541,
+          "file_hash": "05df381fee9b9d73148f7180c528f554",
+          "added_time": "2026-09-28T20:59:38.725924"
+        },
+        {
+          "number": 21,
+          "title": "慈济品第十四",
+          "file_size": 2576,
+          "char_count": 717,
+          "file_hash": "6a45f462eae6206e0b6d75b53ddf11e6",
+          "added_time": "2026-09-28T20:59:38.726427"
+        },
+        {
+          "number": 22,
+          "title": "救苦品第十五",
+          "file_size": 11941,
+          "char_count": 3295,
+          "file_hash": "e056f529807149214b9ac78375969d5f",
+          "added_time": "2026-09-28T20:59:38.727388"
+        },
+        {
+          "number": 24,
+          "title": "功德品第十六",
+          "file_size": 9708,
+          "char_count": 2658,
+          "file_hash": "2c5eda7413c4bd67031c33f76765b16d",
+          "added_time": "2026-09-28T20:59:38.728043"
+        },
+        {
+          "number": 25,
+          "title": "应感品第十七",
+          "file_size": 3583,
+          "char_count": 1002,
+          "file_hash": "80522ae104d100b51a21261296c6b684",
+          "added_time": "2026-09-28T20:59:38.728594"
+        },
+        {
+          "number": 26,
+          "title": "福报品第十八",
+          "file_size": 2417,
+          "char_count": 676,
+          "file_hash": "6e2a948f554f1c25eac7b9fccec61411",
+          "added_time": "2026-09-28T20:59:38.729057"
+        },
+        {
+          "number": 28,
+          "title": "生神品第十九",
+          "file_size": 11497,
+          "char_count": 3157,
+          "file_hash": "8cde5d4c985426b9e4dbeee83a3c559e",
+          "added_time": "2026-09-28T20:59:38.729712"
+        },
+        {
+          "number": 30,
+          "title": "弘救品第二十",
+          "file_size": 12021,
+          "char_count": 3320,
+          "file_hash": "11bb36f235d32fd84f995c125c1d2c35",
+          "added_time": "2026-09-28T20:59:38.730418"
+        },
+        {
+          "number": 31,
+          "title": "证实品第二十一",
+          "file_size": 4425,
+          "char_count": 1200,
+          "file_hash": "295cfc114d7dc49e975e93db7aad8fed",
+          "added_time": "2026-09-28T20:59:38.730902"
+        },
+        {
+          "number": 32,
+          "title": "摄因品第二十二",
+          "file_size": 2300,
+          "char_count": 636,
+          "file_hash": "0ed78845d674aceddb6f3916067e1d93",
+          "added_time": "2026-09-28T20:59:38.731331"
+        },
+        {
+          "number": 33,
+          "title": "生化品第二十三",
+          "file_size": 2805,
+          "char_count": 755,
+          "file_hash": "739d20c7739cebc812f0c3cb1af217a5",
+          "added_time": "2026-09-28T20:59:38.731756"
+        },
+        {
+          "number": 35,
+          "title": "广统品第二十四",
+          "file_size": 994,
+          "char_count": 273,
+          "file_hash": "fda32a6f678b2a13f5d441685e34fe66",
+          "added_time": "2026-09-28T20:59:38.732211"
+        },
+        {
+          "number": 36,
+          "title": "会真品第二十五",
+          "file_size": 2751,
+          "char_count": 729,
+          "file_hash": "98ea1653689259e39f6d568ed9607432",
+          "added_time": "2026-09-28T20:59:38.732665"
+        },
+        {
+          "number": 37,
+          "title": "叙教品第二十六",
+          "file_size": 3435,
+          "char_count": 920,
+          "file_hash": "c35243a00cc5ebef45c070f7cee789fe",
+          "added_time": "2026-09-28T20:59:38.733403"
+        },
+        {
+          "number": 38,
+          "title": "流通品第二十七",
+          "file_size": 4211,
+          "char_count": 1173,
+          "file_hash": "180e416ea3136cc7fc27761ed5f9956c",
+          "added_time": "2026-09-28T20:59:38.734254"
+        }
+      ],
+      "translation_status": {
+        "completed_chapters": 21,
+        "total_chapters": 27,
+        "completion_percentage": 77.8,
+        "last_translation_update": "2026-09-28T20:59:38.843219"
+      },
+      "tags": [
+        "道教經典",
+        "佚名",
+        "太上",
+        "唐代"
+      ],
+      "category": "道教經文",
+      "status": "新增"
+    },
+    "DZ0376": {
+      "book_info": {
+        "id": "DZ0376",
+        "title": "太上洞玄灵宝净供妙经",
+        "author": "[唐] 佚名 著",
+        "url": "https://www.shidianguji.com/book/DZ0376?page_from=bookshelf&mode=book"
+      },
+      "folder_name": "太上洞玄灵宝净供妙经_DZ0376",
+      "source_dir": "docs\\source_texts\\太上洞玄灵宝净供妙经_DZ0376",
+      "translation_dir": "docs\\translations\\太上洞玄灵宝净供妙经_DZ0376",
+      "added_time": "2026-09-28T20:59:38.736751",
+      "last_modified": "2026-09-28T20:59:38.736752",
+      "chapter_count": 1,
+      "total_characters": 3227,
+      "chapters": [
+        {
+          "number": 1,
+          "title": "太上洞玄灵宝净供妙经",
+          "file_size": 11793,
+          "char_count": 3227,
+          "file_hash": "3cfeb9c6287a0b5e8fb99e19763e3d52",
+          "added_time": "2026-09-28T20:59:38.736732"
+        }
+      ],
+      "translation_status": {
+        "completed_chapters": 1,
+        "total_chapters": 1,
+        "completion_percentage": 100.0,
+        "last_translation_update": "2026-09-28T20:59:38.843354"
+      },
+      "tags": [
+        "道教經典",
+        "佚名",
+        "太上",
+        "唐代"
+      ],
+      "category": "道教經文",
+      "status": "新增"
+    },
+    "DZ0349": {
+      "book_info": {
+        "id": "DZ0349",
+        "title": "太上洞玄灵宝法烛经",
+        "author": "[南北朝] 陆修静 著",
+        "url": "https://www.shidianguji.com/book/DZ0349?page_from=bookshelf&mode=book"
+      },
+      "folder_name": "太上洞玄灵宝法烛经_DZ0349",
+      "source_dir": "docs\\source_texts\\太上洞玄灵宝法烛经_DZ0349",
+      "translation_dir": "docs\\translations\\太上洞玄灵宝法烛经_DZ0349",
+      "added_time": "2026-09-28T20:59:38.739028",
+      "last_modified": "2026-09-28T20:59:38.739028",
+      "chapter_count": 1,
+      "total_characters": 3019,
+      "chapters": [
+        {
+          "number": 1,
+          "title": "太上洞玄灵宝法躅经",
+          "file_size": 11076,
+          "char_count": 3019,
+          "file_hash": "3387c992ff1968118f840a50112628f2",
+          "added_time": "2026-09-28T20:59:38.739011"
+        }
+      ],
+      "translation_status": {
+        "completed_chapters": 0,
+        "total_chapters": 1,
+        "completion_percentage": 0.0,
+        "last_translation_update": "2026-09-28T20:59:38.843465"
+      },
+      "tags": [
+        "道教經典",
+        "太上"
+      ],
+      "category": "道教經文",
+      "status": "新增"
+    },
+    "DZ0369": {
+      "book_info": {
+        "id": "DZ0369",
+        "title": "太上洞玄灵宝灭度五炼生尸妙经",
+        "author": "[南北朝] 佚名 著",
+        "url": "https://www.shidianguji.com/book/DZ0369?page_from=bookshelf&mode=book"
+      },
+      "folder_name": "太上洞玄灵宝灭度五炼生尸妙经_DZ0369",
+      "source_dir": "docs\\source_texts\\太上洞玄灵宝灭度五炼生尸妙经_DZ0369",
+      "translation_dir": "docs\\translations\\太上洞玄灵宝灭度五炼生尸妙经_DZ0369",
+      "added_time": "2026-09-28T20:59:38.742159",
+      "last_modified": "2026-09-28T20:59:38.742160",
+      "chapter_count": 1,
+      "total_characters": 4510,
+      "chapters": [
+        {
+          "number": 1,
+          "title": "太上洞玄灵宝灭度五炼生尸妙经",
+          "file_size": 16140,
+          "char_count": 4510,
+          "file_hash": "af97b9ebd93b5230090698d38da94826",
+          "added_time": "2026-09-28T20:59:38.742125"
+        }
+      ],
+      "translation_status": {
+        "completed_chapters": 1,
+        "total_chapters": 1,
+        "completion_percentage": 100.0,
+        "last_translation_update": "2026-09-28T20:59:38.843603"
+      },
+      "tags": [
+        "道教經典",
+        "佚名",
+        "太上"
+      ],
+      "category": "道教經文",
+      "status": "新增"
+    },
+    "DZ0352": {
+      "book_info": {
+        "id": "DZ0352",
+        "title": "太上洞玄灵宝赤书玉诀妙经",
+        "author": "[南北朝] 佚名 著",
+        "url": "https://www.shidianguji.com/book/DZ0352?page_from=bookshelf&mode=book"
+      },
+      "folder_name": "太上洞玄灵宝赤书玉诀妙经_DZ0352",
+      "source_dir": "docs\\source_texts\\太上洞玄灵宝赤书玉诀妙经_DZ0352",
+      "translation_dir": "docs\\translations\\太上洞玄灵宝赤书玉诀妙经_DZ0352",
+      "added_time": "2026-09-28T20:59:38.746173",
+      "last_modified": "2026-09-28T20:59:38.746174",
+      "chapter_count": 2,
+      "total_characters": 15190,
+      "chapters": [
+        {
+          "number": 1,
+          "title": "太上洞玄灵宝赤书玉诀妙经卷上乃一",
+          "file_size": 33663,
+          "char_count": 9188,
+          "file_hash": "9b5ca774127ddb864a4031d774589189",
+          "added_time": "2026-09-28T20:59:38.745208"
+        },
+        {
+          "number": 2,
+          "title": "太上洞玄灵宝赤书玉诀妙经卷下",
+          "file_size": 21881,
+          "char_count": 6002,
+          "file_hash": "729d427ad2c144a101938fdb227052c2",
+          "added_time": "2026-09-28T20:59:38.746155"
+        }
+      ],
+      "translation_status": {
+        "completed_chapters": 0,
+        "total_chapters": 2,
+        "completion_percentage": 0.0,
+        "last_translation_update": "2026-09-28T20:59:38.843846"
+      },
+      "tags": [
+        "道教經典",
+        "佚名",
+        "太上"
+      ],
+      "category": "道教經文",
+      "status": "新增"
+    },
+    "DZ0350": {
+      "book_info": {
+        "id": "DZ0350",
+        "title": "太上灵宝智慧观身经",
+        "author": "[唐] 佚名 著",
+        "url": "https://www.shidianguji.com/book/DZ0350?page_from=bookshelf&mode=book"
+      },
+      "folder_name": "太上灵宝智慧观身经_DZ0350",
+      "source_dir": "docs\\source_texts\\太上灵宝智慧观身经_DZ0350",
+      "translation_dir": "docs\\translations\\太上灵宝智慧观身经_DZ0350",
+      "added_time": "2026-09-28T20:59:38.748403",
+      "last_modified": "2026-09-28T20:59:38.748404",
+      "chapter_count": 1,
+      "total_characters": 427,
+      "chapters": [
+        {
+          "number": 1,
+          "title": "太上灵宝智慧观身经",
+          "file_size": 1588,
+          "char_count": 427,
+          "file_hash": "b36ad631229bec880b4972b43192c01b",
+          "added_time": "2026-09-28T20:59:38.748378"
+        }
+      ],
+      "translation_status": {
+        "completed_chapters": 1,
+        "total_chapters": 1,
+        "completion_percentage": 100.0,
+        "last_translation_update": "2026-09-28T20:59:38.843952"
+      },
+      "tags": [
+        "道教經典",
+        "佚名",
+        "太上",
+        "唐代"
+      ],
+      "category": "道教經文",
+      "status": "新增"
+    },
+    "DZ0364": {
+      "book_info": {
+        "id": "DZ0364",
+        "title": "太上灵宝补谢灶王经",
+        "author": "[北宋] 佚名 著",
+        "url": "https://www.shidianguji.com/book/DZ0364?page_from=bookshelf&mode=book"
+      },
+      "folder_name": "太上灵宝补谢灶王经_DZ0364",
+      "source_dir": "docs\\source_texts\\太上灵宝补谢灶王经_DZ0364",
+      "translation_dir": "docs\\translations\\太上灵宝补谢灶王经_DZ0364",
+      "added_time": "2026-09-28T20:59:38.750530",
+      "last_modified": "2026-09-28T20:59:38.750531",
+      "chapter_count": 1,
+      "total_characters": 867,
+      "chapters": [
+        {
+          "number": 1,
+          "title": "太上灵宝补谢灶王经",
+          "file_size": 3216,
+          "char_count": 867,
+          "file_hash": "72613675747cf078321098a505f9524b",
+          "added_time": "2026-09-28T20:59:38.750513"
+        }
+      ],
+      "translation_status": {
+        "completed_chapters": 1,
+        "total_chapters": 1,
+        "completion_percentage": 100.0,
+        "last_translation_update": "2026-09-28T20:59:38.844102"
+      },
+      "tags": [
+        "道教經典",
+        "佚名",
+        "太上",
+        "宋代"
+      ],
+      "category": "道教經文",
+      "status": "新增"
+    },
+    "DZ0035": {
+      "book_info": {
+        "id": "DZ0035",
+        "title": "太上玄都妙本清静身心经",
+        "author": "[唐] 佚名 著",
+        "url": "https://www.shidianguji.com/book/DZ0035?page_from=bookshelf&mode=book"
+      },
+      "folder_name": "太上玄都妙本清静身心经_DZ0035",
+      "source_dir": "docs\\source_texts\\太上玄都妙本清静身心经_DZ0035",
+      "translation_dir": "docs\\translations\\太上玄都妙本清静身心经_DZ0035",
+      "added_time": "2026-09-28T20:59:38.752738",
+      "last_modified": "2026-09-28T20:59:38.752739",
+      "chapter_count": 1,
+      "total_characters": 1864,
+      "chapters": [
+        {
+          "number": 1,
+          "title": "太上玄都妙本清静身心经",
+          "file_size": 6888,
+          "char_count": 1864,
+          "file_hash": "ce6a3dab782b07151509769be399bbe5",
+          "added_time": "2026-09-28T20:59:38.752717"
+        }
+      ],
+      "translation_status": {
+        "completed_chapters": 1,
+        "total_chapters": 1,
+        "completion_percentage": 100.0,
+        "last_translation_update": "2026-09-28T20:59:38.844255"
+      },
+      "tags": [
+        "道教經典",
+        "佚名",
+        "太上",
+        "唐代"
       ],
       "category": "道教經文",
       "status": "新增"
@@ -92,13 +1278,13 @@
         "id": "DZ0065",
         "title": "太上真一报父母恩重经",
         "author": "[唐] 佚名 著",
-        "url": "https://www.shidianguji.com/book/DZ0065"
+        "url": "https://www.shidianguji.com/book/DZ0065?page_from=bookshelf&mode=book"
       },
       "folder_name": "太上真一报父母恩重经_DZ0065",
-      "source_dir": "docs/source_texts/太上真一报父母恩重经_DZ0065",
-      "translation_dir": "docs/translations/太上真一报父母恩重经_DZ0065",
-      "added_time": "2025-08-09T03:11:05.308147",
-      "last_modified": "2025-08-09T03:11:05.308148",
+      "source_dir": "docs\\source_texts\\太上真一报父母恩重经_DZ0065",
+      "translation_dir": "docs\\translations\\太上真一报父母恩重经_DZ0065",
+      "added_time": "2026-09-28T20:59:38.755096",
+      "last_modified": "2026-09-28T20:59:38.755097",
       "chapter_count": 1,
       "total_characters": 498,
       "chapters": [
@@ -108,20 +1294,136 @@
           "file_size": 1811,
           "char_count": 498,
           "file_hash": "7781ab9d01084f27d8eb0ee661571efb",
-          "added_time": "2025-08-09T03:11:05.308132"
+          "added_time": "2026-09-28T20:59:38.755071"
         }
       ],
       "translation_status": {
         "completed_chapters": 0,
         "total_chapters": 1,
         "completion_percentage": 0.0,
-        "last_translation_update": "2025-08-10T03:11:19.410324"
+        "last_translation_update": "2026-09-28T20:59:38.844380"
       },
       "tags": [
-        "太上",
+        "道教經典",
         "佚名",
-        "唐代",
-        "道教經典"
+        "太上",
+        "唐代"
+      ],
+      "category": "道教經文",
+      "status": "新增"
+    },
+    "DZ0358": {
+      "book_info": {
+        "id": "DZ0358",
+        "title": "太上神咒延寿妙经",
+        "author": "[唐] 佚名 著",
+        "url": "https://www.shidianguji.com/book/DZ0358?page_from=bookshelf&mode=book"
+      },
+      "folder_name": "太上神咒延寿妙经_DZ0358",
+      "source_dir": "docs\\source_texts\\太上神咒延寿妙经_DZ0358",
+      "translation_dir": "docs\\translations\\太上神咒延寿妙经_DZ0358",
+      "added_time": "2026-09-28T20:59:38.757475",
+      "last_modified": "2026-09-28T20:59:38.757476",
+      "chapter_count": 1,
+      "total_characters": 297,
+      "chapters": [
+        {
+          "number": 1,
+          "title": "太上神咒延寿妙经",
+          "file_size": 1095,
+          "char_count": 297,
+          "file_hash": "49efe6200fddd15d2aedec643ee0771c",
+          "added_time": "2026-09-28T20:59:38.757454"
+        }
+      ],
+      "translation_status": {
+        "completed_chapters": 0,
+        "total_chapters": 1,
+        "completion_percentage": 0.0,
+        "last_translation_update": "2026-09-28T20:59:38.844591"
+      },
+      "tags": [
+        "道教經典",
+        "佚名",
+        "太上",
+        "唐代"
+      ],
+      "category": "道教經文",
+      "status": "新增"
+    },
+    "DZ0756": {
+      "book_info": {
+        "id": "DZ0756",
+        "title": "太上老君说常清静经注",
+        "author": "[元] 佚名 撰",
+        "url": "https://www.shidianguji.com/book/DZ0756/chapter/1k1t1i8x5se89"
+      },
+      "folder_name": "太上老君说常清静经注_DZ0756",
+      "source_dir": "docs\\source_texts\\太上老君说常清静经注_DZ0756",
+      "translation_dir": "docs\\translations\\太上老君说常清静经注_DZ0756",
+      "added_time": "2026-09-28T20:59:38.762281",
+      "last_modified": "2026-09-28T20:59:38.762283",
+      "chapter_count": 1,
+      "total_characters": 19810,
+      "chapters": [
+        {
+          "number": 1,
+          "title": "太上老君说常清静注",
+          "file_size": 70723,
+          "char_count": 19810,
+          "file_hash": "f9e609ff00428092df24db5d39301d02",
+          "added_time": "2026-09-28T20:59:38.762242"
+        }
+      ],
+      "translation_status": {
+        "completed_chapters": 0,
+        "total_chapters": 1,
+        "completion_percentage": 0.0,
+        "last_translation_update": "2026-09-28T20:59:38.844971"
+      },
+      "tags": [
+        "道教經典",
+        "佚名",
+        "太上"
+      ],
+      "category": "道教經文",
+      "status": "新增"
+    },
+    "DZ0384": {
+      "book_info": {
+        "id": "DZ0384",
+        "title": "太上虚皇保生神咒经",
+        "author": "[南朝宋] 佚名 著",
+        "url": "https://www.shidianguji.com/book/DZ0384?page_from=bookshelf&mode=book"
+      },
+      "folder_name": "太上虚皇保生神咒经_DZ0384",
+      "source_dir": "docs\\source_texts\\太上虚皇保生神咒经_DZ0384",
+      "translation_dir": "docs\\translations\\太上虚皇保生神咒经_DZ0384",
+      "added_time": "2026-09-28T20:59:38.765901",
+      "last_modified": "2026-09-28T20:59:38.765902",
+      "chapter_count": 1,
+      "total_characters": 251,
+      "chapters": [
+        {
+          "number": 1,
+          "title": "太上虚皇保生神咒经",
+          "file_size": 935,
+          "char_count": 251,
+          "file_hash": "d8ad30f69fc89ecf784239b2a6b79f68",
+          "added_time": "2026-09-28T20:59:38.765883"
+        }
+      ],
+      "translation_status": {
+        "completed_chapters": 0,
+        "total_chapters": 1,
+        "completion_percentage": 0.0,
+        "last_translation_update": "2026-09-28T20:59:38.845159"
+      },
+      "tags": [
+        "道教經典",
+        "佚名",
+        "太上",
+        "宋代"
       ],
       "category": "道教經文",
       "status": "新增"
@@ -131,13 +1433,13 @@
         "id": "DZ0046",
         "title": "太乙元真保命长生经",
         "author": "[唐] 佚名 著",
-        "url": "https://www.shidianguji.com/book/DZ0046"
+        "url": "https://www.shidianguji.com/book/DZ0046?page_from=bookshelf&mode=book"
       },
       "folder_name": "太乙元真保命长生经_DZ0046",
-      "source_dir": "docs/source_texts/太乙元真保命长生经_DZ0046",
-      "translation_dir": "docs/translations/太乙元真保命长生经_DZ0046",
-      "added_time": "2025-08-09T03:11:05.310552",
-      "last_modified": "2025-08-09T03:11:05.310552",
+      "source_dir": "docs\\source_texts\\太乙元真保命长生经_DZ0046",
+      "translation_dir": "docs\\translations\\太乙元真保命长生经_DZ0046",
+      "added_time": "2026-09-28T20:59:38.768382",
+      "last_modified": "2026-09-28T20:59:38.768384",
       "chapter_count": 1,
       "total_characters": 609,
       "chapters": [
@@ -147,14 +1449,14 @@
           "file_size": 2324,
           "char_count": 609,
           "file_hash": "f52565ea3f0cee3e1c7be8d327ce58b4",
-          "added_time": "2025-08-09T03:11:05.310538"
+          "added_time": "2026-09-28T20:59:38.768353"
         }
       ],
       "translation_status": {
         "completed_chapters": 0,
         "total_chapters": 1,
         "completion_percentage": 0.0,
-        "last_translation_update": "2025-08-10T03:11:19.410507"
+        "last_translation_update": "2026-09-28T20:59:38.845285"
       },
       "tags": [
         "佚名",
@@ -171,10 +1473,10 @@
         "url": "https://www.shidianguji.com/book/SBCK109"
       },
       "folder_name": "抱朴子（抱朴子内篇）_SBCK109",
-      "source_dir": "docs/source_texts/抱朴子（抱朴子内篇）_SBCK109",
-      "translation_dir": "docs/translations/抱朴子（抱朴子内篇）_SBCK109",
-      "added_time": "2025-08-09T03:11:05.342180",
-      "last_modified": "2025-08-09T03:11:05.342181",
+      "source_dir": "docs\\source_texts\\抱朴子（抱朴子内篇）_SBCK109",
+      "translation_dir": "docs\\translations\\抱朴子（抱朴子内篇）_SBCK109",
+      "added_time": "2026-09-28T20:59:38.797778",
+      "last_modified": "2026-09-28T20:59:38.797779",
       "chapter_count": 38,
       "total_characters": 97024,
       "chapters": [
@@ -184,7 +1486,7 @@
           "file_size": 2301,
           "char_count": 646,
           "file_hash": "a6fcd25caaca6ed71ddf0f2e3c2cada9",
-          "added_time": "2025-08-09T03:11:05.313242"
+          "added_time": "2026-09-28T20:59:38.771417"
         },
         {
           "number": 2,
@@ -192,7 +1494,7 @@
           "file_size": 1753,
           "char_count": 499,
           "file_hash": "60dcdcff09acbf28dba6db4609137a3a",
-          "added_time": "2025-08-09T03:11:05.313545"
+          "added_time": "2026-09-28T20:59:38.771947"
         },
         {
           "number": 3,
@@ -200,7 +1502,7 @@
           "file_size": 4013,
           "char_count": 1121,
           "file_hash": "8ccdf22c2d4ac9b258952bd7d800dd9c",
-          "added_time": "2025-08-09T03:11:05.313973"
+          "added_time": "2026-09-28T20:59:38.772511"
         },
         {
           "number": 4,
@@ -208,7 +1510,7 @@
           "file_size": 16387,
           "char_count": 4625,
           "file_hash": "21cdc72acb8494c84a311b9808acbf1e",
-          "added_time": "2025-08-09T03:11:05.315363"
+          "added_time": "2026-09-28T20:59:38.773552"
         },
         {
           "number": 5,
@@ -216,7 +1518,7 @@
           "file_size": 12716,
           "char_count": 3554,
           "file_hash": "05d2da9325fc7a8d7d43c0b8e44b5e00",
-          "added_time": "2025-08-09T03:11:05.316617"
+          "added_time": "2026-09-28T20:59:38.774379"
         },
         {
           "number": 6,
@@ -224,7 +1526,7 @@
           "file_size": 25542,
           "char_count": 7105,
           "file_hash": "b4b190e70f2796104d1e3a944625fbf3",
-          "added_time": "2025-08-09T03:11:05.318595"
+          "added_time": "2026-09-28T20:59:38.775374"
         },
         {
           "number": 7,
@@ -232,7 +1534,7 @@
           "file_size": 9887,
           "char_count": 2787,
           "file_hash": "27c1ceec250978926469d3480e8e0405",
-          "added_time": "2025-08-09T03:11:05.319908"
+          "added_time": "2026-09-28T20:59:38.776197"
         },
         {
           "number": 8,
@@ -240,7 +1542,7 @@
           "file_size": 12530,
           "char_count": 3487,
           "file_hash": "1991029f58f0ce4a98490d731d34a124",
-          "added_time": "2025-08-09T03:11:05.321122"
+          "added_time": "2026-09-28T20:59:38.776984"
         },
         {
           "number": 9,
@@ -248,7 +1550,7 @@
           "file_size": 9966,
           "char_count": 2797,
           "file_hash": "c6d02492d9befe94740495882a202a1f",
-          "added_time": "2025-08-09T03:11:05.322148"
+          "added_time": "2026-09-28T20:59:38.777595"
         },
         {
           "number": 10,
@@ -256,7 +1558,7 @@
           "file_size": 12747,
           "char_count": 3592,
           "file_hash": "9cd2fdaf65876edf91610b4c075b730e",
-          "added_time": "2025-08-09T03:11:05.323102"
+          "added_time": "2026-09-28T20:59:38.778360"
         },
         {
           "number": 11,
@@ -264,7 +1566,7 @@
           "file_size": 12207,
           "char_count": 3417,
           "file_hash": "06eec840a4e9e43352a4706b467ead9a",
-          "added_time": "2025-08-09T03:11:05.324186"
+          "added_time": "2026-09-28T20:59:38.779089"
         },
         {
           "number": 12,
@@ -272,7 +1574,7 @@
           "file_size": 9277,
           "char_count": 2588,
           "file_hash": "2f264ecd518f34a6e7187a8086414dd4",
-          "added_time": "2025-08-09T03:11:05.325021"
+          "added_time": "2026-09-28T20:59:38.779815"
         },
         {
           "number": 13,
@@ -280,7 +1582,7 @@
           "file_size": 24030,
           "char_count": 6660,
           "file_hash": "96e2c22a7e65f17bf7596e2286a3f9e7",
-          "added_time": "2025-08-09T03:11:05.326354"
+          "added_time": "2026-09-28T20:59:38.780693"
         },
         {
           "number": 14,
@@ -288,7 +1590,7 @@
           "file_size": 9964,
           "char_count": 2803,
           "file_hash": "60594201bbc213336328fa2188f47f22",
-          "added_time": "2025-08-09T03:11:05.326992"
+          "added_time": "2026-09-28T20:59:38.781321"
         },
         {
           "number": 15,
@@ -296,7 +1598,7 @@
           "file_size": 12131,
           "char_count": 3393,
           "file_hash": "e7eefea34243de7db77ef7b97b038810",
-          "added_time": "2025-08-09T03:11:05.327591"
+          "added_time": "2026-09-28T20:59:38.782093"
         },
         {
           "number": 16,
@@ -304,7 +1606,7 @@
           "file_size": 14673,
           "char_count": 4162,
           "file_hash": "b9c3ef904659a50d14c247ecd42a4c5b",
-          "added_time": "2025-08-09T03:11:05.328282"
+          "added_time": "2026-09-28T20:59:38.782914"
         },
         {
           "number": 17,
@@ -312,7 +1614,7 @@
           "file_size": 16770,
           "char_count": 4672,
           "file_hash": "8174ac509b1ee45e59f8a41e8056487d",
-          "added_time": "2025-08-09T03:11:05.329591"
+          "added_time": "2026-09-28T20:59:38.783802"
         },
         {
           "number": 18,
@@ -320,7 +1622,7 @@
           "file_size": 10490,
           "char_count": 2945,
           "file_hash": "b71cf2ce0be837975185cf251f7ffcff",
-          "added_time": "2025-08-09T03:11:05.330659"
+          "added_time": "2026-09-28T20:59:38.784428"
         },
         {
           "number": 19,
@@ -328,7 +1630,7 @@
           "file_size": 17343,
           "char_count": 4781,
           "file_hash": "80640ec87c26ccfe47324f81681d0669",
-          "added_time": "2025-08-09T03:11:05.331784"
+          "added_time": "2026-09-28T20:59:38.785287"
         },
         {
           "number": 20,
@@ -336,7 +1638,7 @@
           "file_size": 6807,
           "char_count": 1891,
           "file_hash": "293553cd581c1e5426feb8f640ce0b26",
-          "added_time": "2025-08-09T03:11:05.332287"
+          "added_time": "2026-09-28T20:59:38.785818"
         },
         {
           "number": 21,
@@ -344,7 +1646,7 @@
           "file_size": 11958,
           "char_count": 3306,
           "file_hash": "62374ce71c62626475b95ed9070a83be",
-          "added_time": "2025-08-09T03:11:05.333153"
+          "added_time": "2026-09-28T20:59:38.786616"
         },
         {
           "number": 22,
@@ -352,7 +1654,7 @@
           "file_size": 10342,
           "char_count": 2919,
           "file_hash": "4e3c3a82d5df80563e08311f994853c9",
-          "added_time": "2025-08-09T03:11:05.333872"
+          "added_time": "2026-09-28T20:59:38.787296"
         },
         {
           "number": 23,
@@ -360,7 +1662,7 @@
           "file_size": 2058,
           "char_count": 579,
           "file_hash": "e2e4fffe28937a55a781c37f0fe98bee",
-          "added_time": "2025-08-09T03:11:05.334217"
+          "added_time": "2026-09-28T20:59:38.787705"
         },
         {
           "number": 24,
@@ -368,7 +1670,7 @@
           "file_size": 10318,
           "char_count": 2918,
           "file_hash": "9bf5dfcfcac3a5fdeff6d0e1ef568ece",
-          "added_time": "2025-08-09T03:11:05.334854"
+          "added_time": "2026-09-28T20:59:38.788661"
         },
         {
           "number": 25,
@@ -376,7 +1678,7 @@
           "file_size": 11610,
           "char_count": 3217,
           "file_hash": "c5b6d9fbd56722432e75fa31ebd57b9f",
-          "added_time": "2025-08-09T03:11:05.335619"
+          "added_time": "2026-09-28T20:59:38.789761"
         },
         {
           "number": 26,
@@ -384,7 +1686,7 @@
           "file_size": 6324,
           "char_count": 1785,
           "file_hash": "75ec417047b60164fee27a317c449ec9",
-          "added_time": "2025-08-09T03:11:05.336327"
+          "added_time": "2026-09-28T20:59:38.790662"
         },
         {
           "number": 27,
@@ -392,7 +1694,7 @@
           "file_size": 5378,
           "char_count": 1509,
           "file_hash": "f4ab7d52d6db1e1ddecc1c11bc1f28a0",
-          "added_time": "2025-08-09T03:11:05.337187"
+          "added_time": "2026-09-28T20:59:38.791360"
         },
         {
           "number": 28,
@@ -400,7 +1702,7 @@
           "file_size": 10390,
           "char_count": 2944,
           "file_hash": "4529575612c32fcc33a8009868126e28",
-          "added_time": "2025-08-09T03:11:05.338247"
+          "added_time": "2026-09-28T20:59:38.792185"
         },
         {
           "number": 29,
@@ -408,7 +1710,7 @@
           "file_size": 3777,
           "char_count": 1047,
           "file_hash": "03c3b470e867b9457e7effc532a78b1b",
-          "added_time": "2025-08-09T03:11:05.338834"
+          "added_time": "2026-09-28T20:59:38.792824"
         },
         {
           "number": 30,
@@ -416,7 +1718,7 @@
           "file_size": 4204,
           "char_count": 1173,
           "file_hash": "53ff7ffbe63978cfb5088cf7f8ff1e2f",
-          "added_time": "2025-08-09T03:11:05.339338"
+          "added_time": "2026-09-28T20:59:38.793359"
         },
         {
           "number": 31,
@@ -424,7 +1726,7 @@
           "file_size": 1332,
           "char_count": 373,
           "file_hash": "19f368c6e0471e3ba4cdfa455e9f9d0f",
-          "added_time": "2025-08-09T03:11:05.339656"
+          "added_time": "2026-09-28T20:59:38.793837"
         },
         {
           "number": 32,
@@ -432,7 +1734,7 @@
           "file_size": 941,
           "char_count": 264,
           "file_hash": "76023074a1fb448cf08e735ab7812d04",
-          "added_time": "2025-08-09T03:11:05.339945"
+          "added_time": "2026-09-28T20:59:38.794287"
         },
         {
           "number": 33,
@@ -440,7 +1742,7 @@
           "file_size": 705,
           "char_count": 199,
           "file_hash": "9a47ff8f69ebe55eb7d1a23786902390",
-          "added_time": "2025-08-09T03:11:05.340205"
+          "added_time": "2026-09-28T20:59:38.794694"
         },
         {
           "number": 34,
@@ -448,7 +1750,7 @@
           "file_size": 1549,
           "char_count": 446,
           "file_hash": "2ee5e95603cbaee611985ae3162d225a",
-          "added_time": "2025-08-09T03:11:05.340474"
+          "added_time": "2026-09-28T20:59:38.795106"
         },
         {
           "number": 35,
@@ -456,7 +1758,7 @@
           "file_size": 1398,
           "char_count": 389,
           "file_hash": "0c81762df78989105b7083888bf036aa",
-          "added_time": "2025-08-09T03:11:05.340745"
+          "added_time": "2026-09-28T20:59:38.795521"
         },
         {
           "number": 36,
@@ -464,7 +1766,7 @@
           "file_size": 1195,
           "char_count": 334,
           "file_hash": "556046a4c2e2a03765718edc0b9a912e",
-          "added_time": "2025-08-09T03:11:05.341015"
+          "added_time": "2026-09-28T20:59:38.795986"
         },
         {
           "number": 37,
@@ -472,7 +1774,7 @@
           "file_size": 11177,
           "char_count": 3113,
           "file_hash": "28013b4f0fc53ed087c786cf5e5182b4",
-          "added_time": "2025-08-09T03:11:05.341588"
+          "added_time": "2026-09-28T20:59:38.796858"
         },
         {
           "number": 38,
@@ -480,74 +1782,586 @@
           "file_size": 10619,
           "char_count": 2984,
           "file_hash": "795af105cd51b90afdc23a82ac3959fa",
-          "added_time": "2025-08-09T03:11:05.342167"
+          "added_time": "2026-09-28T20:59:38.797761"
         }
       ],
       "translation_status": {
         "completed_chapters": 0,
         "total_chapters": 38,
         "completion_percentage": 0.0,
-        "last_translation_update": "2025-08-10T03:11:19.417763"
+        "last_translation_update": "2026-09-28T20:59:38.848918"
       },
       "tags": [
-        "道教煉丹",
         "東晉",
         "抱朴子",
+        "道教煉丹",
         "葛洪"
       ],
       "category": "道教理論",
+      "status": "新增"
+    },
+    "SBCK440": {
+      "book_info": {
+        "id": "SBCK440",
+        "title": "文始真经（关尹子）",
+        "author": "[周] 尹喜 撰",
+        "url": "https://www.shidianguji.com/book/SBCK440/chapter/1j6lo3zzeqt6n_1"
+      },
+      "folder_name": "文始真经（关尹子）_SBCK440",
+      "source_dir": "docs\\source_texts\\文始真经（关尹子）_SBCK440",
+      "translation_dir": "docs\\translations\\文始真经（关尹子）_SBCK440",
+      "added_time": "2026-09-28T20:59:38.802925",
+      "last_modified": "2026-09-28T20:59:38.802926",
+      "chapter_count": 10,
+      "total_characters": 15706,
+      "chapters": [
+        {
+          "number": 2,
+          "title": "一宇萹",
+          "file_size": 5340,
+          "char_count": 1438,
+          "file_hash": "7eb284eb783c785a68e9e15b38e85824",
+          "added_time": "2026-09-28T20:59:38.800496"
+        },
+        {
+          "number": 3,
+          "title": "二柱萹",
+          "file_size": 3351,
+          "char_count": 910,
+          "file_hash": "a80da3ede871fa418a57da4e8f5301a5",
+          "added_time": "2026-09-28T20:59:38.800702"
+        },
+        {
+          "number": 4,
+          "title": "三极萹",
+          "file_size": 5380,
+          "char_count": 1452,
+          "file_hash": "d7ccc07d323a0793764883fede02dc43",
+          "added_time": "2026-09-28T20:59:38.800936"
+        },
+        {
+          "number": 6,
+          "title": "四符萹",
+          "file_size": 6869,
+          "char_count": 1891,
+          "file_hash": "3f038d07c62f64bcc2e3747f5bc2cbe7",
+          "added_time": "2026-09-28T20:59:38.801195"
+        },
+        {
+          "number": 7,
+          "title": "五鉴萹",
+          "file_size": 5498,
+          "char_count": 1493,
+          "file_hash": "a590ae61b772024579f18587e4b5cb73",
+          "added_time": "2026-09-28T20:59:38.801418"
+        },
+        {
+          "number": 8,
+          "title": "六匕萹",
+          "file_size": 3985,
+          "char_count": 1081,
+          "file_hash": "0cd63f29edc7b59052cf54a0fdbe3668",
+          "added_time": "2026-09-28T20:59:38.801626"
+        },
+        {
+          "number": 10,
+          "title": "七釜萹",
+          "file_size": 3415,
+          "char_count": 917,
+          "file_hash": "cb0328f0ef01e73d9e660604b35e3650",
+          "added_time": "2026-09-28T20:59:38.801817"
+        },
+        {
+          "number": 11,
+          "title": "八筹萹",
+          "file_size": 2051,
+          "char_count": 533,
+          "file_hash": "b106ce54271f2de2b40c8632462b790e",
+          "added_time": "2026-09-28T20:59:38.801981"
+        },
+        {
+          "number": 12,
+          "title": "九药萹",
+          "file_size": 5928,
+          "char_count": 1574,
+          "file_hash": "10a68681dd16e28902a68c71d3d28d92",
+          "added_time": "2026-09-28T20:59:38.802227"
+        },
+        {
+          "number": 13,
+          "title": "校勘记",
+          "file_size": 17788,
+          "char_count": 4417,
+          "file_hash": "07ac19ca02d8aed0aa73a05e767f6831",
+          "added_time": "2026-09-28T20:59:38.802907"
+        }
+      ],
+      "translation_status": {
+        "completed_chapters": 0,
+        "total_chapters": 10,
+        "completion_percentage": 0.0,
+        "last_translation_update": "2026-09-28T20:59:38.849722"
+      },
+      "tags": [],
+      "category": "其他道教文獻",
+      "status": "新增"
+    },
+    "DZ1422": {
+      "book_info": {
+        "id": "DZ1422",
+        "title": "枕中经",
+        "author": "[唐] 佚名 撰",
+        "url": "https://www.shidianguji.com/book/DZ1422/chapter/DZ1422_1"
+      },
+      "folder_name": "枕中经_DZ1422",
+      "source_dir": "docs\\source_texts\\枕中经_DZ1422",
+      "translation_dir": "docs\\translations\\枕中经_DZ1422",
+      "added_time": "2026-09-28T20:59:38.806204",
+      "last_modified": "2026-09-28T20:59:38.806205",
+      "chapter_count": 1,
+      "total_characters": 686,
+      "chapters": [
+        {
+          "number": 1,
+          "title": "枕中经",
+          "file_size": 2543,
+          "char_count": 686,
+          "file_hash": "49193adce442407f42ece6ba118d28d2",
+          "added_time": "2026-09-28T20:59:38.806192"
+        }
+      ],
+      "translation_status": {
+        "completed_chapters": 0,
+        "total_chapters": 1,
+        "completion_percentage": 0.0,
+        "last_translation_update": "2026-09-28T20:59:38.849820"
+      },
+      "tags": [
+        "佚名",
+        "唐代"
+      ],
+      "category": "其他道教文獻",
+      "status": "新增"
+    },
+    "DZ0789": {
+      "book_info": {
+        "id": "DZ0789",
+        "title": "正一法文天师教戒科经",
+        "author": "[魏] 佚名 撰",
+        "url": "https://www.shidianguji.com/book/DZ0789/chapter/DZ0789_1"
+      },
+      "folder_name": "正一法文天师教戒科经_DZ0789",
+      "source_dir": "docs\\source_texts\\正一法文天师教戒科经_DZ0789",
+      "translation_dir": "docs\\translations\\正一法文天师教戒科经_DZ0789",
+      "added_time": "2026-09-28T20:59:38.809737",
+      "last_modified": "2026-09-28T20:59:38.809738",
+      "chapter_count": 5,
+      "total_characters": 7246,
+      "chapters": [
+        {
+          "number": 1,
+          "title": "正一法文天师教戒科经",
+          "file_size": 13674,
+          "char_count": 3736,
+          "file_hash": "b62d5026af4f28e26e9b847e8e1d57cb",
+          "added_time": "2026-09-28T20:59:38.808845"
+        },
+        {
+          "number": 2,
+          "title": "大道家令戒",
+          "file_size": 9083,
+          "char_count": 2518,
+          "file_hash": "45a3a25300feb92f1402319a7e8a5088",
+          "added_time": "2026-09-28T20:59:38.809196"
+        },
+        {
+          "number": 3,
+          "title": "天师教",
+          "file_size": 812,
+          "char_count": 226,
+          "file_hash": "0319523222e00e413a34f3dc014097b3",
+          "added_time": "2026-09-28T20:59:38.809372"
+        },
+        {
+          "number": 4,
+          "title": "阳平治",
+          "file_size": 1902,
+          "char_count": 523,
+          "file_hash": "f74ee5822a49d4f52e56e771f37b3685",
+          "added_time": "2026-09-28T20:59:38.809556"
+        },
+        {
+          "number": 5,
+          "title": "天师五言牵三诗",
+          "file_size": 919,
+          "char_count": 243,
+          "file_hash": "2d1b384edcfea03c48851a4d6f639c71",
+          "added_time": "2026-09-28T20:59:38.809726"
+        }
+      ],
+      "translation_status": {
+        "completed_chapters": 0,
+        "total_chapters": 5,
+        "completion_percentage": 0.0,
+        "last_translation_update": "2026-09-28T20:59:38.850257"
+      },
+      "tags": [
+        "佚名"
+      ],
+      "category": "其他道教文獻",
       "status": "新增"
     },
     "DZ0095": {
       "book_info": {
         "id": "DZ0095",
         "title": "洞玄灵宝无量度人经诀音义",
-        "author": "[唐] 张万福 著",
-        "url": "https://www.shidianguji.com/book/DZ0095"
+        "author": "[唐] 张万福 编",
+        "url": "https://www.shidianguji.com/book/DZ0095/chapter/DZ0095_1"
       },
       "folder_name": "洞玄灵宝无量度人经诀音义_DZ0095",
-      "source_dir": "docs/source_texts/洞玄灵宝无量度人经诀音义_DZ0095",
-      "translation_dir": "docs/translations/洞玄灵宝无量度人经诀音义_DZ0095",
-      "added_time": "2025-08-09T03:11:05.347246",
-      "last_modified": "2025-08-09T03:11:05.347247",
+      "source_dir": "docs\\source_texts\\洞玄灵宝无量度人经诀音义_DZ0095",
+      "translation_dir": "docs\\translations\\洞玄灵宝无量度人经诀音义_DZ0095",
+      "added_time": "2026-09-28T20:59:38.812701",
+      "last_modified": "2026-09-28T20:59:38.812702",
       "chapter_count": 3,
-      "total_characters": 3170,
+      "total_characters": 2513,
       "chapters": [
         {
           "number": 1,
-          "title": "下一篇",
-          "file_size": 1452,
-          "char_count": 441,
-          "file_hash": "92da6d13fe3c1d83e2a7664f0a2d0bf3",
-          "added_time": "2025-08-09T03:11:05.346238"
+          "title": "洞玄灵宝无量度人经诀音义秋七",
+          "file_size": 5197,
+          "char_count": 1409,
+          "file_hash": "2ee741bb0355df2f5e47f63b352b61a1",
+          "added_time": "2026-09-28T20:59:38.812261"
         },
         {
           "number": 2,
-          "title": "洞玄灵宝无量度人经诀音义秋七",
-          "file_size": 7644,
-          "char_count": 2065,
-          "file_hash": "bfac129874cf59d12a732b0bcf6aba43",
-          "added_time": "2025-08-09T03:11:05.346853"
-        },
-        {
-          "number": 3,
           "title": "诵诸天内音存念法",
           "file_size": 2473,
           "char_count": 664,
           "file_hash": "ee833aa419c1b186af812f63791cba64",
-          "added_time": "2025-08-09T03:11:05.347234"
+          "added_time": "2026-09-28T20:59:38.812460"
+        },
+        {
+          "number": 3,
+          "title": "音义",
+          "file_size": 1449,
+          "char_count": 440,
+          "file_hash": "dd2a45d24952339d66561c901e7e1d20",
+          "added_time": "2026-09-28T20:59:38.812622"
         }
       ],
       "translation_status": {
         "completed_chapters": 0,
         "total_chapters": 3,
         "completion_percentage": 0.0,
-        "last_translation_update": "2025-08-10T03:11:19.418239"
+        "last_translation_update": "2026-09-28T20:59:38.850496"
       },
       "tags": [
         "唐代"
       ],
       "category": "度化經典",
+      "status": "新增"
+    },
+    "DZ1439": {
+      "book_info": {
+        "id": "DZ1439",
+        "title": "洞玄灵宝玉京山步虚经",
+        "author": "[东晋] 佚名 撰",
+        "url": "https://www.shidianguji.com/book/DZ1439/chapter/DZ1439_1"
+      },
+      "folder_name": "洞玄灵宝玉京山步虚经_DZ1439",
+      "source_dir": "docs\\source_texts\\洞玄灵宝玉京山步虚经_DZ1439",
+      "translation_dir": "docs\\translations\\洞玄灵宝玉京山步虚经_DZ1439",
+      "added_time": "2026-09-28T20:59:38.815972",
+      "last_modified": "2026-09-28T20:59:38.815972",
+      "chapter_count": 6,
+      "total_characters": 2975,
+      "chapters": [
+        {
+          "number": 1,
+          "title": "洞玄灵宝玉京山步虚经",
+          "file_size": 2472,
+          "char_count": 692,
+          "file_hash": "e77544d5caeadc1814e1460ccf6f7e71",
+          "added_time": "2026-09-28T20:59:38.815125"
+        },
+        {
+          "number": 3,
+          "title": "洞玄步虚吟十首",
+          "file_size": 2322,
+          "char_count": 632,
+          "file_hash": "c0ca6787ff2ad3bcce73e41e7f25fbc5",
+          "added_time": "2026-09-28T20:59:38.815307"
+        },
+        {
+          "number": 4,
+          "title": "太上智慧经赞八首",
+          "file_size": 2116,
+          "char_count": 579,
+          "file_hash": "12d6b3d5f4ef6c1205fc01c6feb82ca0",
+          "added_time": "2026-09-28T20:59:38.815481"
+        },
+        {
+          "number": 5,
+          "title": "玄师太元真人临授许常侍、掾《太洞玄经玉京山诀》，作颂三首",
+          "file_size": 802,
+          "char_count": 218,
+          "file_hash": "acd44a962c6e33e75b5b6f56ea176b49",
+          "added_time": "2026-09-28T20:59:38.815633"
+        },
+        {
+          "number": 6,
+          "title": "太上太极五真人于会稽山、虞山授葛仙公《洞玄灵宝经》，各吟一颂",
+          "file_size": 1841,
+          "char_count": 504,
+          "file_hash": "22c675d61c9a65f6336b7fcf24c15512",
+          "added_time": "2026-09-28T20:59:38.815796"
+        },
+        {
+          "number": 7,
+          "title": "礼经三首咒",
+          "file_size": 1263,
+          "char_count": 350,
+          "file_hash": "0ab91981361dc7706c58869cdb42b8bb",
+          "added_time": "2026-09-28T20:59:38.815963"
+        }
+      ],
+      "translation_status": {
+        "completed_chapters": 0,
+        "total_chapters": 6,
+        "completion_percentage": 0.0,
+        "last_translation_update": "2026-09-28T20:59:38.850975"
+      },
+      "tags": [
+        "佚名"
+      ],
+      "category": "其他道教文獻",
+      "status": "新增"
+    },
+    "DZ0318": {
+      "book_info": {
+        "id": "DZ0318",
+        "title": "洞玄灵宝自然九天生神章经",
+        "author": "[东晋] 佚名 著",
+        "url": "https://www.shidianguji.com/book/DZ0318/chapter/1jld4ukmnhh56?page_from=bookshelf&version=2"
+      },
+      "folder_name": "洞玄灵宝自然九天生神章经_DZ0318",
+      "source_dir": "docs\\source_texts\\洞玄灵宝自然九天生神章经_DZ0318",
+      "translation_dir": "docs\\translations\\洞玄灵宝自然九天生神章经_DZ0318",
+      "added_time": "2026-09-28T20:59:38.825765",
+      "last_modified": "2026-09-28T20:59:38.825766",
+      "chapter_count": 15,
+      "total_characters": 7275,
+      "chapters": [
+        {
+          "number": 2,
+          "title": "洞玄灵宝自然九天生神章经",
+          "file_size": 8779,
+          "char_count": 2405,
+          "file_hash": "b542d1cb4cfa456c9a9438315c10c435",
+          "added_time": "2026-09-28T20:59:38.819566"
+        },
+        {
+          "number": 3,
+          "title": "三宝大有金书",
+          "file_size": 8721,
+          "char_count": 2387,
+          "file_hash": "884b0b281b97845187774fd787f87b9a",
+          "added_time": "2026-09-28T20:59:38.820203"
+        },
+        {
+          "number": 4,
+          "title": "始青清微天宝章",
+          "file_size": 620,
+          "char_count": 164,
+          "file_hash": "d9ddc7ffd606075274aa796adf739263",
+          "added_time": "2026-09-28T20:59:38.820641"
+        },
+        {
+          "number": 5,
+          "title": "元白禹余灵宝章",
+          "file_size": 620,
+          "char_count": 164,
+          "file_hash": "4345697ac4e3ae67326d7cbd0d75ddd9",
+          "added_time": "2026-09-28T20:59:38.821010"
+        },
+        {
+          "number": 6,
+          "title": "玄黄太赤神宝章",
+          "file_size": 504,
+          "char_count": 134,
+          "file_hash": "65a358372237174dd0abc89315375a72",
+          "added_time": "2026-09-28T20:59:38.821250"
+        },
+        {
+          "number": 7,
+          "title": "郁单无量天生神章第一",
+          "file_size": 559,
+          "char_count": 151,
+          "file_hash": "755c59f20ff017db0299ec69a82a5903",
+          "added_time": "2026-09-28T20:59:38.821645"
+        },
+        {
+          "number": 8,
+          "title": "上上禅善无量寿天生神章第二",
+          "file_size": 693,
+          "char_count": 187,
+          "file_hash": "859bd86a501e4086ca8802ac1ea0f6eb",
+          "added_time": "2026-09-28T20:59:38.822104"
+        },
+        {
+          "number": 9,
+          "title": "梵监须延天生神章第三",
+          "file_size": 635,
+          "char_count": 171,
+          "file_hash": "8b8b9bb931baed35e12c1a0e5a8c5081",
+          "added_time": "2026-09-28T20:59:38.822481"
+        },
+        {
+          "number": 10,
+          "title": "寂然兜术天生神章第四",
+          "file_size": 526,
+          "char_count": 142,
+          "file_hash": "f61dcd642f5ddd07a2feb038ee2b4a24",
+          "added_time": "2026-09-28T20:59:38.822790"
+        },
+        {
+          "number": 11,
+          "title": "波罗尼蜜不骄乐天生神章第五",
+          "file_size": 544,
+          "char_count": 148,
+          "file_hash": "1636b3d7d6a06925c43a28da57702302",
+          "added_time": "2026-09-28T20:59:38.823223"
+        },
+        {
+          "number": 12,
+          "title": "洞元化应声天生神章第六",
+          "file_size": 532,
+          "char_count": 144,
+          "file_hash": "89018a5c4c6fc4255588607dded41276",
+          "added_time": "2026-09-28T20:59:38.823707"
+        },
+        {
+          "number": 13,
+          "title": "灵化梵辅天生神章第七",
+          "file_size": 562,
+          "char_count": 152,
+          "file_hash": "0bac2ce4bddc9eb5c2df098e896b947c",
+          "added_time": "2026-09-28T20:59:38.824599"
+        },
+        {
+          "number": 14,
+          "title": "高虚清明天生神章第八",
+          "file_size": 486,
+          "char_count": 132,
+          "file_hash": "a19d98a5e5fe900188044667474051a5",
+          "added_time": "2026-09-28T20:59:38.824901"
+        },
+        {
+          "number": 15,
+          "title": "无想无结无爱天生神章第九",
+          "file_size": 1211,
+          "char_count": 325,
+          "file_hash": "27358a02ce4845f36f80a23249d5479c",
+          "added_time": "2026-09-28T20:59:38.825335"
+        },
+        {
+          "number": 16,
+          "title": "诵经应验",
+          "file_size": 1685,
+          "char_count": 469,
+          "file_hash": "c662c86cfdf92e65b5dc48d3f3592d1c",
+          "added_time": "2026-09-28T20:59:38.825752"
+        }
+      ],
+      "translation_status": {
+        "completed_chapters": 15,
+        "total_chapters": 15,
+        "completion_percentage": 100.0,
+        "last_translation_update": "2026-09-28T20:59:38.852657"
+      },
+      "tags": [
+        "佚名"
+      ],
+      "category": "其他道教文獻",
+      "status": "新增"
+    },
+    "DZ0032": {
+      "book_info": {
+        "id": "DZ0032",
+        "title": "混元陽符經",
+        "author": "[南朝宋] 佚名 著",
+        "url": "https://www.shidianguji.com/zh/book/DZ0032/chapter/DZ0032_1?page_from=bookshelf&version=2"
+      },
+      "folder_name": "混元陽符經_DZ0032",
+      "source_dir": "docs\\source_texts\\混元陽符經_DZ0032",
+      "translation_dir": "docs\\translations\\混元陽符經_DZ0032",
+      "added_time": "2026-09-28T20:59:38.828575",
+      "last_modified": "2026-09-28T20:59:38.828576",
+      "chapter_count": 1,
+      "total_characters": 155,
+      "chapters": [
+        {
+          "number": 1,
+          "title": "混元陽符經",
+          "file_size": 584,
+          "char_count": 155,
+          "file_hash": "923a91576c6d68732b63fbdfca4e14c3",
+          "added_time": "2026-09-28T20:59:38.828561"
+        }
+      ],
+      "translation_status": {
+        "completed_chapters": 0,
+        "total_chapters": 1,
+        "completion_percentage": 0.0,
+        "last_translation_update": "2026-09-28T20:59:38.852780"
+      },
+      "tags": [
+        "道教經典",
+        "經文",
+        "佚名",
+        "宋代"
+      ],
+      "category": "其他道教文獻",
+      "status": "新增"
+    },
+    "DZ0045": {
+      "book_info": {
+        "id": "DZ0045",
+        "title": "玉清無上靈寶自然北斗本生真經",
+        "author": "未知作者",
+        "url": ""
+      },
+      "folder_name": "玉清無上靈寶自然北斗本生真經_DZ0045",
+      "source_dir": "docs\\source_texts\\玉清無上靈寶自然北斗本生真經_DZ0045",
+      "translation_dir": "docs\\translations\\玉清無上靈寶自然北斗本生真經_DZ0045",
+      "added_time": "2026-09-28T20:59:38.832052",
+      "last_modified": "2026-09-28T20:59:38.832053",
+      "chapter_count": 1,
+      "total_characters": 1099,
+      "chapters": [
+        {
+          "number": 1,
+          "title": "玉清无上靈寶自然北斗本生真經",
+          "file_size": 3974,
+          "char_count": 1099,
+          "file_hash": "788be17c6150448730bd04cead70cbd3",
+          "added_time": "2026-09-28T20:59:38.832033"
+        }
+      ],
+      "translation_status": {
+        "completed_chapters": 0,
+        "total_chapters": 1,
+        "completion_percentage": 0.0,
+        "last_translation_update": "2026-09-28T20:59:38.852887"
+      },
+      "tags": [
+        "道教經典",
+        "經文",
+        "佚名"
+      ],
+      "category": "其他道教文獻",
       "status": "新增"
     }
   }
