@@ -5,10 +5,8 @@
 支援多種部署方式：GitHub Pages、Docker、本地服務
 """
 
-import os
 import sys
 import subprocess
-import json
 import shutil
 from pathlib import Path
 from datetime import datetime

@@ -10,6 +10,7 @@ import requests
 import re
 import json
 import time
+from collections import Counter
 from pathlib import Path
 from bs4 import BeautifulSoup
 from datetime import datetime
@@ -41,7 +42,12 @@ except ImportError:
 
 class TranslationEngine:
     """翻譯引擎核心類"""
-    
+
+    # 段落中文字數少於此值視為只有標題的分組頁
+    MIN_BODY_CHARS = 20
+    # 分卷頁內以段落形式出現的篇名，例如「内篇齐物论下」
+    _SECTION_TITLE = re.compile(r'^[内外杂內雜]篇\S{1,8}$')
+
     def __init__(self, config: Dict = None):
         """初始化翻譯引擎"""
         self.config = config or self._load_default_config()
@@ -79,13 +85,22 @@ class TranslationEngine:
         match = re.search(r'/book/([^/?]+)', url)
         return match.group(1) if match else None
         
+    def _fetch_page(self, url: str) -> BeautifulSoup:
+        """取得頁面；章節頁使用有重試與正文檢查的 _fetch_chapter_page"""
+        if '/chapter/' in url:
+            soup = self._fetch_chapter_page(url)
+            if soup is None:
+                raise RuntimeError("無法取得章節頁面")
+            return soup
+        response = self.session.get(url, timeout=self.config["timeout"])
+        response.raise_for_status()
+        return BeautifulSoup(response.text, 'html.parser')
+
     def get_book_info(self, book_url: str) -> Dict:
         """獲取書籍基本資訊"""
         try:
-            response = self.session.get(book_url, timeout=self.config["timeout"])
-            response.raise_for_status()
-            soup = BeautifulSoup(response.text, 'html.parser')
-            
+            soup = self._fetch_page(book_url)
+
             book_id = self.extract_book_id(book_url)
             
             # 提取書籍標題
@@ -180,11 +195,9 @@ class TranslationEngine:
     def get_chapter_list(self, book_url: str) -> List[Dict]:
         """獲取章節列表（支持層級結構和動態發現）"""
         safe_print(f"🔍 正在獲取章節列表...")
-        
+
         try:
-            response = self.session.get(book_url, timeout=self.config["timeout"])
-            response.raise_for_status()
-            soup = BeautifulSoup(response.text, 'html.parser')
+            soup = self._fetch_page(book_url)
             
             # 1. 從HTML結構中解析可見的章節
             visible_chapters = self._parse_hierarchical_chapters(soup)
@@ -199,11 +212,30 @@ class TranslationEngine:
                 return all_chapters
             else:
                 safe_print("⚠️  未找到章節，嘗試傳統方式...")
-                return self._get_chapters_traditional(soup)
-                
+                return self._get_chapters_traditional(soup) or self._single_chapter_from_page(soup, book_url)
+
         except Exception as e:
             safe_print(f"❌ 獲取章節列表失敗: {e}")
             return []
+
+    def _single_chapter_from_page(self, soup: BeautifulSoup, url: str) -> List[Dict]:
+        """只有一章的書沒有目錄，直接把這個章節頁當成唯一的章節"""
+        chapter_id = self._extract_chapter_id(url)
+        article = soup.select_one('main.read-layout-main article.chapter-reader')
+        if not chapter_id or not article:
+            return []
+        heading = article.find(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'])
+        title = heading.get_text().strip() if heading else self.current_book['title']
+        safe_print(f"📄 沒有目錄，視為單章經典：{title}")
+        return [{
+            'number': 1,
+            'title': title,
+            'url': url.split('?')[0],
+            'chapter_id': chapter_id,
+            'level': 1,
+            'is_volume': False,
+            'is_chapter': False
+        }]
     
     def _parse_hierarchical_chapters(self, soup: BeautifulSoup) -> List[Dict]:
         """解析層級章節結構"""
@@ -346,50 +378,43 @@ class TranslationEngine:
             return "unknown"
     
     def _discover_numeric_chapters(self, all_chapters: List[Dict], visible_chapters: List[Dict]) -> List[Dict]:
-        """發現數字型章節ID的隱藏章節"""
-        # 提取已知的章節ID
-        known_ids = set()
-        for chapter in visible_chapters:
-            if chapter.get('chapter_id'):
-                # 提取數字ID
-                match = re.search(r'_(\d+)$', chapter['chapter_id'])
-                if match:
-                    known_ids.add(int(match.group(1)))
-        
-        if not known_ids:
+        """探測「前綴_序號」型章節ID中目錄沒有列出的章節"""
+        numbered = [re.match(r'^(.+)_(\d+)$', c.get('chapter_id') or '') for c in visible_chapters]
+        numbered = [m for m in numbered if m]
+        if not numbered:
             return all_chapters
-        
-        # 確定搜索範圍
-        min_id = min(known_ids)
-        max_id = max(known_ids)
-        
-        # 擴展搜索範圍
-        search_start = max(1, min_id - 5)
-        search_end = min(50, max_id + 10)  # 限制最大搜索範圍
-        
-        safe_print(f"🎯 數字搜索範圍: {search_start} 到 {search_end}")
-        
-        # 系統性地探測缺失的章節
-        missing_ids = []
-        for chapter_id in range(search_start, search_end + 1):
-            if chapter_id not in known_ids:
-                missing_ids.append(chapter_id)
-        
-        if missing_ids:
-            safe_print(f"🔎 探測 {len(missing_ids)} 個可能的缺失章節...")
-            discovered_chapters = self._probe_chapter_ids(missing_ids)
-            
-            if discovered_chapters:
-                safe_print(f"✅ 發現 {len(discovered_chapters)} 個隱藏章節")
-                all_chapters.extend(discovered_chapters)
-                
-                # 重新排序章節
-                all_chapters.sort(key=lambda x: self._extract_chapter_number(x.get('chapter_id', '')))
-                
-                # 重新編號
-                for i, chapter in enumerate(all_chapters, 1):
-                    chapter['number'] = i
-        
+
+        # 同一本書的序號前綴相同，例如 DZ0789_3、1j6lo3zzeqt6n_3
+        prefix = Counter(m.group(1) for m in numbered).most_common(1)[0][0]
+        known_ids = {int(m.group(2)) for m in numbered if m.group(1) == prefix}
+        search_start = max(1, min(known_ids) - 5)
+        search_end = max(known_ids) + 10
+        missing_ids = [n for n in range(search_start, search_end + 1) if n not in known_ids]
+        if not missing_ids:
+            return all_chapters
+
+        safe_print(f"🔎 探測 {len(missing_ids)} 個目錄未列出的章節（{prefix}_{search_start}～{search_end}）...")
+        existing_titles = {c['title'] for c in all_chapters}
+        # 同一章可能也能用序號網址開啟，標題已在目錄中的不重複加入
+        discovered = [c for c in self._probe_chapter_ids(prefix, missing_ids)
+                      if c['title'] not in existing_titles]
+        if not discovered:
+            safe_print("   沒有發現目錄以外的章節")
+            return all_chapters
+
+        safe_print(f"✅ 發現 {len(discovered)} 個隱藏章節")
+        for chapter in discovered:
+            # 插在同前綴、序號比它小的最後一個章節後面，維持目錄順序
+            number = self._extract_chapter_number(chapter['chapter_id'])
+            index = 0
+            for i, existing in enumerate(all_chapters):
+                match = re.match(r'^(.+)_(\d+)$', existing.get('chapter_id') or '')
+                if match and match.group(1) == prefix and int(match.group(2)) < number:
+                    index = i + 1
+            all_chapters.insert(index, chapter)
+
+        for i, chapter in enumerate(all_chapters, 1):
+            chapter['number'] = i
         return all_chapters
     
     def _discover_random_chapters(self, all_chapters: List[Dict], visible_chapters: List[Dict]) -> List[Dict]:
@@ -632,57 +657,40 @@ class TranslationEngine:
         
         return chapters
     
-    def _probe_chapter_ids(self, chapter_ids: List[int]) -> List[Dict]:
-        """探測指定的數字章節ID"""
+    def _probe_chapter_ids(self, prefix: str, numbers: List[int]) -> List[Dict]:
+        """探測指定序號的章節；不存在的序號，網站會回傳沒有正文區塊的頁面"""
         discovered = []
-        
-        for chapter_id in chapter_ids:
-            chapter_key = f"{self.current_book['id']}_{chapter_id}"
+
+        for number in numbers:
+            chapter_key = f"{prefix}_{number}"
             test_url = f"{self.config['base_url']}/book/{self.current_book['id']}/chapter/{chapter_key}"
-            
+
             try:
-                response = self.session.get(test_url, timeout=5)
-                if response.status_code == 200:
-                    soup = BeautifulSoup(response.text, 'html.parser')
-                    
-                    # 嘗試提取標題
-                    title_elem = soup.find('h1', class_='Goq6DYSE')
-                    if title_elem:
-                        title = title_elem.get_text().strip()
-                        
-                        # 嘗試從內容中提取實際的品名
-                        content = self._extract_content_from_html(soup, title)
-                        if content and content.get('content'):
-                            actual_title = self._extract_actual_title_from_content(
-                                content['content'], title
-                            )
-                            
-                            discovered.append({
-                                'number': len(discovered) + 1,  # 臨時編號
-                                'title': actual_title,
-                                'original_title': title,
-                                'url': test_url,
-                                'chapter_id': chapter_key,
-                                'level': 2 if '品' in actual_title else 1,
-                                'is_volume': '卷' in actual_title,
-                                'is_chapter': '品' in actual_title or '章' in actual_title,
-                                'discovered': True  # 標記為動態發現的章節
-                            })
-                            
-                            safe_print(f"  ✅ 發現: {actual_title} ({chapter_key})")
-                        else:
-                            safe_print(f"  ⚠️  {chapter_key}: 無有效內容")
-                    else:
-                        safe_print(f"  ❌ {chapter_key}: 無標題")
-                else:
-                    safe_print(f"  ❌ {chapter_key}: HTTP {response.status_code}")
-                    
-            except Exception as e:
-                safe_print(f"  ❌ {chapter_key}: {e}")
-            
+                response = self.session.get(test_url, timeout=self.config["timeout"])
+                soup = BeautifulSoup(response.text, 'html.parser') if response.status_code == 200 else None
+                article = soup.select_one('main.read-layout-main article.chapter-reader') if soup else None
+                heading = article.find(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']) if article else None
+                if heading:
+                    title = heading.get_text().strip()
+                    content = self._extract_content_from_html(soup, title)
+                    if content and content['has_body']:
+                        discovered.append({
+                            'number': len(discovered) + 1,  # 臨時編號
+                            'title': title,
+                            'url': test_url,
+                            'chapter_id': chapter_key,
+                            'level': 2 if '品' in title else 1,
+                            'is_volume': '卷' in title,
+                            'is_chapter': '品' in title or '章' in title,
+                            'discovered': True  # 標記為動態發現的章節
+                        })
+                        safe_print(f"  ✅ 發現: {title} ({chapter_key})")
+            except requests.RequestException as e:
+                safe_print(f"  ⚠️  {chapter_key}: {type(e).__name__}")
+
             # 添加延遲避免被封鎖
             time.sleep(1)
-        
+
         return discovered
     
     def _extract_chapter_number(self, chapter_id: str) -> int:
@@ -737,12 +745,16 @@ class TranslationEngine:
                     pass
             
             # 如果API失敗，嘗試直接訪問頁面
-            response = self.session.get(chapter_info['url'], timeout=self.config["timeout"])
-            if response.status_code == 200:
-                soup = BeautifulSoup(response.text, 'html.parser')
+            soup = self._fetch_chapter_page(chapter_info['url'])
+            if soup:
                 content_data = self._extract_content_from_html(soup, chapter_info['title'])
-                
+
+                if content_data and not content_data['has_body']:
+                    safe_print(f"  📂 {level_prefix}{chapter_info['title']}：只有標題、沒有正文（上層分組），不另存")
+                    return None
+
                 if content_data:
+                    self._retitle_volume_section(content_data)
                     content_data['level'] = chapter_info.get('level', 1)
                     content_data['is_volume'] = chapter_info.get('is_volume', False)
                     content_data['is_chapter'] = chapter_info.get('is_chapter', False)
@@ -764,11 +776,54 @@ class TranslationEngine:
             safe_print(f"❌ 爬取章節失敗: {e}")
             return None
             
+    def _retitle_volume_section(self, content_data: Dict) -> None:
+        """分卷頁的正文其實是某一篇（篇名以段落出現、目錄沒有獨立章節）時，改用篇名當標題
+
+        例如南華真經口義「卷之三」頁面的內容就是「内篇齐物论下」。
+        """
+        title = content_data['title']
+        if not re.search(r'卷[之第]', title):
+            return
+        for line in content_data['content'].split('\n\n')[:4]:
+            line = line.strip()
+            if self._SECTION_TITLE.match(line) and line not in self._chapter_titles:
+                safe_print(f"  🏷️  {title} 的內容是「{line}」，改用篇名")
+                content_data['original_title'] = title
+                content_data['title'] = line
+                return
+
+    def _fetch_chapter_page(self, url: str) -> Optional[BeautifulSoup]:
+        """取得章節頁面；連續請求時網站偶爾回傳錯誤或缺少正文區塊的頁面，依 max_retries 重試"""
+        retries = max(1, self.config.get("max_retries", 3))
+        reason = ""
+        for attempt in range(1, retries + 1):
+            try:
+                response = self.session.get(url, timeout=self.config["timeout"])
+                if response.status_code == 404:
+                    safe_print("  ❌ 章節不存在（HTTP 404）")
+                    return None
+                if response.status_code == 200:
+                    soup = BeautifulSoup(response.text, 'html.parser')
+                    if soup.select_one('main.read-layout-main article.chapter-reader'):
+                        return soup
+                    reason = "頁面缺少正文區塊"
+                else:
+                    reason = f"HTTP {response.status_code}"
+            except requests.RequestException as e:
+                reason = type(e).__name__
+            if attempt < retries:
+                wait = 2 ** attempt
+                safe_print(f"  ⏳ 第 {attempt} 次取得失敗（{reason}），{wait} 秒後重試")
+                time.sleep(wait)
+        safe_print(f"  ❌ 重試 {retries} 次仍失敗（{reason}）")
+        return None
+
     def _extract_content_from_html(self, soup: BeautifulSoup, title: str) -> Optional[Dict]:
         """從HTML中提取內容
 
         上層章節的頁面會連同底下的子章節一起顯示，遇到其他章節的標題就停止，
-        避免子章節內容被重複存進上層章節。
+        避免子章節內容被重複存進上層章節。has_body 為 False 表示這頁只有標題
+        （例如「文始真經上卷」「步虚吟」這類分組標題）。
         """
         other_titles = self._chapter_titles - {title}
 
@@ -778,19 +833,26 @@ class TranslationEngine:
                 article = main_content.find('article', class_='chapter-reader')
                 if article:
                     content_parts = []
+                    body_chars = 0
+                    started = False
 
                     for element in article.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p']):
                         text = element.get_text().strip()
-                        if element.name != 'p' and content_parts and text in other_titles:
+                        # 本章標題之後遇到其他章節的標題，就是子章節的開始
+                        if started and element.name != 'p' and text in other_titles:
                             break
+                        started = True
+                        if element.name == 'p':
+                            body_chars += len(re.findall(r'[一-鿿]', text))
                         if text and len(text) > 3:
                             content_parts.append(text)
-                    
-                    if content_parts:
-                        return {
-                            'title': title,
-                            'content': '\n\n'.join(content_parts)
-                        }
+
+                    return {
+                        'title': title,
+                        'content': '\n\n'.join(content_parts),
+                        # 只有卷名加撰者（例如「鬳斋林希逸」）的分卷頁不算正文
+                        'has_body': body_chars >= self.MIN_BODY_CHARS
+                    }
                         
         except Exception as e:
             safe_print(f"⚠️  HTML解析錯誤: {e}")
@@ -1280,6 +1342,21 @@ class TranslationEngine:
             
         safe_print(f"✅ 已建立專案說明: {readme_path}")
         
+    def _resolve_start_url(self, url: str) -> str:
+        """識典古籍的書籍首頁不含目錄，只有章節頁才有；給的是書籍首頁時改用第一章
+
+        道藏（DZ）的第一章通常是 `<書籍ID>_1`；章節 ID 是亂碼的書（例如 SBCK440、DZ0735）
+        猜不到，需要使用者提供第一章網址。
+        """
+        if '/chapter/' in url:
+            return url
+        book_id = self.extract_book_id(url)
+        if not book_id:
+            return url
+        first_chapter = f"{self.config['base_url']}/book/{book_id}/chapter/{book_id}_1"
+        safe_print(f"🔗 書籍首頁不含目錄，改用第一章網址：{first_chapter}")
+        return first_chapter
+
     def translate_book(self, book_url: str) -> bool:
         """翻譯整本書籍的主要流程"""
         safe_print("🚀 啟動道教經典翻譯系統 v2.0")
@@ -1287,6 +1364,7 @@ class TranslationEngine:
         
         try:
             # 1. 獲取書籍資訊
+            book_url = self._resolve_start_url(book_url)
             book_info = self.get_book_info(book_url)
             safe_print(f"📚 書籍：{book_info['title']}")
             safe_print(f"👤 作者：{book_info['author']}")
@@ -1301,6 +1379,7 @@ class TranslationEngine:
             chapters = self.get_chapter_list(book_url)
             if not chapters:
                 safe_print("❌ 無法獲取章節列表，程序終止")
+                safe_print("💡 請在瀏覽器打開這本書，複製網址列中含 /chapter/ 的第一章網址再試一次")
                 return False
                 
             safe_print(f"📋 找到 {len(chapters)} 個初始章節")
@@ -1312,10 +1391,13 @@ class TranslationEngine:
             # 6. 智能子章節發現階段
             safe_print(f"\n🔍 開始智能子章節發現階段...")
             safe_print(f"📊 使用策略: {id_pattern['strategy']}")
-            all_chapters = chapters.copy()
+            # 子章節插在所屬上層章節的後面，維持閱讀順序（例如 上卷 → 一宇篇、二柱篇 → 中卷）
+            all_chapters = []
             discovered_sub_chapters = []
-            
+            known_ids = {c['chapter_id'] for c in chapters}
+
             for chapter in chapters:
+                all_chapters.append(chapter)
                 if chapter.get('level', 1) == 1:  # 只檢查頂級章節
                     level_prefix = "  " * (chapter.get('level', 1) - 1)
                     safe_print(f"{level_prefix}🔍 檢查章節: {chapter['title']}")
@@ -1327,7 +1409,6 @@ class TranslationEngine:
                             soup = BeautifulSoup(response.text, 'html.parser')
                             
                             # 智能發現子章節（目錄中已經有的章節不重複加入）
-                            known_ids = {c['chapter_id'] for c in all_chapters}
                             sub_chapters = [
                                 sub for sub in self._smart_discover_sub_chapters(soup, chapter)
                                 if sub['chapter_id'] not in known_ids
@@ -1335,10 +1416,10 @@ class TranslationEngine:
 
                             if sub_chapters:
                                 safe_print(f"{level_prefix}   ✅ 發現 {len(sub_chapters)} 個子章節")
-                                
-                                # 為子章節分配編號並添加到總列表
+
+                                # 緊接在上層章節後面加入（編號在下面統一重排）
                                 for sub_chapter in sub_chapters:
-                                    sub_chapter['number'] = len(all_chapters) + 1
+                                    known_ids.add(sub_chapter['chapter_id'])
                                     all_chapters.append(sub_chapter)
                                     discovered_sub_chapters.append(sub_chapter)
                                     

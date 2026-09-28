@@ -199,6 +199,14 @@ class MonitorCLI:
         safe_print(f"📄 狀態已匯出: {status_file}")
         return status_file
         
+    def rebuild_tracking(self) -> None:
+        """依 docs/ 的實際檔案重建經典追蹤資料"""
+        safe_print("🔄 依 docs/source_texts 重建經典追蹤資料...")
+        count = self.tracker.rebuild_from_docs()
+        stats = self.tracker.get_statistics()
+        safe_print(f"✅ 已重建：{count} 部經典、{stats.get('total_chapters', 0)} 章、"
+                   f"{stats.get('total_characters', 0):,} 字")
+
     def generate_reports(self) -> None:
         """生成所有報告"""
         safe_print("📊 正在生成報告...")
@@ -238,7 +246,7 @@ def main():
     )
     
     parser.add_argument('command', nargs='?', default='dashboard',
-                       choices=['status', 'dashboard', 'progress', 'activity', 'watch', 'export', 'reports'],
+                       choices=['status', 'dashboard', 'progress', 'activity', 'watch', 'export', 'reports', 'rebuild'],
                        help='要執行的命令')
     parser.add_argument('param', nargs='?', type=int, help='命令參數（如活動數量或監控間隔）')
     
@@ -262,6 +270,8 @@ def main():
         monitor.export_status_json()
     elif args.command == 'reports':
         monitor.generate_reports()
+    elif args.command == 'rebuild':
+        monitor.rebuild_tracking()
     else:
         monitor.generate_dashboard()
 

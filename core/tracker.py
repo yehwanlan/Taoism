@@ -8,10 +8,11 @@
 
 import json
 import hashlib
+import re
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional
-from .conventions import chapter_stem, is_untranslated
+from .conventions import CHAPTER_FILE, chapter_stem, is_untranslated, split_book_folder
 from .unicode_handler import safe_print
 
 
@@ -237,6 +238,40 @@ class ClassicTracker:
             
         self.save_tracker_data()
         
+    def rebuild_from_docs(self, docs_dir: Path = Path("docs")) -> int:
+        """依 docs/source_texts 的實際檔案重建經典資料庫，回傳經典數
+
+        追蹤資料只在 translate_book 成功時更新，手動整理或過去流程失敗時會與實際檔案脫節。
+        """
+        self.data = self._create_empty_data()
+        for book_dir in sorted((docs_dir / "source_texts").iterdir()):
+            source_dir = book_dir / "原文"
+            if not source_dir.is_dir():
+                continue
+            chapters = []
+            for source_file in sorted(source_dir.glob("*.txt")):
+                match = CHAPTER_FILE.match(source_file.name)
+                if match:
+                    chapters.append({"number": int(match.group(1)), "title": match.group(2)})
+            if not chapters:
+                continue
+
+            # 書名、作者、網址以爬取時產生的 README 為準
+            title, book_id = split_book_folder(book_dir.name)
+            readme = book_dir / "README.md"
+            meta = dict(re.findall(r"- \*\*(書名|作者|原始網址)\*\*：(.+)",
+                                   readme.read_text(encoding="utf-8"))) if readme.exists() else {}
+            book_info = {
+                "id": book_id,
+                "title": meta.get("書名", title).strip(),
+                "author": meta.get("作者", "未知作者").strip(),
+                "url": meta.get("原始網址", "").strip(),
+            }
+            self.track_new_classic(book_info, chapters, book_dir, docs_dir / "translations" / book_dir.name)
+
+        self.check_translation_progress()
+        return len(self.data["classics"])
+
     def get_statistics(self) -> Dict:
         """獲取統計資訊"""
         return self.data.get("metadata", {})

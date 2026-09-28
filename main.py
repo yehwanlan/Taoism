@@ -86,8 +86,8 @@ python main.py info
     # 監控子命令
     monitor_parser = subparsers.add_parser('monitor', help='監控功能')
     monitor_parser.add_argument('action', nargs='?', default='dashboard',
-                               choices=['status', 'dashboard', 'progress', 'activity', 'watch', 'export', 'reports'],
-                               help='監控動作')
+                               choices=['status', 'dashboard', 'progress', 'activity', 'watch', 'export', 'reports', 'rebuild'],
+                               help='監控動作（rebuild：依實際檔案重建追蹤資料）')
     monitor_parser.add_argument('param', nargs='?', type=int, help='參數（數量或間隔）')
 
     # 資訊子命令
@@ -139,6 +139,8 @@ python main.py info
             monitor.export_status_json()
         elif args.action == 'reports':
             monitor.generate_reports()
+        elif args.action == 'rebuild':
+            monitor.rebuild_tracking()
         else:
             monitor.generate_dashboard()
 

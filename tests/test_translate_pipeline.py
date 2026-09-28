@@ -107,6 +107,19 @@ def test_recrawl_keeps_existing_translation(engine, tmp_path):
     assert is_untranslated(other.read_text(encoding="utf-8"))
 
 
+def test_rebuild_tracking_from_docs(engine, tmp_path):
+    engine.translate_book("https://example.invalid/book/TEST01")
+    # 模擬追蹤資料與實際檔案脫節：清空後依 docs/ 重建
+    engine.tracker.data = engine.tracker._create_empty_data()
+
+    assert engine.tracker.rebuild_from_docs() == 1
+    classic = engine.tracker.get_classic_by_id("TEST01")
+    assert classic["book_info"]["title"] == "測試經"
+    assert classic["book_info"]["author"] == "佚名"
+    assert [(c["number"], c["title"]) for c in classic["chapters"]] == [(1, "开度品第一"), (3, "善对品第二")]
+    assert all(c["char_count"] > 0 for c in classic["chapters"])
+
+
 def test_placeholder_detection_covers_legacy_templates():
     assert is_untranslated(f"## 翻譯\n\n{TRANSLATION_PLACEHOLDER}\n")
     assert is_untranslated("## 翻譯\n\n[此處填入現代中文翻譯]\n")

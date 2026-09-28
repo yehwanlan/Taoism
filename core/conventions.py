@@ -20,6 +20,20 @@ _PLACEHOLDERS = (
 
 _UNSAFE_FILENAME_CHARS = re.compile(r'[<>:"/\\|?*]')
 
+# 書籍資料夾名稱結尾的書籍編號，例如 _DZ0336、_SBCK109、_PC2471
+_BOOK_ID_SUFFIX = re.compile(r"_([A-Za-z]+\d+)$")
+
+# 原文檔名，例如 03_开度品第一.txt
+CHAPTER_FILE = re.compile(r"^(\d+)_(.+)\.txt$")
+
+
+def split_book_folder(folder_name: str) -> tuple:
+    """書籍資料夾名稱 → (書名, 書籍編號)，例如 `南华真经口义_DZ0735` → (`南华真经口义`, `DZ0735`)"""
+    match = _BOOK_ID_SUFFIX.search(folder_name)
+    if not match:
+        return folder_name, folder_name
+    return folder_name[:match.start()], match.group(1)
+
 
 def sanitize_title(title: str) -> str:
     """把標題中不能用在檔名的字元換成底線"""

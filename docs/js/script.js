@@ -85,7 +85,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggleViewButton = document.getElementById('toggle-view');
 
     // 書單由 docs/data/books.json 載入（python tools/build_web_data.py 依實際檔案產生）
-    const DEFAULT_BOOK_ID = '太上老君説常清靜經注_DZ0756';  // 不需密語即可閱讀的書
+    const DEFAULT_BOOK_CODE = 'DZ0756';  // 不需密語即可閱讀的書（太上老君說常清靜經注），以書籍編號比對
+    let DEFAULT_BOOK_ID = null;
     let booksData = {};
     let webStats = { books: 0, chapters: 0, translated: 0 };
 
@@ -123,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
         loadSystemStats();
         populateBookSelect();
         // 初始載入預設書籍
-        loadBook(booksData[DEFAULT_BOOK_ID] ? DEFAULT_BOOK_ID : Object.keys(booksData)[0]);
+        loadBook(DEFAULT_BOOK_ID);
     }
 
     // 載入書單
@@ -137,6 +138,8 @@ document.addEventListener('DOMContentLoaded', () => {
         booksData = Object.fromEntries(
             data.books.map(book => [book.id, { title: book.title, chapters: book.chapters }])
         );
+        DEFAULT_BOOK_ID = Object.keys(booksData).find(id => id.endsWith(`_${DEFAULT_BOOK_CODE}`))
+            || Object.keys(booksData)[0];
     }
 
     // 載入系統統計

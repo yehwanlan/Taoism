@@ -15,30 +15,21 @@ import re
 from pathlib import Path
 from typing import Dict, List
 
-from .conventions import is_untranslated
+from .conventions import CHAPTER_FILE, is_untranslated, split_book_folder
 
 DOCS_DIR = Path("docs")
 
-_CHAPTER_FILE = re.compile(r"^(\d+)_(.+)\.txt$")
-# 資料夾名稱結尾的書籍編號，例如 _DZ0336、_SBCK109、_PC2471
-_BOOK_ID_SUFFIX = re.compile(r"_([A-Za-z]+\d+)$")
-
 
 def _book_sort_key(folder_name: str):
-    match = _BOOK_ID_SUFFIX.search(folder_name)
-    book_id = match.group(1) if match else folder_name
+    _, book_id = split_book_folder(folder_name)
     prefix, number = re.match(r"([A-Za-z]*)(\d*)", book_id).groups()
     return (prefix, int(number) if number else 0, folder_name)
-
-
-def _book_title(folder_name: str) -> str:
-    return _BOOK_ID_SUFFIX.sub("", folder_name)
 
 
 def _chapters(book_dir: Path, translation_dir: Path) -> List[Dict]:
     chapters = []
     for source_file in (book_dir / "原文").glob("*.txt"):
-        match = _CHAPTER_FILE.match(source_file.name)
+        match = CHAPTER_FILE.match(source_file.name)
         if not match:
             continue
         number, title = match.groups()
@@ -58,7 +49,8 @@ def build_web_data(docs_dir: Path = DOCS_DIR) -> Dict:
             continue
         chapters = _chapters(book_dir, docs_dir / "translations" / book_dir.name)
         if chapters:
-            books.append({"id": book_dir.name, "title": _book_title(book_dir.name), "chapters": chapters})
+            title, _ = split_book_folder(book_dir.name)
+            books.append({"id": book_dir.name, "title": title, "chapters": chapters})
 
     all_chapters = [c for book in books for c in book["chapters"]]
     return {
