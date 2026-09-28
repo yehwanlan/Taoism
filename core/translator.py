@@ -15,6 +15,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 from typing import Dict, List, Optional, Tuple
 
+from .conventions import TRANSLATION_PLACEHOLDER, chapter_stem
 from .tracker import ClassicTracker
 from .file_monitor import FileMonitor
 
@@ -274,17 +275,7 @@ class TranslationEngine:
                         chapter_number += 1
         
         return chapters
-    
-    def _is_volume_title(self, title: str, level: int) -> bool:
-        """判斷是否為卷標題"""
-        volume_indicators = ['卷之', '卷第', '第.*卷', '卷.*第']
-        return any(re.search(indicator, title) for indicator in volume_indicators)
-    
-    def _is_chapter_title(self, title: str, level: int) -> bool:
-        """判斷是否為章節標題"""
-        chapter_indicators = ['品第', '章第', '篇', '外篇', '內篇', '雜篇']
-        return any(indicator in title for indicator in chapter_indicators)
-    
+
     def _get_chapters_traditional(self, soup: BeautifulSoup) -> List[Dict]:
         """傳統方式獲取章節（備用）"""
         chapters = []
@@ -1116,9 +1107,8 @@ class TranslationEngine:
         
         # 根據層級調整文件名格式
         level_prefix = "  " * (level - 1) if level > 1 else ""
-        clean_title = re.sub(r'[<>:"/\\|?*]', '_', title)
-        
-        filename = f"{chapter_number:02d}_{clean_title}.txt"
+
+        filename = f"{chapter_stem(chapter_number, title)}.txt"
         file_path = self.source_dir / filename
         
         with open(file_path, 'w', encoding='utf-8') as f:
@@ -1153,8 +1143,7 @@ class TranslationEngine:
         
         safe_print(f"🤖 {level_prefix}生成翻譯模板: {title}")
         
-        clean_title = re.sub(r'[<>:"/\\|?*]', '_', title)
-        filename = f"{chapter_number:02d}_{clean_title}.md"
+        filename = f"{chapter_stem(chapter_number, title)}.md"
         file_path = self.translation_dir / filename
         
         # 根據層級和類型調整模板內容
@@ -1172,7 +1161,7 @@ class TranslationEngine:
 
 ## 翻譯
 
-[此處應為現代中文翻譯]
+{TRANSLATION_PLACEHOLDER}
 
 原文字數：{len(content_data['content'])} 字{structure_info}
 建議：請使用AI翻譯工具或人工翻譯此段落。
@@ -1375,16 +1364,21 @@ class TranslationEngine:
             safe_print(f"\n📋 最終章節總數: {len(chapters)}")
             
             # 7. 批量爬取和翻譯
-            success_count = 0
+            # 記錄實際存檔用的編號與標題（標題可能已被改成內容中的品名），供追蹤系統找檔案
+            processed_chapters = []
             for chapter in chapters:
                 safe_print(f"\n🔄 處理第 {chapter['number']} 章...")
-                
+
                 # 爬取原文
                 content_data = self.crawl_chapter(chapter)
                 if content_data:
                     # 生成翻譯模板
                     self.generate_translation_template(content_data, chapter['number'])
-                    success_count += 1
+                    processed_chapters.append({
+                        'number': chapter['number'],
+                        'title': content_data['title'],
+                        'url': chapter.get('url', '')
+                    })
                     
                 # 添加延遲避免被封鎖
                 time.sleep(self.config["request_delay"])
@@ -1393,17 +1387,10 @@ class TranslationEngine:
             self.create_project_readme(chapters)
             
             # 9. 追蹤新經典到系統
+            success_count = len(processed_chapters)
             if success_count > 0:
                 safe_print("\n📊 更新經典追蹤系統...")
                 try:
-                    processed_chapters = []
-                    for i, chapter in enumerate(chapters[:success_count], 1):
-                        processed_chapters.append({
-                            'number': i,
-                            'title': chapter.get('title', f'第{i}章'),
-                            'url': chapter.get('url', '')
-                        })
-                    
                     self.tracker.track_new_classic(
                         book_info=book_info,
                         chapters=processed_chapters,

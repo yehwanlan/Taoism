@@ -8,6 +8,10 @@ import re
 import sys
 from pathlib import Path
 
+# 讓 `python tools/xxx.py` 也能找到 core 套件
+sys.path.append(str(Path(__file__).parent.parent))
+from core.unicode_handler import safe_print
+
 def fix_print_statements(file_path: Path):
     """修復文件中的print語句"""
     if not file_path.exists():

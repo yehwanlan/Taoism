@@ -46,8 +46,8 @@ class APICrawler(BaseCrawler):
             elif len(part) > 10 and '_' in part:
                 analysis['chapter_id'] = part
                 
-safe_print(f"書籍ID: {analysis['book_id']}")
-safe_print(f"章節ID: {analysis['chapter_id']}")
+        safe_print(f"書籍ID: {analysis['book_id']}")
+        safe_print(f"章節ID: {analysis['chapter_id']}")
         
         return analysis
         

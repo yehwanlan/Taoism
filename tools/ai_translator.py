@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-from core.unicode_handler import safe_print
 生成式AI經文翻譯工具
 
 基於AI翻譯指導規範，使用生成式AI進行道教經文翻譯
@@ -16,6 +15,10 @@ from typing import Dict, List, Optional, Generator
 from datetime import datetime
 import subprocess
 import sys
+
+# 讓 `python tools/xxx.py` 也能找到 core 套件
+sys.path.append(str(Path(__file__).parent.parent))
+from core.unicode_handler import safe_print
 
 # 設置標準輸出編碼為 UTF-8
 if sys.stdout.encoding != 'utf-8':

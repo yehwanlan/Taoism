@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-from core.unicode_handler import safe_print
 手動添加隱藏章節工具
 
 用於添加系統無法自動發現的隱藏章節，如DZ0735中的子章節
@@ -15,6 +14,7 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent))
 
 from core.translator import TranslationEngine
+from core.unicode_handler import safe_print
 
 
 class HiddenChapterAdder:

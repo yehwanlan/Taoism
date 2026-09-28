@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-from core.unicode_handler import safe_print
 更新README文件，正確顯示所有章節
 """
 
 from pathlib import Path
 import re
+import sys
+
+# 讓 `python tools/xxx.py` 也能找到 core 套件
+sys.path.append(str(Path(__file__).parent.parent))
+from core.unicode_handler import safe_print
 
 
 def update_readme():

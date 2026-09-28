@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-from core.unicode_handler import safe_print
 道教經典翻譯系統 - 經典追蹤核心
 
 整合原有的 classic_tracker.py 功能，提供統一的追蹤介面
@@ -12,6 +11,8 @@ import hashlib
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional, Any
+from .conventions import chapter_stem, is_untranslated
+from .unicode_handler import safe_print
 
 
 class ClassicTracker:
@@ -76,7 +77,7 @@ class ClassicTracker:
         total_chars = 0
         
         for chapter in chapters:
-            chapter_file = source_dir / "原文" / f"{chapter['number']:02d}_{chapter['title']}.txt"
+            chapter_file = source_dir / "原文" / f"{chapter_stem(chapter['number'], chapter['title'])}.txt"
             if chapter_file.exists():
                 file_size = chapter_file.stat().st_size
                 file_hash = self.generate_file_hash(chapter_file)
@@ -213,13 +214,13 @@ class ClassicTracker:
             
             if translation_dir.exists():
                 for chapter in classic["chapters"]:
-                    trans_file = translation_dir / f"{chapter['number']:02d}_{chapter['title']}.md"
+                    trans_file = translation_dir / f"{chapter_stem(chapter['number'], chapter['title'])}.md"
                     if trans_file.exists():
                         # 檢查是否有實際翻譯內容（不只是模板）
                         try:
                             with open(trans_file, 'r', encoding='utf-8') as f:
                                 content = f.read()
-                                if '[此處應為現代中文翻譯]' not in content and len(content) > 1000:
+                                if content.strip() and not is_untranslated(content):
                                     completed += 1
                         except Exception:
                             pass
@@ -367,8 +368,9 @@ class ClassicTracker:
                 continue
 
             for chapter in classic.get("chapters", []):
-                original_filename = f"{chapter['number']:02d}_{chapter['title']}.txt"
-                translation_filename = f"{chapter['number']:02d}_{chapter['title']}.md"
+                stem = chapter_stem(chapter['number'], chapter['title'])
+                original_filename = f"{stem}.txt"
+                translation_filename = f"{stem}.md"
                 
                 # Construct the full path to the original file
                 original_file_path = source_dir / "原文" / original_filename
@@ -379,7 +381,7 @@ class ClassicTracker:
                     try:
                         with open(translation_file_path, 'r', encoding='utf-8') as f:
                             content = f.read()
-                            if '[此處應為現代中文翻譯]' not in content and len(content.strip()) > 500:
+                            if content.strip() and not is_untranslated(content):
                                 is_translated = True
                     except Exception:
                         pass
@@ -397,17 +399,6 @@ class ClassicTracker:
                         untranslated_files.append(relative_fallback.replace('\\', '/'))
 
         return untranslated_files
-
-
-# 全域追蹤器實例
-_tracker_instance = None
-
-def get_tracker() -> ClassicTracker:
-    """獲取全域追蹤器實例"""
-    global _tracker_instance
-    if _tracker_instance is None:
-        _tracker_instance = ClassicTracker()
-    return _tracker_instance
 
 
 # 全域追蹤器實例

@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-from core.unicode_handler import safe_print
 道教經典翻譯系統 - 監控命令列介面
 
 整合原有的 tracking_monitor.py 功能，提供統一的監控介面
@@ -18,6 +17,7 @@ from typing import Dict, List
 sys.path.append(str(Path(__file__).parent.parent))
 
 from core import get_tracker, get_file_monitor
+from core.unicode_handler import safe_print
 
 
 class MonitorCLI:

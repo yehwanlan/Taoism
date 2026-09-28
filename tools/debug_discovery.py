@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-from core.unicode_handler import safe_print
 調試智能發現問題
 """
 
@@ -10,6 +9,7 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent))
 
 from core.translator import TranslationEngine
+from core.unicode_handler import safe_print
 
 def debug_specific_chapters():
     """調試特定章節的發現問題"""

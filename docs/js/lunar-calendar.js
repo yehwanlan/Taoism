@@ -35,11 +35,8 @@ class LunarCalendar {
     // 陽曆轉農曆
     solarToLunar(year, month, day) {
         // 基準日期：1900年1月31日 = 農曆1900年正月初一
-        const baseDate = new Date(1900, 0, 31);
-        const targetDate = new Date(year, month - 1, day);
-        
-        // 計算天數差
-        let offset = Math.floor((targetDate - baseDate) / 86400000);
+        // 用 UTC 計算天數差，避免遇到夏令時間（例如台灣 1945–1979 年）時少算一天
+        let offset = Math.round((Date.UTC(year, month - 1, day) - Date.UTC(1900, 0, 31)) / 86400000);
         
         let i, temp = 0;
         let lunarYear;
@@ -106,33 +103,37 @@ class LunarCalendar {
 
     // 農曆轉陽曆
     lunarToSolar(lunarYear, lunarMonth, lunarDay, isLeap = false) {
-        const baseDate = new Date(1900, 0, 31);
         let offset = 0;
-        
+
         // 累加年份的天數
         for (let y = 1900; y < lunarYear; y++) {
             offset += this.lYearDays(y);
         }
-        
+
         // 累加月份的天數
         const leap = this.leapMonth(lunarYear);
         for (let m = 1; m < lunarMonth; m++) {
             offset += this.monthDays(lunarYear, m);
         }
-        
-        // 如果是閏月
+
+        // 閏月在目標月份之前，要多算閏月的天數
+        if (leap > 0 && leap < lunarMonth) {
+            offset += this.leapDays(lunarYear);
+        }
+
+        // 如果是閏月，閏月排在同名的正常月份之後
         if (isLeap && leap === lunarMonth) {
             offset += this.monthDays(lunarYear, lunarMonth);
         }
-        
+
         // 加上日期
         offset += lunarDay - 1;
-        
-        const result = new Date(baseDate.getTime() + offset * 86400000);
+
+        const result = new Date(Date.UTC(1900, 0, 31) + offset * 86400000);
         return {
-            year: result.getFullYear(),
-            month: result.getMonth() + 1,
-            day: result.getDate()
+            year: result.getUTCFullYear(),
+            month: result.getUTCMonth() + 1,
+            day: result.getUTCDate()
         };
     }
 

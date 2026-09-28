@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-from core.unicode_handler import safe_print
 智能翻譯模板生成器
 
 自動檢測現有經典並生成翻譯模板
@@ -11,6 +10,11 @@ import re
 from pathlib import Path
 from datetime import datetime
 from typing import List, Dict, Optional
+import sys
+
+# 讓 `python tools/xxx.py` 也能找到 core 套件
+sys.path.append(str(Path(__file__).parent.parent))
+from core.unicode_handler import safe_print
 
 
 class TemplateGenerator:

@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-from core.unicode_handler import safe_print
 調試href匹配問題
 """
 
@@ -12,6 +11,7 @@ sys.path.append(str(Path(__file__).parent.parent))
 
 from core.translator import TranslationEngine
 from bs4 import BeautifulSoup
+from core.unicode_handler import safe_print
 
 def debug_href_matching():
     """調試href匹配問題"""

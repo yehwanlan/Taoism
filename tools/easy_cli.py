@@ -7,26 +7,9 @@
 """
 
 import argparse
-
-def safe_print(*args, **kwargs):
-    """安全的打印函數，自動處理導入問題"""
-    try:
-        from core.unicode_handler import safe_print as _safe_print
-        _safe_print(*args, **kwargs)
-    except ImportError:
-        try:
-            import sys
-            from pathlib import Path
-            sys.path.append(str(Path(__file__).parent.parent))
-            from core.unicode_handler import safe_print as _safe_print
-            _safe_print(*args, **kwargs)
-        except ImportError:
-            print(*args, **kwargs)
-    except Exception:
-        print(*args, **kwargs)
-
 import json
 import sys
+from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional
 
@@ -35,6 +18,7 @@ sys.path.append(str(Path(__file__).parent.parent))
 
 from core import TranslationEngine, get_tracker
 from core.ai_engine import AIEngine
+from core.conventions import TRANSLATION_PLACEHOLDER
 from core.unicode_handler import safe_print, get_unicode_handler
 
 
@@ -111,18 +95,6 @@ class EasyCLI:
         safe_print(f"📖 URL: {url}")
         
         # 不再重複詢問，因為在互動模式中已經處理了
-        
-    def _get_book_title_from_url(self, url: str) -> str:
-        """從URL自動獲取書籍標題"""
-        try:
-            from core.translator import TranslationEngine
-            engine = TranslationEngine()
-            book_info = engine.get_book_info(url)
-            return book_info.get('title', f"書籍_{len(self.config['books']) + 1}")
-        except Exception as e:
-            safe_print(f"⚠️  無法自動獲取書名: {e}")
-            return f"書籍_{len(self.config['books']) + 1}"
-            
 
     def list_books(self) -> None:
         """列出所有書籍"""
@@ -358,47 +330,6 @@ class EasyCLI:
                 safe_print(f"❌ 發生錯誤: {e}")
                 safe_print("💡 請重新選擇操作")
 
-    def _ai_translation_interface(self) -> None:
-        """AI 智能翻譯互動介面"""
-        safe_print("\n🤖 AI 智能翻譯")
-        safe_print("=" * 50)
-        
-        # 使用 tracker 獲取進度
-        # 注意：這裡需要一個方法從 tracker 獲取未翻譯列表
-        # 假設 tracker 有一個 get_untranslated_files() 方法
-        try:
-            untranslated = self.tracker.get_untranslated_files()
-        except Exception as e:
-            safe_print(f"⚠️  警告: 獲取未翻譯列表時發生錯誤: {e}")
-            untranslated = []
-
-        if not untranslated:
-            safe_print("🎉 恭喜！所有經文都已翻譯完成。")
-            return
-
-        safe_print("以下是尚未翻譯的經文列表：")
-        for i, filename in enumerate(untranslated, 1):
-            safe_print(f"{i}. {filename}")
-
-        safe_print("\n請選擇要翻譯的經文：")
-        safe_print("a. 翻譯所有未翻譯的經文")
-        choice = input(f"請輸入編號 (1-{len(untranslated)}) 或 'a' 翻譯全部: ").strip().lower()
-
-        if choice == 'a':
-            safe_print("\n🚀 開始批量準備 AI 翻譯任務...")
-            for filename in untranslated:
-                self.ai_engine.prepare_translation_task(filename)
-        else:
-            try:
-                index = int(choice) - 1
-                if 0 <= index < len(untranslated):
-                    filename = untranslated[index]
-                    self.ai_engine.prepare_translation_task(filename)
-                else:
-                    safe_print("❌ 無效的編號。")
-            except ValueError:
-                safe_print("❌ 無效的輸入。")
-                
     def _show_interactive_help(self) -> None:
         """顯示互動模式幫助"""
         safe_print("""
@@ -519,9 +450,9 @@ class EasyCLI:
                 safe_print(f"  ⏭️  跳過已存在的模板: {translation_filename}")
                 continue
             
-            self._create_single_translation_template(source_file, translation_dir)
-            safe_print(f"  ✅ 已生成: {translation_filename}")
-            generated_count += 1
+            if self._create_single_translation_template(source_file, translation_dir):
+                safe_print(f"  ✅ 已生成: {translation_filename}")
+                generated_count += 1
         
         return generated_count
             
@@ -556,8 +487,7 @@ class EasyCLI:
     def _generate_templates_for_existing_sources(self) -> None:
         """為現有的原文檔案生成翻譯模板"""
         from pathlib import Path
-        from datetime import datetime
-        
+
         # 查找所有原文目錄
         docs_dir = Path("docs/source_texts")
         if not docs_dir.exists():
@@ -623,8 +553,8 @@ class EasyCLI:
         match = re.search(r'/book/([^/?]+)', url)
         return match.group(1) if match else "未知書籍"
 
-    def _create_single_translation_template(self, source_file_path, translation_dir):
-        """為單個原文檔案生成翻譯模板"""
+    def _create_single_translation_template(self, source_file_path, translation_dir) -> bool:
+        """為單個原文檔案生成翻譯模板，有實際寫入檔案時回傳 True"""
         try:
             # 讀取原文
             with open(source_file_path, 'r', encoding='utf-8') as f:
@@ -641,8 +571,8 @@ class EasyCLI:
             
             # 如果翻譯模板已存在，跳過
             if translation_file_path.exists():
-                return
-            
+                return False
+
             # 生成翻譯模板內容
             template_content = f"""# {title}
 
@@ -652,7 +582,7 @@ class EasyCLI:
 
 ## 翻譯
 
-[此處填入現代中文翻譯]
+{TRANSLATION_PLACEHOLDER}
 
 ---
 
@@ -679,9 +609,11 @@ class EasyCLI:
             # 保存翻譯模板
             with open(translation_file_path, 'w', encoding='utf-8') as f:
                 f.write(template_content)
-                
+            return True
+
         except Exception as e:
             safe_print(f"❌ 生成翻譯模板失敗 {source_file_path}: {e}")
+            return False
             
     def _ai_translation_interface(self) -> None:
         """AI翻譯介面"""

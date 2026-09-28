@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-"""
+# -*- coding: utf-8 -*-
+"""
 改進的爬蟲示例
 
 學習重點：
@@ -29,4 +30,41 @@ def improved_demo():
     ]
     
     safe_print("🔍 正在驗證網址品質...")
-    safe_print("-
+    safe_print("-" * 30)
+    
+    valid_urls = []
+    for title, url in test_urls:
+        safe_print(f"驗證: {title} - {url}")
+        result = finder.validate_scripture_url(url)
+        
+        if result['valid']:
+            safe_print(f"  ✅ 有效 (長度: {result['content_length']}, 指標: {result['taoism_indicators']})")
+            valid_urls.append((title, url))
+        else:
+            safe_print(f"  ❌ 無效 - {result['reason']}")
+    
+    safe_print(f"\n📥 開始爬取 {len(valid_urls)} 個有效網址...")
+    safe_print("-" * 30)
+    
+    success_count = 0
+    for title, url in valid_urls:
+        safe_print(f"爬取: {title}")
+        if crawler.crawl_scripture(url, title):
+            success_count += 1
+            safe_print("  ✅ 成功")
+        else:
+            safe_print("  ❌ 失敗")
+        
+        # 延遲避免被封鎖
+        crawler.delay()
+    
+    safe_print(f"\n🎉 爬取完成！成功: {success_count}/{len(valid_urls)}")
+    
+    safe_print("\n📚 學習重點：")
+    safe_print("1. 先驗證網址再爬取，提高成功率")
+    safe_print("2. 處理多個網址時要適當延遲")
+    safe_print("3. 檢查爬取內容的品質很重要")
+    safe_print("4. 失敗是學習過程的一部分")
+
+if __name__ == "__main__":
+    improved_demo()

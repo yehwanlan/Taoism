@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-from core.unicode_handler import safe_print
 AI翻譯品質評估工具
 
 用於評估AI翻譯的品質和規範符合度
@@ -12,6 +11,11 @@ import json
 from pathlib import Path
 from typing import Dict, List, Tuple
 from datetime import datetime
+import sys
+
+# 讓 `python tools/xxx.py` 也能找到 core 套件
+sys.path.append(str(Path(__file__).parent.parent))
+from core.unicode_handler import safe_print
 
 
 class TranslationEvaluator:

@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-from core.unicode_handler import safe_print
 修復缺失章節工具
 
 專門用於修復 太上洞玄灵宝业报因缘经_DZ0336 等經典中缺失的品（章節）
@@ -14,6 +13,11 @@ import time
 from pathlib import Path
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
+import sys
+
+# 讓 `python tools/xxx.py` 也能找到 core 套件
+sys.path.append(str(Path(__file__).parent.parent))
+from core.unicode_handler import safe_print
 
 
 class ChapterFixer:

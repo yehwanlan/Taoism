@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-from core.unicode_handler import safe_print
 道教經典翻譯系統 - 檔案監控核心
 
 整合原有的 file_tracker.py 功能，提供統一的檔案監控介面
@@ -12,6 +11,7 @@ import hashlib
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional, Any
+from .unicode_handler import safe_print
 
 
 class FileMonitor:

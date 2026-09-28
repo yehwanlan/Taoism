@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-from core.unicode_handler import safe_print
 數字序列章節發現器
 
 針對使用數字序列ID的書籍，提供專門的子章節發現策略
@@ -15,6 +14,7 @@ from bs4 import BeautifulSoup
 from typing import Dict, List, Optional
 
 sys.path.append(str(Path(__file__).parent.parent))
+from core.unicode_handler import safe_print
 
 class NumericSequenceDiscovery:
     """數字序列章節發現器"""

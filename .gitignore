@@ -111,6 +111,7 @@ coverage.xml
 local_*
 dev_*
 test_*
+!tests/test_*.py
 
 # 開發測試文件
 tools/temp/

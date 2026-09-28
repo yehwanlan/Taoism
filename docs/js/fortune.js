@@ -244,8 +244,8 @@ class FortuneChecker {
         let jdn = day + Math.floor((153 * m + 2) / 5) + 365 * y + 
                   Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400) - 32045;
         
-        const baseJDN = 2414686; // 1900年1月31日
-        const baseStemBranchIndex = 36; // 庚子
+        const baseJDN = 2415051; // 1900年1月31日
+        const baseStemBranchIndex = 40; // 甲辰
         const daysDiff = jdn - baseJDN;
         
         let stemBranchIndex = (baseStemBranchIndex + daysDiff) % 60;
@@ -258,7 +258,7 @@ class FortuneChecker {
         
         return {
             type: '日干支計算',
-            baseDate: '2000年1月1日 (戊午日)',
+            baseDate: '1900年1月31日 (甲辰日)',
             baseJDN: baseJDN,
             targetJDN: jdn,
             daysDiff: daysDiff,

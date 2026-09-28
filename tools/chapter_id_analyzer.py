@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-from core.unicode_handler import safe_print
 章節ID分析器 - 智能識別章節ID模式並採用對應策略
 
 根據章節ID的特徵（數字序列 vs 隨機字符串）來決定最佳的子章節發現策略
@@ -14,6 +13,7 @@ from typing import Dict, List, Tuple, Optional
 from dataclasses import dataclass
 
 sys.path.append(str(Path(__file__).parent.parent))
+from core.unicode_handler import safe_print
 
 @dataclass
 class ChapterIdPattern:

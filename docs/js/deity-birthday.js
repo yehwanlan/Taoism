@@ -390,11 +390,16 @@ class DeityBirthdayChecker {
             date.getMonth() + 1, 
             date.getDate()
         );
-        
+
+        // 聖誕在正常月份慶祝，閏月不重複
+        if (lunar.isLeap) {
+            return [];
+        }
+
         const month = String(lunar.month).padStart(2, '0');
         const day = String(lunar.day).padStart(2, '0');
         const key = `${month}-${day}`;
-        
+
         return this.deityBirthdays[key] || [];
     }
     

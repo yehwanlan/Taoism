@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-from core.unicode_handler import safe_print
 資料遷移工具
 
 將舊系統的資料遷移到新的模組化結構中
@@ -11,6 +10,11 @@ import json
 import shutil
 from pathlib import Path
 from datetime import datetime
+import sys
+
+# 讓 `python tools/xxx.py` 也能找到 core 套件
+sys.path.append(str(Path(__file__).parent.parent))
+from core.unicode_handler import safe_print
 
 
 class DataMigrator:

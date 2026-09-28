@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-from core.unicode_handler import safe_print
 修復層級章節工具
 
 專門處理有層級結構的經典，如每卷包含多個品的情況
@@ -14,6 +13,11 @@ import time
 from pathlib import Path
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
+import sys
+
+# 讓 `python tools/xxx.py` 也能找到 core 套件
+sys.path.append(str(Path(__file__).parent.parent))
+from core.unicode_handler import safe_print
 
 
 class HierarchicalChapterFixer:

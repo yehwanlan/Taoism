@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-from core.unicode_handler import safe_print
 專門修復 DZ0336 太上洞玄灵宝业报因缘经 的結構問題
 
 根據meta description中的信息，這本書應該有以下結構：
@@ -19,6 +18,11 @@ import json
 import time
 from pathlib import Path
 from bs4 import BeautifulSoup
+import sys
+
+# 讓 `python tools/xxx.py` 也能找到 core 套件
+sys.path.append(str(Path(__file__).parent.parent))
+from core.unicode_handler import safe_print
 
 
 class DZ0336StructureFixer:

@@ -248,7 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 { number: "01", title: "太上洞玄灵宝法躅经" },
             ]
         },
-        "太上洞玄灵宝滅度五炼生尸妙经_DZ0369": {
+        "太上洞玄灵宝灭度五炼生尸妙经_DZ0369": {
             title: "太上洞玄灵宝灭度五炼生尸妙经",
             chapters: [
                 { number: "01", title: "太上洞玄灵宝灭度五炼生尸妙经" },
