@@ -22,8 +22,25 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # Single deploy job since we're just deploying
+  # 先檢查程式碼與執行測試，通過才部署
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4 pytest ruff
+      - name: Lint（未定義名稱、重複定義、未使用的 import）
+        run: ruff check --select F401,F811,F821,F841 core tools tests main.py
+      - name: Tests
+        run: pytest -q
+
   deploy:
+    needs: test
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
