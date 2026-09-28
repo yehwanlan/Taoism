@@ -1,11 +1,11 @@
 {
   "metadata": {
     "created": "2026-09-28T20:59:38.677056",
-    "last_updated": "2026-09-28T20:59:38.852890",
+    "last_updated": "2026-09-28T21:21:32.111543",
     "version": "2.0",
-    "total_classics": 31,
-    "total_chapters": 179,
-    "total_characters": 427514
+    "total_classics": 36,
+    "total_chapters": 186,
+    "total_characters": 433258
   },
   "classics": {
     "PC2471": {
@@ -36,7 +36,7 @@
         "completed_chapters": 1,
         "total_chapters": 1,
         "completion_percentage": 100.0,
-        "last_translation_update": "2026-09-28T20:59:38.834543"
+        "last_translation_update": "2026-09-28T21:21:32.091102"
       },
       "tags": [
         "道教經典",
@@ -75,7 +75,7 @@
         "completed_chapters": 0,
         "total_chapters": 1,
         "completion_percentage": 0.0,
-        "last_translation_update": "2026-09-28T20:59:38.834686"
+        "last_translation_update": "2026-09-28T21:21:32.091252"
       },
       "tags": [],
       "category": "其他道教文獻",
@@ -221,7 +221,7 @@
         "completed_chapters": 0,
         "total_chapters": 15,
         "completion_percentage": 0.0,
-        "last_translation_update": "2026-09-28T20:59:38.835896"
+        "last_translation_update": "2026-09-28T21:21:32.092385"
       },
       "tags": [
         "道教神話",
@@ -548,7 +548,7 @@
         "completed_chapters": 0,
         "total_chapters": 37,
         "completion_percentage": 0.0,
-        "last_translation_update": "2026-09-28T20:59:38.839981"
+        "last_translation_update": "2026-09-28T21:21:32.096528"
       },
       "tags": [
         "宋代"
@@ -584,7 +584,7 @@
         "completed_chapters": 0,
         "total_chapters": 1,
         "completion_percentage": 0.0,
-        "last_translation_update": "2026-09-28T20:59:38.840092"
+        "last_translation_update": "2026-09-28T21:21:32.096679"
       },
       "tags": [
         "道教經典",
@@ -622,7 +622,7 @@
         "completed_chapters": 1,
         "total_chapters": 1,
         "completion_percentage": 100.0,
-        "last_translation_update": "2026-09-28T20:59:38.840192"
+        "last_translation_update": "2026-09-28T21:21:32.096801"
       },
       "tags": [
         "道教經典",
@@ -661,7 +661,7 @@
         "completed_chapters": 1,
         "total_chapters": 1,
         "completion_percentage": 100.0,
-        "last_translation_update": "2026-09-28T20:59:38.840298"
+        "last_translation_update": "2026-09-28T21:21:32.096916"
       },
       "tags": [
         "道教經典",
@@ -700,7 +700,7 @@
         "completed_chapters": 1,
         "total_chapters": 1,
         "completion_percentage": 100.0,
-        "last_translation_update": "2026-09-28T20:59:38.840395"
+        "last_translation_update": "2026-09-28T21:21:32.097018"
       },
       "tags": [
         "道教經典",
@@ -739,7 +739,7 @@
         "completed_chapters": 0,
         "total_chapters": 1,
         "completion_percentage": 0.0,
-        "last_translation_update": "2026-09-28T20:59:38.840516"
+        "last_translation_update": "2026-09-28T21:21:32.097152"
       },
       "tags": [
         "道教經典",
@@ -985,7 +985,7 @@
         "completed_chapters": 21,
         "total_chapters": 27,
         "completion_percentage": 77.8,
-        "last_translation_update": "2026-09-28T20:59:38.843219"
+        "last_translation_update": "2026-09-28T21:21:32.099727"
       },
       "tags": [
         "道教經典",
@@ -1024,7 +1024,7 @@
         "completed_chapters": 1,
         "total_chapters": 1,
         "completion_percentage": 100.0,
-        "last_translation_update": "2026-09-28T20:59:38.843354"
+        "last_translation_update": "2026-09-28T21:21:32.099863"
       },
       "tags": [
         "道教經典",
@@ -1063,7 +1063,7 @@
         "completed_chapters": 0,
         "total_chapters": 1,
         "completion_percentage": 0.0,
-        "last_translation_update": "2026-09-28T20:59:38.843465"
+        "last_translation_update": "2026-09-28T21:21:32.099982"
       },
       "tags": [
         "道教經典",
@@ -1100,7 +1100,7 @@
         "completed_chapters": 1,
         "total_chapters": 1,
         "completion_percentage": 100.0,
-        "last_translation_update": "2026-09-28T20:59:38.843603"
+        "last_translation_update": "2026-09-28T21:21:32.100128"
       },
       "tags": [
         "道教經典",
@@ -1146,7 +1146,7 @@
         "completed_chapters": 0,
         "total_chapters": 2,
         "completion_percentage": 0.0,
-        "last_translation_update": "2026-09-28T20:59:38.843846"
+        "last_translation_update": "2026-09-28T21:21:32.100382"
       },
       "tags": [
         "道教經典",
@@ -1184,7 +1184,7 @@
         "completed_chapters": 1,
         "total_chapters": 1,
         "completion_percentage": 100.0,
-        "last_translation_update": "2026-09-28T20:59:38.843952"
+        "last_translation_update": "2026-09-28T21:21:32.100524"
       },
       "tags": [
         "道教經典",
@@ -1223,7 +1223,7 @@
         "completed_chapters": 1,
         "total_chapters": 1,
         "completion_percentage": 100.0,
-        "last_translation_update": "2026-09-28T20:59:38.844102"
+        "last_translation_update": "2026-09-28T21:21:32.100652"
       },
       "tags": [
         "道教經典",
@@ -1262,7 +1262,7 @@
         "completed_chapters": 1,
         "total_chapters": 1,
         "completion_percentage": 100.0,
-        "last_translation_update": "2026-09-28T20:59:38.844255"
+        "last_translation_update": "2026-09-28T21:21:32.100920"
       },
       "tags": [
         "道教經典",
@@ -1301,7 +1301,7 @@
         "completed_chapters": 0,
         "total_chapters": 1,
         "completion_percentage": 0.0,
-        "last_translation_update": "2026-09-28T20:59:38.844380"
+        "last_translation_update": "2026-09-28T21:21:32.101230"
       },
       "tags": [
         "道教經典",
@@ -1340,7 +1340,7 @@
         "completed_chapters": 0,
         "total_chapters": 1,
         "completion_percentage": 0.0,
-        "last_translation_update": "2026-09-28T20:59:38.844591"
+        "last_translation_update": "2026-09-28T21:21:32.101387"
       },
       "tags": [
         "道教經典",
@@ -1379,7 +1379,7 @@
         "completed_chapters": 0,
         "total_chapters": 1,
         "completion_percentage": 0.0,
-        "last_translation_update": "2026-09-28T20:59:38.844971"
+        "last_translation_update": "2026-09-28T21:21:32.101668"
       },
       "tags": [
         "道教經典",
@@ -1417,7 +1417,7 @@
         "completed_chapters": 0,
         "total_chapters": 1,
         "completion_percentage": 0.0,
-        "last_translation_update": "2026-09-28T20:59:38.845159"
+        "last_translation_update": "2026-09-28T21:21:32.101875"
       },
       "tags": [
         "道教經典",
@@ -1456,7 +1456,7 @@
         "completed_chapters": 0,
         "total_chapters": 1,
         "completion_percentage": 0.0,
-        "last_translation_update": "2026-09-28T20:59:38.845285"
+        "last_translation_update": "2026-09-28T21:21:32.102050"
       },
       "tags": [
         "佚名",
@@ -1789,7 +1789,7 @@
         "completed_chapters": 0,
         "total_chapters": 38,
         "completion_percentage": 0.0,
-        "last_translation_update": "2026-09-28T20:59:38.848918"
+        "last_translation_update": "2026-09-28T21:21:32.105323"
       },
       "tags": [
         "東晉",
@@ -1900,7 +1900,7 @@
         "completed_chapters": 0,
         "total_chapters": 10,
         "completion_percentage": 0.0,
-        "last_translation_update": "2026-09-28T20:59:38.849722"
+        "last_translation_update": "2026-09-28T21:21:32.106102"
       },
       "tags": [],
       "category": "其他道教文獻",
@@ -1934,7 +1934,7 @@
         "completed_chapters": 0,
         "total_chapters": 1,
         "completion_percentage": 0.0,
-        "last_translation_update": "2026-09-28T20:59:38.849820"
+        "last_translation_update": "2026-09-28T21:21:32.106208"
       },
       "tags": [
         "佚名",
@@ -2003,7 +2003,7 @@
         "completed_chapters": 0,
         "total_chapters": 5,
         "completion_percentage": 0.0,
-        "last_translation_update": "2026-09-28T20:59:38.850257"
+        "last_translation_update": "2026-09-28T21:21:32.106614"
       },
       "tags": [
         "佚名"
@@ -2055,7 +2055,7 @@
         "completed_chapters": 0,
         "total_chapters": 3,
         "completion_percentage": 0.0,
-        "last_translation_update": "2026-09-28T20:59:38.850496"
+        "last_translation_update": "2026-09-28T21:21:32.106852"
       },
       "tags": [
         "唐代"
@@ -2131,7 +2131,7 @@
         "completed_chapters": 0,
         "total_chapters": 6,
         "completion_percentage": 0.0,
-        "last_translation_update": "2026-09-28T20:59:38.850975"
+        "last_translation_update": "2026-09-28T21:21:32.107312"
       },
       "tags": [
         "佚名"
@@ -2279,7 +2279,7 @@
         "completed_chapters": 15,
         "total_chapters": 15,
         "completion_percentage": 100.0,
-        "last_translation_update": "2026-09-28T20:59:38.852657"
+        "last_translation_update": "2026-09-28T21:21:32.109794"
       },
       "tags": [
         "佚名"
@@ -2315,7 +2315,7 @@
         "completed_chapters": 0,
         "total_chapters": 1,
         "completion_percentage": 0.0,
-        "last_translation_update": "2026-09-28T20:59:38.852780"
+        "last_translation_update": "2026-09-28T21:21:32.110097"
       },
       "tags": [
         "道教經典",
@@ -2354,7 +2354,7 @@
         "completed_chapters": 0,
         "total_chapters": 1,
         "completion_percentage": 0.0,
-        "last_translation_update": "2026-09-28T20:59:38.852887"
+        "last_translation_update": "2026-09-28T21:21:32.110399"
       },
       "tags": [
         "道教經典",
@@ -2362,6 +2362,209 @@
         "佚名"
       ],
       "category": "其他道教文獻",
+      "status": "新增"
+    },
+    "DZ0620": {
+      "book_info": {
+        "id": "DZ0620",
+        "title": "太上老君说常清静妙经",
+        "author": "[唐] 佚名 撰",
+        "url": "https://www.shidianguji.com/book/DZ0620/chapter/DZ0620_1"
+      },
+      "folder_name": "太上老君说常清静妙经_DZ0620",
+      "source_dir": "docs\\source_texts\\太上老君说常清静妙经_DZ0620",
+      "translation_dir": "docs\\translations\\太上老君说常清静妙经_DZ0620",
+      "added_time": "2026-09-28T21:19:51.331862",
+      "last_modified": "2026-09-28T21:19:51.331863",
+      "chapter_count": 1,
+      "total_characters": 672,
+      "chapters": [
+        {
+          "number": 1,
+          "title": "太上老君说常清静妙经",
+          "file_size": 2447,
+          "char_count": 672,
+          "file_hash": "857d88b4e63d4806a32780426f9ae4c9",
+          "added_time": "2026-09-28T21:19:51.331854"
+        }
+      ],
+      "translation_status": {
+        "completed_chapters": 0,
+        "total_chapters": 1,
+        "completion_percentage": 0.0,
+        "last_translation_update": "2026-09-28T21:21:32.110694"
+      },
+      "tags": [
+        "佚名",
+        "唐代",
+        "道教經典",
+        "太上"
+      ],
+      "category": "道教經文",
+      "status": "新增"
+    },
+    "DZ0013": {
+      "book_info": {
+        "id": "DZ0013",
+        "title": "高上玉皇心印经",
+        "author": "[南宋] 佚名 撰",
+        "url": "https://www.shidianguji.com/book/DZ0013/chapter/DZ0013_1"
+      },
+      "folder_name": "高上玉皇心印经_DZ0013",
+      "source_dir": "docs\\source_texts\\高上玉皇心印经_DZ0013",
+      "translation_dir": "docs\\translations\\高上玉皇心印经_DZ0013",
+      "added_time": "2026-09-28T21:20:18.341323",
+      "last_modified": "2026-09-28T21:20:18.341326",
+      "chapter_count": 1,
+      "total_characters": 221,
+      "chapters": [
+        {
+          "number": 1,
+          "title": "高上玉皇心印经",
+          "file_size": 875,
+          "char_count": 221,
+          "file_hash": "a9767849272b3ae285096ca73b5fa6d8",
+          "added_time": "2026-09-28T21:20:18.341307"
+        }
+      ],
+      "translation_status": {
+        "completed_chapters": 0,
+        "total_chapters": 1,
+        "completion_percentage": 0.0,
+        "last_translation_update": "2026-09-28T21:21:32.111002"
+      },
+      "tags": [
+        "宋代",
+        "佚名"
+      ],
+      "category": "其他道教文獻",
+      "status": "新增"
+    },
+    "DZ0622": {
+      "book_info": {
+        "id": "DZ0622",
+        "title": "太上玄灵北斗本命延生真经",
+        "author": "[东汉] 佚名 撰",
+        "url": "https://www.shidianguji.com/book/DZ0622/chapter/DZ0622_1"
+      },
+      "folder_name": "太上玄灵北斗本命延生真经_DZ0622",
+      "source_dir": "docs\\source_texts\\太上玄灵北斗本命延生真经_DZ0622",
+      "translation_dir": "docs\\translations\\太上玄灵北斗本命延生真经_DZ0622",
+      "added_time": "2026-09-28T21:20:38.496773",
+      "last_modified": "2026-09-28T21:20:38.496778",
+      "chapter_count": 1,
+      "total_characters": 2406,
+      "chapters": [
+        {
+          "number": 1,
+          "title": "太上玄灵北斗本命延生真经",
+          "file_size": 8771,
+          "char_count": 2406,
+          "file_hash": "e7bdcca17fd75868bc27dd6a85811ade",
+          "added_time": "2026-09-28T21:20:38.496730"
+        }
+      ],
+      "translation_status": {
+        "completed_chapters": 0,
+        "total_chapters": 1,
+        "completion_percentage": 0.0,
+        "last_translation_update": "2026-09-28T21:21:32.111179"
+      },
+      "tags": [
+        "佚名",
+        "太上",
+        "道教經典"
+      ],
+      "category": "道教經文",
+      "status": "新增"
+    },
+    "DZ0031": {
+      "book_info": {
+        "id": "DZ0031",
+        "title": "黄帝阴符经",
+        "author": "[南北朝] 佚名 撰",
+        "url": "https://www.shidianguji.com/book/DZ0031/chapter/DZ0031_1"
+      },
+      "folder_name": "黄帝阴符经_DZ0031",
+      "source_dir": "docs\\source_texts\\黄帝阴符经_DZ0031",
+      "translation_dir": "docs\\translations\\黄帝阴符经_DZ0031",
+      "added_time": "2026-09-28T21:21:13.287319",
+      "last_modified": "2026-09-28T21:21:13.287321",
+      "chapter_count": 3,
+      "total_characters": 500,
+      "chapters": [
+        {
+          "number": 2,
+          "title": "神仙抱一演道章上",
+          "file_size": 574,
+          "char_count": 152,
+          "file_hash": "a1d73ff07007c3c6c97f5a0218d3e40a",
+          "added_time": "2026-09-28T21:21:13.286863"
+        },
+        {
+          "number": 3,
+          "title": "富国安民演法章中",
+          "file_size": 409,
+          "char_count": 109,
+          "file_hash": "3e323c32f8ca1ca30a91eae22c593fdd",
+          "added_time": "2026-09-28T21:21:13.287060"
+        },
+        {
+          "number": 4,
+          "title": "强兵战胜演术章下",
+          "file_size": 869,
+          "char_count": 239,
+          "file_hash": "e3cb16373e4a9d1bc8bd1280cf670775",
+          "added_time": "2026-09-28T21:21:13.287310"
+        }
+      ],
+      "translation_status": {
+        "completed_chapters": 0,
+        "total_chapters": 3,
+        "completion_percentage": 0.0,
+        "last_translation_update": "2026-09-28T21:21:32.111438"
+      },
+      "tags": [
+        "佚名"
+      ],
+      "category": "其他道教文獻",
+      "status": "新增"
+    },
+    "DZ1437": {
+      "book_info": {
+        "id": "DZ1437",
+        "title": "太上老君开天经",
+        "author": "[南北朝] 题张泮 撰",
+        "url": "https://www.shidianguji.com/book/DZ1437/chapter/DZ1437_1"
+      },
+      "folder_name": "太上老君开天经_DZ1437",
+      "source_dir": "docs\\source_texts\\太上老君开天经_DZ1437",
+      "translation_dir": "docs\\translations\\太上老君开天经_DZ1437",
+      "added_time": "2026-09-28T21:21:32.057426",
+      "last_modified": "2026-09-28T21:21:32.057427",
+      "chapter_count": 1,
+      "total_characters": 1945,
+      "chapters": [
+        {
+          "number": 1,
+          "title": "太上老君开天经",
+          "file_size": 7275,
+          "char_count": 1945,
+          "file_hash": "98da26d54574e6fda16ee73cb431efa3",
+          "added_time": "2026-09-28T21:21:32.057418"
+        }
+      ],
+      "translation_status": {
+        "completed_chapters": 0,
+        "total_chapters": 1,
+        "completion_percentage": 0.0,
+        "last_translation_update": "2026-09-28T21:21:32.111540"
+      },
+      "tags": [
+        "太上",
+        "道教經典"
+      ],
+      "category": "道教經文",
       "status": "新增"
     }
   }

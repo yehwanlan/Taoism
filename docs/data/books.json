@@ -1,10 +1,42 @@
 {
   "stats": {
-    "books": 31,
-    "chapters": 179,
+    "books": 36,
+    "chapters": 186,
     "translated": 45
   },
   "books": [
+    {
+      "id": "高上玉皇心印经_DZ0013",
+      "title": "高上玉皇心印经",
+      "chapters": [
+        {
+          "number": "01",
+          "title": "高上玉皇心印经",
+          "translated": false
+        }
+      ]
+    },
+    {
+      "id": "黄帝阴符经_DZ0031",
+      "title": "黄帝阴符经",
+      "chapters": [
+        {
+          "number": "02",
+          "title": "神仙抱一演道章上",
+          "translated": false
+        },
+        {
+          "number": "03",
+          "title": "富国安民演法章中",
+          "translated": false
+        },
+        {
+          "number": "04",
+          "title": "强兵战胜演术章下",
+          "translated": false
+        }
+      ]
+    },
     {
       "id": "混元陽符經_DZ0032",
       "title": "混元陽符經",
@@ -533,6 +565,28 @@
       ]
     },
     {
+      "id": "太上老君说常清静妙经_DZ0620",
+      "title": "太上老君说常清静妙经",
+      "chapters": [
+        {
+          "number": "01",
+          "title": "太上老君说常清静妙经",
+          "translated": false
+        }
+      ]
+    },
+    {
+      "id": "太上玄灵北斗本命延生真经_DZ0622",
+      "title": "太上玄灵北斗本命延生真经",
+      "chapters": [
+        {
+          "number": "01",
+          "title": "太上玄灵北斗本命延生真经",
+          "translated": false
+        }
+      ]
+    },
+    {
       "id": "南华真经口义_DZ0735",
       "title": "南华真经口义",
       "chapters": [
@@ -783,6 +837,17 @@
         {
           "number": "01",
           "title": "枕中经",
+          "translated": false
+        }
+      ]
+    },
+    {
+      "id": "太上老君开天经_DZ1437",
+      "title": "太上老君开天经",
+      "chapters": [
+        {
+          "number": "01",
+          "title": "太上老君开天经",
           "translated": false
         }
       ]
