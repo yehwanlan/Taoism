@@ -10,7 +10,7 @@ import json
 import hashlib
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Optional, Any
+from typing import Dict, List, Optional
 from .unicode_handler import safe_print
 
 
@@ -133,21 +133,7 @@ class FileMonitor:
         """獲取最近的操作記錄"""
         operations = self.log_data["operations"]
         return operations[-limit:] if operations else []
-        
-    def get_operations_by_type(self, file_type: str) -> List[Dict]:
-        """根據檔案類型獲取操作記錄"""
-        return [
-            op for op in self.log_data["operations"]
-            if op.get("file_type") == file_type
-        ]
-        
-    def get_operations_by_date(self, date_str: str) -> List[Dict]:
-        """根據日期獲取操作記錄"""
-        return [
-            op for op in self.log_data["operations"]
-            if op["timestamp"].startswith(date_str)
-        ]
-        
+
     def get_statistics(self) -> Dict:
         """獲取統計資訊"""
         operations = self.log_data["operations"]

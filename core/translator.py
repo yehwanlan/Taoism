@@ -13,7 +13,7 @@ import time
 from pathlib import Path
 from bs4 import BeautifulSoup
 from datetime import datetime
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional
 
 from .conventions import TRANSLATION_PLACEHOLDER, chapter_stem
 from .tracker import ClassicTracker
@@ -205,8 +205,6 @@ class TranslationEngine:
     
     def _parse_hierarchical_chapters(self, soup: BeautifulSoup) -> List[Dict]:
         """解析層級章節結構"""
-        chapters = []
-        
         # 尋找目錄樹結構
         catalog_selectors = [
             '.reader-catalog-tree',
@@ -692,11 +690,6 @@ class TranslationEngine:
         match = re.search(r'/chapter/([^/?]+)', href)
         return match.group(1) if match else None
         
-    def _get_chapters_via_api(self) -> List[Dict]:
-        """通過API方式獲取章節列表"""
-        # 預留API實現
-        return []
-        
     def crawl_chapter(self, chapter_info: Dict) -> Optional[Dict]:
         """爬取單一章節（支持層級結構和內容去重）"""
         from .unicode_handler import safe_print
@@ -1065,14 +1058,12 @@ class TranslationEngine:
         
         # 查找卷的介紹或概述部分
         in_summary = False
-        chapter_started = False
-        
+
         for line in lines:
             line = line.strip()
             
             # 如果遇到品的標題，停止提取
             if re.search(r'品第[一二三四五六七八九十]+', line) or re.search(r'第[一二三四五六七八九十]+品', line):
-                chapter_started = True
                 break
             
             # 如果是卷標題行，開始提取

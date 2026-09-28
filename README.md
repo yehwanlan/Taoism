@@ -239,12 +239,7 @@ python main.py monitor reports
 
 ## 🔄 從舊版本升級
 
-如果您使用的是舊版本（v1.x），系統提供了自動遷移工具：
-
-```bash
-# 執行資料遷移（已完成）
-python tools/migrate_data.py
-```
+v1.x → v2.0 的資料遷移已經完成，遷移工具已封存到 `archive/one_off_tools/migrate_data.py`。
 
 遷移後的變更：
 - ✅ 所有舊檔案已備份到 `backup/` 和 `archive/` 目錄
@@ -263,7 +258,9 @@ python tools/migrate_data.py
 - **tools/** - 命令列工具
   - `easy_cli.py` - 翻譯介面
   - `monitor_cli.py` - 監控介面
-  - `migrate_data.py` - 資料遷移工具
+  - `ai_translator.py` / `ai_translation_evaluator.py` - AI 翻譯與品質評估
+
+- **archive/** - 已不再使用、保留參考的舊程式（說明見 `archive/README.md`）
 
 ### 擴展功能
 

@@ -12,7 +12,6 @@ Unicode處理器 - 解決Windows CMD Unicode顯示問題
 import sys
 import os
 import locale
-from typing import Optional
 
 class UnicodeHandler:
     """Unicode處理器"""
@@ -56,7 +55,7 @@ class UnicodeHandler:
                     sys.stdout.reconfigure(encoding='utf-8', errors='replace')
                     sys.stderr.reconfigure(encoding='utf-8', errors='replace')
                 
-            except Exception as e:
+            except Exception:
                 pass  # 靜默處理，使用備用方案
     
     def safe_print(self, *args, **kwargs):

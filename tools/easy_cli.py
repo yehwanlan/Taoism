@@ -11,15 +11,14 @@ import json
 import sys
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, List
 
 # 添加父目錄到路徑以便導入核心模組
 sys.path.append(str(Path(__file__).parent.parent))
 
 from core import TranslationEngine, get_tracker
-from core.ai_engine import AIEngine
 from core.conventions import TRANSLATION_PLACEHOLDER
-from core.unicode_handler import safe_print, get_unicode_handler
+from core.unicode_handler import safe_print
 
 
 class EasyCLI:
@@ -31,7 +30,6 @@ class EasyCLI:
         self.config = self._load_config()
         self.engine = TranslationEngine(self.config.get("translation", {}))
         self.tracker = get_tracker()
-        self.ai_engine = AIEngine(self.config.get("ai", {}))
         
     def _load_config(self) -> Dict:
         """載入配置"""

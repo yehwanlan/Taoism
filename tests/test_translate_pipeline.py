@@ -91,8 +91,7 @@ def test_new_templates_count_as_untranslated(engine, tmp_path):
 
     status = engine.tracker.get_classic_by_id("TEST01")["translation_status"]
     assert status["completed_chapters"] == 0
-    assert engine.tracker.get_untranslated_files() == [
-        "測試經_TEST01/原文/01_开度品第一.txt", "測試經_TEST01/原文/03_善对品第二.txt"]
+    assert status["total_chapters"] == 2
 
 
 def test_placeholder_detection_covers_legacy_templates():

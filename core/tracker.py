@@ -10,7 +10,7 @@ import json
 import hashlib
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Optional, Any
+from typing import Dict, List, Optional
 from .conventions import chapter_stem, is_untranslated
 from .unicode_handler import safe_print
 
@@ -248,21 +248,7 @@ class ClassicTracker:
     def get_classic_by_id(self, classic_id: str) -> Optional[Dict]:
         """根據ID獲取經典"""
         return self.data["classics"].get(classic_id)
-        
-    def get_classics_by_category(self, category: str) -> List[Dict]:
-        """根據分類獲取經典"""
-        return [
-            classic for classic in self.data["classics"].values()
-            if classic.get("category") == category
-        ]
-        
-    def get_classics_by_tag(self, tag: str) -> List[Dict]:
-        """根據標籤獲取經典"""
-        return [
-            classic for classic in self.data["classics"].values()
-            if tag in classic.get("tags", [])
-        ]
-        
+
     def generate_report(self) -> str:
         """生成詳細報告"""
         metadata = self.data.get("metadata", {})
@@ -354,51 +340,6 @@ class ClassicTracker:
             
         safe_print(f"📋 報告已儲存: {report_file}")
         return report_file
-
-    def get_untranslated_files(self) -> List[str]:
-        """獲取所有未翻譯的原文檔名列表，會檢查翻譯檔案內容以確保不是只有模板。"""
-        untranslated_files = []
-        base_source_path = Path.cwd() / 'docs' / 'source_texts'
-
-        for classic in self.data.get("classics", {}).values():
-            source_dir = Path(classic.get("source_dir", ""))
-            translation_dir = Path(classic.get("translation_dir", ""))
-            
-            if not source_dir.is_dir() or not translation_dir.is_dir():
-                continue
-
-            for chapter in classic.get("chapters", []):
-                stem = chapter_stem(chapter['number'], chapter['title'])
-                original_filename = f"{stem}.txt"
-                translation_filename = f"{stem}.md"
-                
-                # Construct the full path to the original file
-                original_file_path = source_dir / "原文" / original_filename
-                translation_file_path = translation_dir / translation_filename
-
-                is_translated = False
-                if translation_file_path.exists():
-                    try:
-                        with open(translation_file_path, 'r', encoding='utf-8') as f:
-                            content = f.read()
-                            if content.strip() and not is_untranslated(content):
-                                is_translated = True
-                    except Exception:
-                        pass
-
-                if original_file_path.exists() and not is_translated:
-                    try:
-                        # This creates a path relative to the `docs/source_texts` directory
-                        relative_path = original_file_path.relative_to(base_source_path)
-                        untranslated_files.append(str(relative_path).replace('\\', '/'))
-                    except ValueError:
-                        # Fallback for cases where the path logic might fail
-                        # This part might need adjustment if paths are not consistent
-                        folder_name = source_dir.name
-                        relative_fallback = f"{folder_name}/原文/{original_filename}"
-                        untranslated_files.append(relative_fallback.replace('\\', '/'))
-
-        return untranslated_files
 
 
 # 全域追蹤器實例

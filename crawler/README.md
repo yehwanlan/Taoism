@@ -42,18 +42,11 @@ crawler/
 ├── base_crawler.py             # 基礎爬蟲類別
 ├── README.md                   # 本文檔
 ├── 快速開始.md                  # 5分鐘上手指南
-├── README_更新說明.md           # 詳細API文檔
-│
-├── 舊版爬蟲（保留參考）/
-│   ├── shidian_selenium.py     # Selenium版本
-│   ├── smart_crawler.py        # 智能爬蟲
-│   ├── taoism_crawler.py       # 通用爬蟲
-│   └── ...其他舊版工具
-│
-└── docs/                       # 文檔目錄
-    ├── practical_guide.md      # 實用指南
-    └── 工具功能對照表.md        # 功能對照
+└── README_更新說明.md           # 詳細API文檔
 ```
+
+舊版與實驗性質的爬蟲（shidian_selenium、smart_crawler、taoism_crawler 等）
+及其說明文件已封存到 `archive/crawler_experiments/`。
 
 ## 🎯 主要爬蟲：shidian_crawler.py
 
@@ -122,11 +115,9 @@ Taoism/
 ### 新手入門
 1. **快速開始.md** - 5分鐘快速上手
 2. **README_更新說明.md** - 詳細API文檔
-3. **practical_guide.md** - 實用指南
 
 ### 進階使用
 - 查看 `shidian_crawler.py` 原始碼
-- 參考 `工具功能對照表.md`
 
 ## 📈 測試結果
 
@@ -255,20 +246,13 @@ results = crawler.batch_crawl(['DZ1422', 'DZ1439'])
 
 ## 🔄 舊版工具說明
 
-模組中保留了一些舊版爬蟲工具供參考：
-
-- `shidian_selenium.py` - 使用 Selenium 的版本（需要 ChromeDriver）
-- `smart_crawler.py` - 智能爬蟲（自動選擇策略）
-- `taoism_crawler.py` - 通用道教經典爬蟲
-
-**建議：** 新專案請使用 `shidian_crawler.py`
+舊版爬蟲工具（`shidian_selenium.py`、`smart_crawler.py`、`taoism_crawler.py` 等）
+已封存到 `archive/crawler_experiments/`，新專案請使用 `shidian_crawler.py`。
 
 ## 📚 相關文檔
 
 - [快速開始指南](快速開始.md) - 5分鐘上手
 - [詳細API文檔](README_更新說明.md) - 完整API說明
-- [實用指南](docs/practical_guide.md) - 進階技巧
-- [功能對照表](工具功能對照表.md) - 工具比較
 
 ## 🎉 開始使用
 

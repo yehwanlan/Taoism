@@ -11,7 +11,6 @@ import time
 import sys
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List
 
 # 添加父目錄到路徑以便導入核心模組
 sys.path.append(str(Path(__file__).parent.parent))

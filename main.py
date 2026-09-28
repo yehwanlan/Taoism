@@ -91,7 +91,7 @@ python main.py info
     monitor_parser.add_argument('param', nargs='?', type=int, help='參數（數量或間隔）')
 
     # 資訊子命令
-    info_parser = subparsers.add_parser('info', help='顯示系統資訊')
+    subparsers.add_parser('info', help='顯示系統資訊')
 
     args = parser.parse_args()
 

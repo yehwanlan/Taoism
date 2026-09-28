@@ -7,10 +7,8 @@ AI翻譯品質評估工具
 """
 
 import re
-import json
 from pathlib import Path
-from typing import Dict, List, Tuple
-from datetime import datetime
+from typing import Dict
 import sys
 
 # 讓 `python tools/xxx.py` 也能找到 core 套件
