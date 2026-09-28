@@ -15,9 +15,10 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 from typing import Dict, List, Optional
 
-from .conventions import TRANSLATION_PLACEHOLDER, chapter_stem
+from .conventions import TRANSLATION_PLACEHOLDER, chapter_stem, is_untranslated
 from .tracker import ClassicTracker
 from .file_monitor import FileMonitor
+from .web_data import write_web_data
 
 # 確保safe_print在所有地方都可用
 try:
@@ -1147,7 +1148,12 @@ class TranslationEngine:
         
         filename = f"{chapter_stem(chapter_number, title)}.md"
         file_path = self.translation_dir / filename
-        
+
+        # 重新爬取同一本書時，不能用空白模板蓋掉已經完成的翻譯
+        if file_path.exists() and not is_untranslated(file_path.read_text(encoding='utf-8')):
+            safe_print(f"⏭️  {level_prefix}已有翻譯，保留不覆蓋: {filename}")
+            return
+
         # 根據層級和類型調整模板內容
         structure_info = ""
         if content_data.get('is_volume'):
@@ -1409,7 +1415,11 @@ class TranslationEngine:
                     
                 except Exception as e:
                     safe_print(f"⚠️  追蹤系統更新失敗: {e}")
-            
+
+                # 更新網站書單，新書才會出現在網頁上
+                stats = write_web_data()
+                safe_print(f"🌐 網站書單已更新：{stats['books']} 部經典、{stats['chapters']} 章")
+
             # 10. 生成總結報告
             safe_print(f"\n🎉 翻譯完成！")
             safe_print(f"✅ 成功處理：{success_count}/{len(chapters)} 章")

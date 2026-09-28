@@ -84,350 +84,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextButton = document.getElementById('next-chapter');
     const toggleViewButton = document.getElementById('toggle-view');
 
-    // 系統資料結構
-    const booksData = {
-        "太上老君説常清靜經注_DZ0756": {
-            title: "太上老君説常清靜經注",
-            chapters: [
-                { number: "01", title: "太上老君説常清靜注" },
-            ]
-        },
-        "P.Ch.2471太上升玄护命经一卷_PC2471": {
-            title: "P.Ch.2471太上升玄护命经一卷",
-            chapters: [
-                { number: "01", title: "太上升玄护命经一卷" },
-            ]
-        },
-        "元始天尊说十一曜大消灾神咒经_DZ0043": {
-            title: "元始天尊说十一曜大消灾神咒经",
-            chapters: [
-                { number: "01", title: "元始天尊说十一曜大消灾神咒经" },
-                { number: "02", title: "九星都咒" },
-                { number: "03", title: "五星神咒" },
-                { number: "04", title: "太阳真君神咒" },
-                { number: "05", title: "太阴真君神咒" },
-                { number: "06", title: "木星真君神咒" },
-                { number: "07", title: "火星真君神咒" },
-                { number: "08", title: "金星真君神咒" },
-                { number: "09", title: "水星真君神咒" },
-                { number: "10", title: "土星真君神咒" },
-                { number: "11", title: "罗睺真君神咒" },
-                { number: "12", title: "计都真君神咒" },
-                { number: "13", title: "紫气真君神咒" },
-                { number: "14", title: "月孛真君神咒" },
-                { number: "15", title: "三启颂" },
-            ]
-        },
-        "南华真经口义_DZ0735": {
-            title: "南华真经口义",
-            chapters: [
-                { number: "01", title: "庄子口义发题" },
-                { number: "02", title: "庄子口义发题" },
-                { number: "03", title: "南华真经口义卷之一" },
-                { number: "04", title: "南华真经口义卷之二" },
-                { number: "05", title: "南华真经口义卷之三" },
-                { number: "06", title: "南华真经口义卷之四" },
-                { number: "07", title: "南华真经口义卷之五" },
-                { number: "08", title: "南华真经口义卷之六" },
-                { number: "09", title: "南华真经口义卷之七" },
-                { number: "10", title: "南华真经口义卷之八" },
-                { number: "11", title: "南华真经口义卷之九" },
-                { number: "12", title: "南华真经口义卷之十" },
-                { number: "13", title: "南华真经口义卷之十一" },
-                { number: "14", title: "南华真经口义卷之十二" },
-                { number: "15", title: "南华真经口义卷之十三" },
-                { number: "16", title: "南华真经口义卷之十四" },
-                { number: "17", title: "南华真经口义卷之十五" },
-                { number: "18", title: "南华真经口义卷之十六" },
-                { number: "19", title: "南华真经口义卷之十七" },
-                { number: "20", title: "南华真经口义卷之十八" },
-                { number: "21", title: "南华真经口义卷之十九" },
-                { number: "22", title: "南华真经口义卷之二十" },
-                { number: "23", title: "南华真经口义卷之二十一" },
-                { number: "24", title: "南华真经口义卷之二十二" },
-                { number: "25", title: "南华真经口义卷之二十三" },
-                { number: "26", title: "南华真经口义卷之二十四" },
-                { number: "27", title: "南华真经口义卷之二十五" },
-                { number: "28", title: "南华真经口义卷之二十六" },
-                { number: "29", title: "南华真经口义卷之二十七" },
-                { number: "30", title: "南华真经口义卷之二十八" },
-                { number: "31", title: "南华真经口义卷之二十九" },
-                { number: "32", title: "南华真经口义卷之三十" },
-                { number: "33", title: "南华真经口义卷之三十一" },
-                { number: "34", title: "南华真经口义卷之三十二" },
-                { number: "35", title: "内篇逍遥游" },
-                { number: "36", title: "内篇齐物论上" },
-                { number: "37", title: "内篇齐物论下" },
-                { number: "38", title: "内篇养生主" },
-                { number: "39", title: "内篇人间世上" },
-                { number: "40", title: "内篇人间世下" },
-                { number: "41", title: "内篇德充符" },
-                { number: "42", title: "内篇大宗师上" },
-                { number: "43", title: "内篇大宗师下" },
-                { number: "44", title: "内篇应帝王" },
-                { number: "45", title: "外篇骈拇" },
-                { number: "46", title: "外篇马蹄" },
-                { number: "47", title: "外篇胠箧" },
-                { number: "48", title: "外篇在宥" },
-                { number: "49", title: "外篇天地" },
-                { number: "50", title: "外篇天道" },
-                { number: "51", title: "外篇天运" },
-                { number: "52", title: "外篇刻意" },
-                { number: "53", title: "外篇缮性" },
-                { number: "54", title: "外篇秋水" },
-                { number: "55", title: "外篇至乐" },
-                { number: "56", title: "外篇达生" },
-                { number: "57", title: "外篇山木" },
-                { number: "58", title: "外篇田子方" },
-                { number: "59", title: "外篇知北游" },
-                { number: "60", title: "杂篇庚桑楚" },
-                { number: "61", title: "杂篇徐无鬼" },
-                { number: "62", title: "杂篇则阳" },
-                { number: "63", title: "杂篇外物" },
-                { number: "64", title: "杂篇寓言" },
-                { number: "65", title: "杂篇让王" },
-                { number: "66", title: "杂篇盗跖" },
-                { number: "67", title: "杂篇说剑" },
-                { number: "68", title: "杂篇渔父" },
-                { number: "69", title: "杂篇列御寇" },
-                { number: "70", title: "杂篇天下" },
-                { number: "71", title: "南华真经口义后序" },
-            ]
-        },
-        "太上七星神咒经_DZ0383": {
-            title: "太上七星神咒经",
-            chapters: [
-                { number: "01", title: "太上七星神咒经" },
-            ]
-        },
-        "太上元始天尊证果真经_DZ0047": {
-            title: "太上元始天尊证果真经",
-            chapters: [
-                { number: "01", title: "太上元始天尊证果真经" },
-            ]
-        },
-        "太上元始天尊说消殄虫蝗经_DZ0067": {
-            title: "太上元始天尊说消殄虫蝗经",
-            chapters: [
-                { number: "01", title: "太上元始天尊说消殄虫蝗经" },
-            ]
-        },
-        "太上元始天尊说金光明经_DZ0070": {
-            title: "太上元始天尊说金光明经",
-            chapters: [
-                { number: "01", title: "太上元始天尊说金光明经" },
-            ]
-        },
-        "太上洞玄宝元上经_DZ0368": {
-            title: "太上洞玄宝元上经",
-            chapters: [
-                { number: "01", title: "太上洞玄宝元上经" },
-            ]
-        },
-        "太上洞玄灵宝业报因缘经_DZ0336": {
-            title: "太上洞玄灵宝业报因缘经",
-            chapters: [
-                { number: "03", title: "开度品第一" },
-                { number: "05", title: "善对品第二" },
-                { number: "06", title: "恶报品第三" },
-                { number: "07", title: "受罪品第四" },
-                { number: "09", title: "忏悔品第五" },
-                { number: "11", title: "奉戒品第六" },
-                { number: "12", title: "持斋品第七" },
-                { number: "14", title: "诵念品第八" },
-                { number: "15", title: "行道品第九" },
-                { number: "16", title: "弘誓品第十" },
-                { number: "17", title: "发愿品第十一" },
-                { number: "18", title: "赞叹品第十二" },
-                { number: "19", title: "布施品第十三" },
-                { number: "21", title: "慈济品第十四" },
-                { number: "22", title: "救苦品第十五" },
-                { number: "24", title: "功德品第十六" },
-                { number: "25", title: "应感品第十七" },
-                { number: "26", title: "福报品第十八" },
-                { number: "28", title: "生神品第十九" },
-                { number: "30", title: "弘救品第二十" },
-                { number: "31", title: "证实品第二十一" },
-                { number: "32", title: "摄因品第二十二" },
-                { number: "33", title: "生化品第二十三" },
-                { number: "35", title: "广统品第二十四" },
-                { number: "36", title: "会真品第二十五" },
-                { number: "37", title: "叙教品第二十六" },
-                { number: "38", title: "流通品第二十七" },
-            ]
-        },
-        "太上洞玄灵宝净供妙经_DZ0376": {
-            title: "太上洞玄灵宝净供妙经",
-            chapters: [
-                { number: "01", title: "太上洞玄灵宝净供妙经" },
-            ]
-        },
-        "太上洞玄灵宝法烛经_DZ0349": {
-            title: "太上洞玄灵宝法烛经",
-            chapters: [
-                { number: "01", title: "太上洞玄灵宝法躅经" },
-            ]
-        },
-        "太上洞玄灵宝灭度五炼生尸妙经_DZ0369": {
-            title: "太上洞玄灵宝灭度五炼生尸妙经",
-            chapters: [
-                { number: "01", title: "太上洞玄灵宝灭度五炼生尸妙经" },
-            ]
-        },
-        "太上洞玄灵宝赤书玉诀妙经_DZ0352": {
-            title: "太上洞玄灵宝赤书玉诀妙经",
-            chapters: [
-                { number: "01", title: "太上洞玄灵宝赤书玉诀妙经卷上乃一" },
-                { number: "02", title: "太上洞玄灵宝赤书玉诀妙经卷下" },
-            ]
-        },
-        "太上灵宝智慧观身经_DZ0350": {
-            title: "太上灵宝智慧观身经",
-            chapters: [
-                { number: "01", title: "太上灵宝智慧观身经" },
-            ]
-        },
-        "太上灵宝补谢灶王经_DZ0364": {
-            title: "太上灵宝补谢灶王经",
-            chapters: [
-                { number: "01", title: "太上灵宝补谢灶王经" },
-            ]
-        },
-        "太上玄都妙本清静身心经_DZ0035": {
-            title: "太上玄都妙本清静身心经",
-            chapters: [
-                { number: "01", title: "太上玄都妙本清静身心经" },
-            ]
-        },
-        "太上真一报父母恩重经_DZ0065": {
-            title: "太上真一报父母恩重经",
-            chapters: [
-                { number: "01", title: "太上真一报父母恩重经" },
-            ]
-        },
-        "太上神咒延寿妙经_DZ0358": {
-            title: "太上神咒延寿妙经",
-            chapters: [
-                { number: "01", title: "太上神咒延寿妙经" },
-            ]
-        },
-        "太上虚皇保生神咒经_DZ0384": {
-            title: "太上虚皇保生神咒经",
-            chapters: [
-                { number: "01", title: "太上虚皇保生神咒经" },
-            ]
-        },
-        "太乙元真保命长生经_DZ0046": {
-            title: "太乙元真保命长生经",
-            chapters: [
-                { number: "01", title: "太乙元真保命长生经" },
-            ]
-        },
-        "抱朴子（抱朴子内篇）_SBCK109": {
-            title: "抱朴子(抱朴子内篇)",
-            chapters: [
-                { number: "01", title: "刻抱朴子叙" },
-                { number: "02", title: "抱朴子序" },
-                { number: "03", title: "抱朴子内篇卷一" },
-                { number: "04", title: "抱朴子内篇卷二" },
-                { number: "05", title: "抱朴子内篇卷三" },
-                { number: "06", title: "抱朴子内篇卷四" },
-                { number: "07", title: "抱朴子内篇卷五" },
-                { number: "08", title: "抱朴子内篇卷六" },
-                { number: "09", title: "抱朴子内篇卷七" },
-                { number: "10", title: "抱朴子内篇卷八" },
-                { number: "11", title: "抱朴子内篇卷九" },
-                { number: "12", title: "抱朴子内篇卷十" },
-                { number: "13", title: "抱朴子内篇卷十一" },
-                { number: "14", title: "抱朴子内篇卷十二" },
-                { number: "15", title: "抱朴子内篇卷十三" },
-                { number: "16", title: "抱朴子内篇卷十四" },
-                { number: "17", title: "抱朴子内篇卷十五" },
-                { number: "18", title: "抱朴子内篇卷十六" },
-                { number: "19", title: "抱朴子内篇卷十七" },
-                { number: "20", title: "抱朴子内篇卷十八" },
-                { number: "21", title: "抱朴子内篇卷十九" },
-                { number: "22", title: "抱朴子内篇卷二十" },
-                { number: "23", title: "抱朴子别旨" },
-                { number: "24", title: "抱朴子外篇卷一" },
-                { number: "25", title: "抱朴子外篇卷二" },
-                { number: "26", title: "抱朴子外篇卷三" },
-                { number: "27", title: "抱朴子外篇卷四" },
-                { number: "28", title: "抱朴子外篇卷五" },
-                { number: "29", title: "抱朴子外篇卷六" },
-                { number: "30", title: "抱朴子外篇卷七" },
-                { number: "31", title: "抱朴子外篇卷八" },
-                { number: "32", title: "抱朴子外篇卷之九" },
-                { number: "33", title: "抱朴子外篇卷十" },
-                { number: "34", title: "抱朴子外篇卷十一" },
-                { number: "35", title: "抱朴子外篇卷十二" },
-                { number: "36", title: "抱朴子外篇卷十三" },
-                { number: "37", title: "抱朴子外篇卷十四" },
-                { number: "38", title: "抱朴子外篇卷十五" },
-            ]
-        },
-        "文始真經（關尹子）_SBCK440": {
-            title: "文始真經(關尹子)",
-            chapters: [
-                { number: "01", title: "文始真経上卷" },
-                { number: "02", title: "一宇萹" },
-                { number: "03", title: "二柱萹" },
-                { number: "04", title: "三極萹" },
-                { number: "05", title: "文始真經中卷" },
-                { number: "06", title: "文始真経下卷" },
-                { number: "07", title: "校勘記" },
-                { number: "08", title: "一宇萹" },
-                { number: "09", title: "二柱萹" },
-                { number: "10", title: "三極萹" },
-                { number: "11", title: "四符萹" },
-                { number: "12", title: "五鑑萹" },
-                { number: "13", title: "六匕萹" },
-                { number: "14", title: "七釡萹" },
-                { number: "16", title: "九藥萹" },
-            ]
-        },
-        "洞玄灵宝无量度人经诀音义_DZ0095": {
-            title: "洞玄灵宝无量度人经诀音义",
-            chapters: [
-                { number: "01", title: "下一篇" },
-                { number: "02", title: "洞玄灵宝无量度人经诀音义秋七" },
-                { number: "03", title: "诵诸天内音存念法" },
-            ]
-        },
-        "洞玄灵宝自然九天生神章经_DZ0318": {
-            title: "洞玄灵宝自然九天生神章经",
-            chapters: [
-                { number: "01", title: "下一篇" },
-                { number: "02", title: "洞玄灵宝自然九天生神章经" },
-                { number: "03", title: "三宝大有金书" },
-                { number: "04", title: "始青清微天宝章" },
-                { number: "05", title: "元白禹余灵宝章" },
-                { number: "06", title: "玄黄太赤神宝章" },
-                { number: "07", title: "郁单无量天生神章第一" },
-                { number: "08", title: "上上禅善无量寿天生神章第二" },
-                { number: "09", title: "梵监须延天生神章第三" },
-                { number: "10", title: "寂然兜术天生神章第四" },
-                { number: "11", title: "波罗尼蜜不骄乐天生神章第五" },
-                { number: "12", title: "洞元化应声天生神章第六" },
-                { number: "13", title: "灵化梵辅天生神章第七" },
-                { number: "14", title: "高虚清明天生神章第八" },
-                { number: "15", title: "无想无结无爱天生神章第九" },
-                { number: "16", title: "诵经应验" },
-            ]
-        },
-        "混元陽符經_DZ0032": {
-            title: "混元陽符經",
-            chapters: [
-                { number: "01", title: "混元陽符經" },
-            ]
-        },
-        "玉清無上靈寶自然北斗本生真經_DZ0045": {
-            title: "玉清無上靈寶自然北斗本生真經",
-            chapters: [
-                { number: "01", title: "玉清无上靈寶自然北斗本生真經" },
-            ]
-        },
-    };
+    // 書單由 docs/data/books.json 載入（python tools/build_web_data.py 依實際檔案產生）
+    const DEFAULT_BOOK_ID = '太上老君説常清靜經注_DZ0756';  // 不需密語即可閱讀的書
+    let booksData = {};
+    let webStats = { books: 0, chapters: 0, translated: 0 };
 
     // 舊版經典資料（保持向後相容）
     const legacyScriptures = {
@@ -450,20 +110,39 @@ document.addEventListener('DOMContentLoaded', () => {
     let viewMode = 'both'; // 'both', 'original', 'translation'
 
     // 初始化系統
-    function initializeSystem() {
-        loadSystemStats();
-        populateBookSelect();
+    async function initializeSystem() {
         populateLegacySelect();
         setupEventListeners();
+        try {
+            await loadBooksData();
+        } catch (error) {
+            console.error('載入書單失敗:', error);
+            systemStatsDiv.textContent = '⚠️ 書單載入失敗，請重新整理頁面';
+            return;
+        }
+        loadSystemStats();
+        populateBookSelect();
         // 初始載入預設書籍
-        loadBook('太上老君説常清靜經注_DZ0756');
+        loadBook(booksData[DEFAULT_BOOK_ID] ? DEFAULT_BOOK_ID : Object.keys(booksData)[0]);
+    }
+
+    // 載入書單
+    async function loadBooksData() {
+        const response = await fetch('data/books.json');
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+        const data = await response.json();
+        webStats = data.stats;
+        booksData = Object.fromEntries(
+            data.books.map(book => [book.id, { title: book.title, chapters: book.chapters }])
+        );
     }
 
     // 載入系統統計
     function loadSystemStats() {
-        const totalBooks = Object.keys(booksData).length;
-        const totalChapters = Object.values(booksData).reduce((sum, book) => sum + book.chapters.length, 0);
-        systemStatsDiv.textContent = `📚 ${totalBooks} 部經典 | 📖 ${totalChapters} 個章節`;
+        systemStatsDiv.textContent =
+            `📚 ${webStats.books} 部經典 | 📖 ${webStats.chapters} 個章節 | ✅ 已翻譯 ${webStats.translated} 章`;
     }
 
     // 填充書籍選擇器
@@ -503,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
         chapters.forEach((chapter, index) => {
             const option = document.createElement('option');
             option.value = index;
-            option.textContent = `第${chapter.number}章 - ${chapter.title}`;
+            option.textContent = `第${chapter.number}章 - ${chapter.title}${chapter.translated ? '' : '（未翻譯）'}`;
             chapterSelect.appendChild(option);
         });
         
@@ -532,7 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        if (bookId !== '太上老君説常清靜經注_DZ0756' && !passwordEntered) {
+        if (bookId !== DEFAULT_BOOK_ID && !passwordEntered) {
             pendingBookId = bookId;
             passwordOverlay.style.display = 'flex';
             // Reset the dropdown to the current book to avoid confusion
@@ -544,6 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function loadBook(bookId) {
+        if (!booksData[bookId]) return;
         currentBook = bookId;
         currentChapterIndex = 0;
         populateChapterSelect(bookId);
@@ -585,6 +265,13 @@ document.addEventListener('DOMContentLoaded', () => {
         updateNavigationButtons();
     }
 
+    // 原文以純文字顯示，避免內容中的 < > 被當成 HTML
+    function showOriginalText(text) {
+        const pre = document.createElement('pre');
+        pre.textContent = text;
+        originalContentDiv.replaceChildren(pre);
+    }
+
     // 載入章節內容
     async function loadChapter(bookId, chapterIndex) {
         const bookData = booksData[bookId];
@@ -604,18 +291,23 @@ document.addEventListener('DOMContentLoaded', () => {
             // 載入原文
             const originalPath = `source_texts/${bookId}/原文/${chapter.number}_${chapter.title}.txt`;
             const originalResponse = await fetch(originalPath);
-            
+
             if (originalResponse.ok) {
-                const originalText = await originalResponse.text();
-                originalContentDiv.innerHTML = `<pre>${originalText}</pre>`;
+                showOriginalText(await originalResponse.text());
             } else {
                 originalContentDiv.innerHTML = '<p>❌ 無法載入原文</p>';
             }
 
-            // 載入翻譯
+            // 載入翻譯（還只是模板的章節不顯示模板內容）
+            if (!chapter.translated) {
+                translatedContentDiv.innerHTML =
+                    '<div class="untranslated-notice">📝 本章尚未翻譯，請先參閱古文原文。</div>';
+                updateNavigationButtons();
+                return;
+            }
             const translationPath = `translations/${bookId}/${chapter.number}_${chapter.title}.md`;
             const translationResponse = await fetch(translationPath);
-            
+
             if (translationResponse.ok) {
                 const translationMarkdown = await translationResponse.text();
                 translatedContentDiv.innerHTML = marked.parse(translationMarkdown);
@@ -648,8 +340,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // 載入原文
             const originalResponse = await fetch(paths.original);
             if (originalResponse.ok) {
-                const originalText = await originalResponse.text();
-                originalContentDiv.innerHTML = `<pre>${originalText}</pre>`;
+                showOriginalText(await originalResponse.text());
             } else {
                 originalContentDiv.innerHTML = '<p>❌ 無法載入原文</p>';
             }
@@ -736,28 +427,32 @@ document.addEventListener('DOMContentLoaded', () => {
         currentTitleDiv.textContent = '道教經典翻譯系統';
         contentStatsDiv.textContent = '';
         
+        // 章節最多的前五部經典
+        const books = Object.values(booksData);
+        const topBooks = [...books].sort((a, b) => b.chapters.length - a.chapters.length).slice(0, 5);
+        const otherCount = books.length - topBooks.length;
+        const topList = topBooks
+            .map(book => `<li><strong>${book.title}</strong> - ${book.chapters.length}章</li>`)
+            .join('');
+
         originalContentDiv.innerHTML = `
             <div class="welcome-message">
                 <h4>系統說明</h4>
                 <p>🏛️ <strong>主要收錄經典：</strong></p>
                 <ul>
-                    <li><strong>南華真經口義</strong> - 71章（莊子註解）</li>
-                    <li><strong>抱朴子（抱朴子內篇）</strong> - 38章（葛洪著作）</li>
-                    <li><strong>太上洞玄靈寶業報因緣經</strong> - 27章</li>
-                    <li><strong>洞玄靈寶自然九天生神章經</strong> - 16章</li>
-                    <li><strong>元始天尊說十一曜大消災神咒經</strong> - 15章</li>
-                    <li><strong>其他經典</strong> - 19部單章經典</li>
+                    ${topList}
+                    ${otherCount > 0 ? `<li><strong>其他經典</strong> - ${otherCount}部</li>` : ''}
                 </ul>
-                <p>📊 <strong>統計資訊：</strong> 總計23部經典，188個章節</p>
+                <p>📊 <strong>統計資訊：</strong> 總計${webStats.books}部經典，${webStats.chapters}個章節，已翻譯${webStats.translated}章</p>
             </div>
         `;
-        
+
         translatedContentDiv.innerHTML = `
             <div class="welcome-message">
                 <h4>歡迎使用道教經典翻譯系統 v2.0</h4>
                 <p>🎯 <strong>功能特色：</strong></p>
                 <ul>
-                    <li>📚 <strong>23部經典</strong> - 包含188個章節，豐富的道教典籍</li>
+                    <li>📚 <strong>${webStats.books}部經典</strong> - 包含${webStats.chapters}個章節，豐富的道教典籍</li>
                     <li>🔍 <strong>智能選擇</strong> - 書籍和章節雙重選擇系統</li>
                     <li>📖 <strong>對照閱讀</strong> - 原文與譯文並排顯示</li>
                     <li>🎛️ <strong>多種模式</strong> - 支援不同的閱讀模式</li>
@@ -770,14 +465,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 全域函數（供HTML調用）
     window.showSystemInfo = function() {
-        const totalBooks = Object.keys(booksData).length;
-        const totalChapters = Object.values(booksData).reduce((sum, book) => sum + book.chapters.length, 0);
-        
         alert(`道教經典翻譯系統 v2.0
 
 📊 系統統計：
-• 經典總數：${totalBooks}部
-• 章節總數：${totalChapters}章
+• 經典總數：${webStats.books}部
+• 章節總數：${webStats.chapters}章
+• 已翻譯：${webStats.translated}章
 • 主要經典：南華真經口義、抱朴子內篇等
 
 🎯 功能特色：
@@ -786,7 +479,7 @@ document.addEventListener('DOMContentLoaded', () => {
 • 多種閱讀模式切換
 • 向後相容舊版經典
 
-🔗 專案網址：https://github.com/your-repo/taoism-translation`);
+🔗 專案網址：https://github.com/yehwanlan/Taoism`);
     };
 
     window.showHelp = function() {

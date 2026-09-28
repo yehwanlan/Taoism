@@ -387,6 +387,14 @@ header h1 {
     border: 2px solid var(--earth-light);
 }
 
+.untranslated-notice {
+    color: var(--text-secondary);
+    padding: 1.5rem;
+    border: 2px dashed var(--earth-light);
+    border-radius: 12px;
+    text-align: center;
+}
+
 .welcome-message h4 {
     color: var(--earth-dark);
     margin: 0 0 1.5rem 0;

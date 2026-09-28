@@ -94,6 +94,19 @@ def test_new_templates_count_as_untranslated(engine, tmp_path):
     assert status["total_chapters"] == 2
 
 
+def test_recrawl_keeps_existing_translation(engine, tmp_path):
+    translation = tmp_path / "docs/translations/測試經_TEST01/01_开度品第一.md"
+    translation.parent.mkdir(parents=True)
+    translation.write_text("# 开度品第一\n\n## 翻譯\n\n天尊說：善哉。\n", encoding="utf-8")
+
+    engine.translate_book("https://example.invalid/book/TEST01")
+
+    assert "天尊說：善哉。" in translation.read_text(encoding="utf-8")
+    # 沒有翻譯的章節照常產生模板
+    other = tmp_path / "docs/translations/測試經_TEST01/03_善对品第二.md"
+    assert is_untranslated(other.read_text(encoding="utf-8"))
+
+
 def test_placeholder_detection_covers_legacy_templates():
     assert is_untranslated(f"## 翻譯\n\n{TRANSLATION_PLACEHOLDER}\n")
     assert is_untranslated("## 翻譯\n\n[此處填入現代中文翻譯]\n")

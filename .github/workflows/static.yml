@@ -31,6 +31,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Build book list (docs/data/books.json)
+        # 依 docs/source_texts 與 docs/translations 的實際檔案重新產生網站書單
+        run: python tools/build_web_data.py
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact

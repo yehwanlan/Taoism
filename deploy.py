@@ -53,13 +53,14 @@ class TaoismDeployer:
             shutil.copy(example_file, settings_file)
             print("✅ 複製配置檔案")
             
-        # 更新網頁資料
+        # 更新網站書單
         try:
-            subprocess.run([sys.executable, "tools/temp/update_web_data.py"], 
+            subprocess.run([sys.executable, "tools/build_web_data.py"],
                          cwd=self.project_root, check=True, capture_output=True)
-            print("✅ 更新網頁資料")
-        except (subprocess.CalledProcessError, FileNotFoundError):
-            print("⚠️ 網頁資料更新跳過（檔案不存在）")
+            print("✅ 更新網站書單")
+        except subprocess.CalledProcessError as e:
+            print(f"❌ 網站書單更新失敗: {e.stderr.decode('utf-8', errors='replace')}")
+            return False
             
         return True
     

@@ -343,61 +343,23 @@ v1.x → v2.0 的資料遷移已經完成，遷移工具已封存到 `archive/on
 
 *道教經典翻譯系統 v2.0 - 讓古籍翻譯更簡單、更智能* 🏛️✨
 
-1.  **新增原始經文：**
-    將新的道教經典文本檔案（例如 `.txt` 或 `.html`）放入 `source_texts/` 資料夾。
+## 📥 新增經文與更新網站
 
-2.  **新增翻譯：**
-    在 `translations/` 資料夾中，為您新增的原始經文建立一個對應的 `.md` 檔案。檔案名稱應與原始經文的名稱（不含副檔名）相同。例如，如果原始經文是 `道德經.txt`，則翻譯檔案應為 `道德經.md`。
-
-    在 `.md` 檔案中，您可以開始編寫經文的現代中文白話翻譯。您可以使用 Markdown 語法來格式化您的翻譯內容。
-
-### 步驟二：更新經文列表
-
-每當您新增或修改了 `source_texts/` 或 `translations/` 資料夾中的檔案後，您需要執行 `generate_scriptures_js.py` 腳本來更新網頁的經文列表。在專案根目錄下執行：
-```bash
-python generate_scriptures_js.py
-```
-這個腳本會自動掃描資料夾，並更新 `docs/js/script.js` 中的 `scriptures` 物件，確保網頁能夠正確載入新的經文或更新後的翻譯。
-
-### 步驟三：本地預覽
-
-在專案的根目錄下，您可以啟動一個簡單的 Python 網頁伺服器來預覽網站變更：
-```bash
-python -m http.server 8000
-```
-然後在您的瀏覽器中打開 `http://localhost:8000/docs/`。
-
-### 步驟四：一鍵部署
-
-現在支援多種部署方式，推薦使用一鍵部署腳本：
-
-```bash
-# 🚀 一鍵部署到 GitHub Pages
-python deploy.py github
-
-# 🐳 Docker 部署
-python deploy.py docker
-
-# 🏠 本地服務
-python deploy.py local
-
-# 📦 創建發布包
-python deploy.py package
-
-# 🎯 完整部署流程
-python deploy.py all
-```
-
-**GitHub Pages 自動部署：**
-- 系統已配置 GitHub Actions 自動部署
-- 推送到 main 分支會自動觸發部署
-- 訪問地址：`https://<您的GitHub使用者名稱>.github.io/<您的儲存庫名稱>/`
-
-詳細安裝和部署說明請參考：**[安裝指南](INSTALL.md)**
-
-### 步驟五：管理翻譯進度
-
-*   **判斷翻譯狀態：** 您可以透過檢查 `translations/` 資料夾中是否存在對應的 `.md` 檔案來判斷一篇經文是否已經有翻譯。如果存在，就表示有翻譯；如果不存在，就表示還沒有翻譯。
-*   **`generate_scriptures_js.py` 的作用：** 該腳本會自動檢查 `translations/` 資料夾中是否存在對應的 `.md` 檔案。如果存在，它會將翻譯檔案的路徑包含在 `scriptures` 物件中；如果不存在，則翻譯路徑會留空，網頁會顯示載入失敗的訊息，提示該經文尚未翻譯。
+1. **爬取新書**（產生原文與翻譯模板，並自動更新網站書單）：
+   ```bash
+   python main.py translate --book "https://www.shidianguji.com/book/DZ0789"
+   ```
+2. **翻譯**：編輯 `docs/translations/<書名_編號>/<章>.md`，把「[此處應為現代中文翻譯]」換成譯文。
+   已經翻譯好的章節，重新爬取同一本書時不會被覆蓋。
+3. **更新網站書單**：手動新增、刪除或翻譯檔案後執行一次（推送到 main 時 GitHub Actions 也會自動執行）：
+   ```bash
+   python tools/build_web_data.py
+   ```
+4. **本地預覽**：
+   ```bash
+   python -m http.server 8000 --directory docs
+   ```
+   然後打開 `http://localhost:8000`。
+5. **部署**：推送到 main 分支即自動部署到 https://yehwanlan.github.io/Taoism/
 
 ---

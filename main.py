@@ -50,7 +50,7 @@ python main.py translate --book "書籍URL"
 python main.py monitor dashboard
 python main.py --help
 
-🔗 專案網址: https://github.com/your-repo/taoism-translation
+🔗 專案網址: https://github.com/yehwanlan/Taoism
 """)
 
 def main():
