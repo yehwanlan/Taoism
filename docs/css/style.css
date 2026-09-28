@@ -717,6 +717,12 @@ footer::before {
     font-size: 1rem;
 }
 
+.password-box .password-hint {
+    color: #a0aec0;
+    font-size: 0.85rem;
+    margin: 0.75rem 0 0;
+}
+
 .error-message {
     color: #e53e3e;
     margin-top: 1rem;

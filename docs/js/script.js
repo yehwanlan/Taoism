@@ -11,8 +11,14 @@ document.addEventListener('DOMContentLoaded', () => {
     let passwordEntered = false;
     let pendingBookId = null;
 
+    function isPasswordOverlayVisible() {
+        return getComputedStyle(passwordOverlay).display !== 'none';
+    }
+
     function checkPassword() {
-        if (passwordInput.value === correctPassword) {
+        // 輸入框空白時直接按「進入」或 Enter，視同輸入密語
+        const value = passwordInput.value.trim() || correctPassword;
+        if (value === correctPassword) {
             passwordOverlay.style.display = 'none';
             passwordEntered = true;
             if (pendingBookId) {
@@ -31,6 +37,20 @@ document.addEventListener('DOMContentLoaded', () => {
             checkPassword();
         }
     });
+
+    // Tab：輸入框是空的時候自動帶入密語（再按一次 Tab 才移到「進入」按鈕）
+    passwordInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Tab' && !event.shiftKey && !passwordInput.value) {
+            event.preventDefault();
+            passwordInput.value = correctPassword;
+            passwordError.textContent = '';
+        }
+    });
+
+    // 頁面載入時密語視窗就是開著的，先讓輸入框取得焦點，快捷鍵才能直接用
+    if (isPasswordOverlayVisible()) {
+        passwordInput.focus();
+    }
     
     // 手機端優化：添加輸入事件監聽
     passwordInput.addEventListener('input', () => {
@@ -792,7 +812,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 鍵盤快捷鍵
     document.addEventListener('keydown', (e) => {
-        if (!currentBook) return;
+        // 密語視窗開著時，按鍵交給密語輸入框處理
+        if (!currentBook || isPasswordOverlayVisible()) return;
         
         switch (e.key) {
             case 'ArrowLeft':
