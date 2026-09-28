@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const correctPassword = "福生無量天尊";
     let passwordEntered = false;
     let pendingBookId = null;
+    let pendingChapterIndex = 0;
 
     function isPasswordOverlayVisible() {
         return getComputedStyle(passwordOverlay).display !== 'none';
@@ -22,8 +23,9 @@ document.addEventListener('DOMContentLoaded', () => {
             passwordOverlay.style.display = 'none';
             passwordEntered = true;
             if (pendingBookId) {
-                loadBook(pendingBookId);
+                loadBook(pendingBookId, pendingChapterIndex);
                 pendingBookId = null;
+                pendingChapterIndex = 0;
             }
         } else {
             passwordError.textContent = '密語錯誤，請重試';
@@ -123,9 +125,67 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         loadSystemStats();
         populateBookSelect();
-        // 初始載入預設書籍
-        loadBook(DEFAULT_BOOK_ID);
+        // 依序使用：網址指定的章節 → 上次讀到的章節 → 預設書籍
+        openTarget(targetFromHash() || lastReadTarget() || { bookId: DEFAULT_BOOK_ID, chapterIndex: 0 });
     }
+
+    // 章節網址 #書籍編號/章節編號（例如 #DZ0336/03），可分享或加入書籤
+    const LAST_READ_KEY = 'taoism:lastRead';
+
+    function bookCode(bookId) {
+        const match = bookId.match(/_([A-Za-z]+\d+)$/);
+        return match ? match[1] : bookId;
+    }
+
+    function findChapterTarget(code, number) {
+        const bookId = Object.keys(booksData).find(id => bookCode(id) === code);
+        if (!bookId) return null;
+        const index = booksData[bookId].chapters.findIndex(chapter => chapter.number === number);
+        return { bookId, chapterIndex: Math.max(index, 0) };
+    }
+
+    function targetFromHash() {
+        const match = decodeURIComponent(location.hash).match(/^#([^/]+)\/(\d+)$/);
+        return match ? findChapterTarget(match[1], match[2]) : null;
+    }
+
+    function lastReadTarget() {
+        try {
+            const saved = JSON.parse(localStorage.getItem(LAST_READ_KEY) || 'null');
+            return saved ? findChapterTarget(saved.code, saved.number) : null;
+        } catch (error) {
+            return null;  // 無痕模式等情況下無法使用 localStorage
+        }
+    }
+
+    function rememberChapter(bookId, chapter) {
+        const code = bookCode(bookId);
+        history.replaceState(null, '', `#${code}/${chapter.number}`);
+        try {
+            localStorage.setItem(LAST_READ_KEY, JSON.stringify({ code, number: chapter.number }));
+        } catch (error) {
+            // 無法記住閱讀位置時不影響閱讀
+        }
+    }
+
+    // 開啟指定章節；需要密語的書先記下，通過密語後再開
+    function openTarget(target) {
+        if (target.bookId !== DEFAULT_BOOK_ID && !passwordEntered) {
+            pendingBookId = target.bookId;
+            pendingChapterIndex = target.chapterIndex;
+            passwordOverlay.style.display = 'flex';
+            return;
+        }
+        loadBook(target.bookId, target.chapterIndex);
+    }
+
+    // 手動修改網址或點選章節連結時切換章節
+    window.addEventListener('hashchange', () => {
+        const target = targetFromHash();
+        if (target && !(target.bookId === currentBook && target.chapterIndex === currentChapterIndex)) {
+            openTarget(target);
+        }
+    });
 
     // 載入書單
     async function loadBooksData() {
@@ -216,6 +276,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (bookId !== DEFAULT_BOOK_ID && !passwordEntered) {
             pendingBookId = bookId;
+            pendingChapterIndex = 0;
             passwordOverlay.style.display = 'flex';
             // Reset the dropdown to the current book to avoid confusion
             bookSelect.value = currentBook;
@@ -225,16 +286,16 @@ document.addEventListener('DOMContentLoaded', () => {
         loadBook(bookId);
     }
 
-    function loadBook(bookId) {
+    function loadBook(bookId, chapterIndex = 0) {
         if (!booksData[bookId]) return;
         currentBook = bookId;
-        currentChapterIndex = 0;
+        currentChapterIndex = chapterIndex;
         populateChapterSelect(bookId);
-        
-        // 自動選擇第一章
+
+        // 預設選擇第一章（或網址、上次閱讀指定的章節）
         if (booksData[bookId].chapters.length > 0) {
-            chapterSelect.value = 0;
-            loadChapter(bookId, 0);
+            chapterSelect.value = chapterIndex;
+            loadChapter(bookId, chapterIndex);
         }
         
         // 清除舊版選擇
@@ -259,7 +320,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!scriptureName) return;
         
         loadLegacyScripture(scriptureName);
-        
+        history.replaceState(null, '', location.pathname + location.search);
+
         // 清除新版選擇
         bookSelect.value = '';
         chapterSelect.disabled = true;
@@ -281,6 +343,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const chapter = bookData.chapters[chapterIndex];
         
         if (!chapter) return;
+        rememberChapter(bookId, chapter);
 
         // 更新標題和統計
         currentTitleDiv.textContent = `${bookData.title} - 第${chapter.number}章`;

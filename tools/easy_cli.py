@@ -16,7 +16,7 @@ from typing import Dict, List
 # 添加父目錄到路徑以便導入核心模組
 sys.path.append(str(Path(__file__).parent.parent))
 
-from core import TranslationEngine, get_tracker
+from core import TranslationEngine
 from core.conventions import TRANSLATION_PLACEHOLDER
 from core.unicode_handler import safe_print
 
@@ -29,7 +29,8 @@ class EasyCLI:
         self.config_file = Path("config/settings.json")
         self.config = self._load_config()
         self.engine = TranslationEngine(self.config.get("translation", {}))
-        self.tracker = get_tracker()
+        # 與翻譯引擎共用同一份追蹤資料；各自持有時，引擎剛記錄的新書會被這裡的舊資料存檔蓋掉
+        self.tracker = self.engine.tracker
         
     def _load_config(self) -> Dict:
         """載入配置"""

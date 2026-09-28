@@ -99,6 +99,7 @@
                     <a href="#" onclick="showHelp()">❓ 使用說明</a>
                     <a href="calendar.html" target="_blank">📅 萬年曆</a>
                     <a href="deity-birthday.html" target="_blank">🏮 神明聖誕</a>
+                    <a href="progress.html">📈 翻譯進度</a>
                     <a href="六十甲子完整表.md" target="_blank">📊 完整對照表</a>
                     <a href="天干地支計算說明.md" target="_blank">🗓️ 計算說明</a>
                 </div>
@@ -109,6 +110,7 @@
     <!-- 載入 JavaScript 模組 -->
     <script src="js/lunar-calendar.js"></script>
     <script src="js/fortune.js"></script>
+    <script src="js/deity-birthday.js"></script>
     <script src="js/script.js"></script>
     
     <!-- 初始化農曆和拜拜資訊 -->
@@ -140,6 +142,22 @@
             }
         }
         
+        // 近 7 日神明聖誕（依農曆計算），最多列三天
+        function upcomingDeityLine() {
+            if (typeof deityChecker === 'undefined') return '';
+            const upcoming = deityChecker.getUpcomingBirthdays(7);
+            if (upcoming.length === 0) return '';
+            const items = upcoming.slice(0, 3).map(item => {
+                const when = item.isToday ? '<strong>今日</strong>'
+                    : item.isTomorrow ? '明日'
+                    : `${item.date.getMonth() + 1}/${item.date.getDate()}`;
+                const names = item.deities.slice(0, 2).map(d => d.name).join('、');
+                const more = item.deities.length > 2 ? ` 等${item.deities.length}位` : '';
+                return `${when} ${names}${more}`;
+            });
+            return `🏮 <a href="deity-birthday.html" target="_blank">近期聖誕</a>：${items.join('；')}<br>`;
+        }
+
         function updateTodayFortune(lunarCalendar, fortuneChecker) {
             const fortuneInfo = document.getElementById('fortune-info');
             const dailyFortune = document.getElementById('daily-fortune');
@@ -165,6 +183,7 @@
                 // 組合顯示內容
                 let displayText = `${todayFortune.emoji} ${todayFortune.date} ${todayFortune.stemBranch}日<br>`;
                 displayText += `🌙 農曆：${lunarDateStr}<br>`;
+                displayText += upcomingDeityLine();
                 displayText += `${fortuneChecker.getStatusText(todayFortune.status)}<br>`;
                 displayText += `<small>${todayFortune.description}</small>`;
                 

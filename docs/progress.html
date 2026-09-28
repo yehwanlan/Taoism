@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>翻譯進度 - 道教經典翻譯系統</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .progress-page {
+            max-width: 960px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 2px solid var(--earth-light);
+            border-radius: 12px;
+            box-shadow: var(--shadow-soft);
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .summary-numbers {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .summary-numbers strong {
+            font-size: 1.6rem;
+            color: var(--earth-dark);
+            margin-right: 0.25rem;
+        }
+
+        .bar {
+            height: 12px;
+            background: var(--earth-pale);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .bar > span {
+            display: block;
+            height: 100%;
+            background: linear-gradient(90deg, var(--gold-deep), var(--gold-bright));
+        }
+
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .filters button {
+            border: 2px solid var(--earth-light);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            border-radius: 20px;
+            padding: 0.3rem 1rem;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .filters button.active {
+            background: var(--earth-medium);
+            border-color: var(--earth-medium);
+            color: var(--bg-card);
+        }
+
+        .book {
+            border-bottom: 1px solid var(--earth-pale);
+            padding: 0.75rem 0;
+        }
+
+        .book:last-child {
+            border-bottom: none;
+        }
+
+        .book-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .book-head a {
+            color: var(--earth-dark);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .book-head a:hover {
+            text-decoration: underline;
+        }
+
+        .book-count {
+            color: var(--text-light);
+            white-space: nowrap;
+            font-size: 0.9rem;
+        }
+
+        .book details {
+            margin-top: 0.4rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .book summary {
+            cursor: pointer;
+        }
+
+        .chapter-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem 0.8rem;
+            margin-top: 0.4rem;
+        }
+
+        .chapter-links a {
+            color: var(--earth-medium);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 0.5rem;
+            color: var(--gold-pale);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>📈 翻譯進度</h1>
+        <a class="back-link" href="index.html">← 回到經典閱讀</a>
+    </header>
+
+    <main class="progress-page">
+        <section class="card">
+            <div class="summary-numbers" id="summary-numbers">載入中...</div>
+            <div class="bar"><span id="summary-bar" style="width: 0"></span></div>
+        </section>
+
+        <section class="card">
+            <div class="filters" id="filters">
+                <button data-filter="all" class="active">全部</button>
+                <button data-filter="done">✅ 已完成</button>
+                <button data-filter="partial">✍️ 翻譯中</button>
+                <button data-filter="none">📜 尚未開始</button>
+            </div>
+            <div id="book-list"></div>
+        </section>
+    </main>
+
+    <script>
+        // 資料來自 data/books.json（python tools/build_web_data.py 依實際檔案產生）
+        const bookCode = id => (id.match(/_([A-Za-z]+\d+)$/) || [null, id])[1];
+        const escapeHtml = text => text.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+        const percent = (done, total) => (total ? Math.round(done / total * 100) : 0);
+
+        function status(book) {
+            if (book.done === book.total) return 'done';
+            return book.done > 0 ? 'partial' : 'none';
+        }
+
+        function renderBooks(books, filter) {
+            const list = document.getElementById('book-list');
+            const shown = books.filter(book => filter === 'all' || status(book) === filter);
+            if (shown.length === 0) {
+                list.innerHTML = '<p>沒有符合的經典。</p>';
+                return;
+            }
+            list.innerHTML = shown.map(book => {
+                const code = bookCode(book.id);
+                const pending = book.chapters.filter(chapter => !chapter.translated);
+                const pendingLinks = pending.map(chapter =>
+                    `<a href="index.html#${code}/${chapter.number}">${chapter.number} ${escapeHtml(chapter.title)}</a>`
+                ).join('');
+                const details = pending.length && book.done > 0
+                    ? `<details><summary>尚未翻譯的 ${pending.length} 章</summary><div class="chapter-links">${pendingLinks}</div></details>`
+                    : '';
+                return `
+                    <div class="book">
+                        <div class="book-head">
+                            <a href="index.html#${code}/${book.chapters[0].number}">${escapeHtml(book.title)}</a>
+                            <span class="book-count">${book.done} / ${book.total} 章（${percent(book.done, book.total)}%）</span>
+                        </div>
+                        <div class="bar"><span style="width: ${percent(book.done, book.total)}%"></span></div>
+                        ${details}
+                    </div>`;
+            }).join('');
+        }
+
+        async function init() {
+            try {
+                const data = await (await fetch('data/books.json')).json();
+                const books = data.books.map(book => ({
+                    ...book,
+                    total: book.chapters.length,
+                    done: book.chapters.filter(chapter => chapter.translated).length,
+                }));
+                // 翻譯比例高的排前面，同比例依章節數多寡
+                books.sort((a, b) => (b.done / b.total - a.done / a.total) || (b.total - a.total));
+
+                const { stats } = data;
+                const done = books.filter(book => status(book) === 'done').length;
+                document.getElementById('summary-numbers').innerHTML = `
+                    <span><strong>${percent(stats.translated, stats.chapters)}%</strong>整體完成</span>
+                    <span><strong>${stats.translated}</strong>/ ${stats.chapters} 章已翻譯</span>
+                    <span><strong>${done}</strong>/ ${stats.books} 部經典已全部完成</span>`;
+                document.getElementById('summary-bar').style.width = `${percent(stats.translated, stats.chapters)}%`;
+
+                const filters = document.getElementById('filters');
+                filters.addEventListener('click', event => {
+                    const button = event.target.closest('button');
+                    if (!button) return;
+                    filters.querySelectorAll('button').forEach(b => b.classList.toggle('active', b === button));
+                    renderBooks(books, button.dataset.filter);
+                });
+                renderBooks(books, 'all');
+            } catch (error) {
+                console.error('載入書單失敗:', error);
+                document.getElementById('summary-numbers').textContent = '⚠️ 書單載入失敗，請重新整理頁面';
+            }
+        }
+
+        init();
+    </script>
+</body>
+
+</html>

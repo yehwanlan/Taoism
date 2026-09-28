@@ -49,8 +49,10 @@ def engine(tmp_path, monkeypatch):
     # translator / tracker / file_monitor 目前都以工作目錄為基準寫檔
     monkeypatch.chdir(tmp_path)
     monkeypatch.setattr(translator_module.time, "sleep", lambda *_: None)
+    return stub_engine(TranslationEngine(), monkeypatch)
 
-    eng = TranslationEngine()
+
+def stub_engine(eng, monkeypatch):
     monkeypatch.setattr(eng.session, "get", fake_get)
     monkeypatch.setattr(eng, "get_book_info", lambda url: {
         "id": "TEST01", "title": "測試經", "author": "佚名", "url": url,
@@ -105,6 +107,19 @@ def test_recrawl_keeps_existing_translation(engine, tmp_path):
     # 沒有翻譯的章節照常產生模板
     other = tmp_path / "docs/translations/測試經_TEST01/03_善对品第二.md"
     assert is_untranslated(other.read_text(encoding="utf-8"))
+
+
+def test_easy_cli_keeps_newly_tracked_book(tmp_path, monkeypatch):
+    # main.py translate 走的是 EasyCLI；它原本另有一份追蹤資料，會把剛記錄的新書存檔蓋掉
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(translator_module.time, "sleep", lambda *_: None)
+    from tools.easy_cli import EasyCLI
+    cli = EasyCLI()
+    stub_engine(cli.engine, monkeypatch)
+
+    assert cli.translate_book("https://example.invalid/book/TEST01") is True
+    classics = json.loads((tmp_path / "data/tracking/classics.json").read_text(encoding="utf-8"))
+    assert "TEST01" in classics["classics"]
 
 
 def test_rebuild_tracking_from_docs(engine, tmp_path):
