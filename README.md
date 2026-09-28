@@ -59,7 +59,7 @@ Taoism/
 │       └── UPGRADE_SUMMARY.md # 升級總結報告
 │   └── translations/          # 翻譯檔案
 │
-├── 📁 crawler/                 # 爬蟲工具集（保留）
+├── 📁 archive/                 # 封存的舊程式（說明見 archive/README.md）
 │
 ├── main.py                     # 🚀 主要入口點
 └── README.md                   # 專案說明
@@ -185,9 +185,9 @@ cp config/settings.example.json config/settings.json
 
 ### 資料流程概覽
 ```
-網站URL → crawler/ → docs/source_texts/ → core/translator.py → 
-docs/translations/ → core/tracker.py → data/tracking/ → 
-update_web_data.py → docs/index.html
+網站URL → core/translator.py（爬取 + 產生翻譯模板）→
+docs/source_texts/、docs/translations/ → core/tracker.py → data/tracking/ →
+docs/js/script.js（網站書單）→ docs/index.html
 ```
 
 詳細說明請參考：**[資料流程說明](docs/system/資料流程說明.md)**
@@ -312,7 +312,7 @@ v1.x → v2.0 的資料遷移已經完成，遷移工具已封存到 `archive/on
 
 ### 📋 參考資料
 - **[升級總結報告](docs/system/UPGRADE_SUMMARY.md)** - v2.0重構的完整記錄
-- **[爬蟲工具文檔](crawler/)** - 21個專業爬蟲工具的說明
+- **[封存說明](archive/README.md)** - 舊版爬蟲與一次性工具的封存紀錄
 
 ## 📊 當前狀態
 

@@ -16,7 +16,6 @@ recursive-include config/templates *
 # 包含核心模組
 recursive-include core *.py
 recursive-include tools *.py *.md
-recursive-include crawler *.py *.md
 
 # 包含網頁資源
 recursive-include docs *.html *.css *.js *.json *.md

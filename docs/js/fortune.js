@@ -292,6 +292,6 @@ class FortuneChecker {
     }
 }
 
-// 共用的拜拜好日子實例（calendar.html、test-fortune.html 等頁面直接使用）
+// 共用的拜拜好日子實例（calendar.html 直接使用）
 // 首頁的今日資訊由 index.html 的 initializeFortune() 負責顯示
 const fortuneChecker = new FortuneChecker();

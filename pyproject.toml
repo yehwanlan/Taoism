@@ -68,7 +68,7 @@ taoism-translate = "tools.easy_cli:main"
 taoism-monitor = "tools.monitor_cli:main"
 
 [tool.setuptools]
-packages = ["core", "tools", "crawler"]
+packages = ["core", "tools"]
 include-package-data = true
 
 [tool.setuptools.package-data]
